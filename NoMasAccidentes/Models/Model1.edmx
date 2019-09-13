@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Modelo.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ModeloDato.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ACTIVIDAD">
           <Key>
             <PropertyRef Name="ID_ACTIVIDAD" />
@@ -391,7 +391,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ModeloStoreContainer">
+        <EntityContainer Name="ModeloDatoStoreContainer">
           <EntitySet Name="ACTIVIDAD" EntityType="Self.ACTIVIDAD" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="ASISTENTE" EntityType="Self.ASISTENTE" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="CAPACITACION" EntityType="Self.CAPACITACION" Schema="ADMINISTRADOR" store:Type="Tables" />
@@ -486,7 +486,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Modelo" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ModeloDato" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="ACTIVIDAD">
           <Key>
             <PropertyRef Name="ID_ACTIVIDAD" />
@@ -909,7 +909,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EntitiNoMasAccidentes" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EntitiesNoMasAccidentes" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ACTIVIDAD" EntityType="Self.ACTIVIDAD" />
           <EntitySet Name="ASISTENTE" EntityType="Self.ASISTENTE" />
           <EntitySet Name="CAPACITACION" EntityType="Self.CAPACITACION" />
@@ -1005,9 +1005,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModeloStoreContainer" CdmEntityContainer="EntitiNoMasAccidentes">
+        <EntityContainerMapping StorageEntityContainer="ModeloDatoStoreContainer" CdmEntityContainer="EntitiesNoMasAccidentes">
           <EntitySetMapping Name="ACTIVIDAD">
-            <EntityTypeMapping TypeName="Modelo.ACTIVIDAD">
+            <EntityTypeMapping TypeName="ModeloDato.ACTIVIDAD">
               <MappingFragment StoreEntitySet="ACTIVIDAD">
                 <ScalarProperty Name="ID_ACTIVIDAD" ColumnName="ID_ACTIVIDAD" />
                 <ScalarProperty Name="FECHA_ACTIVIDAD" ColumnName="FECHA_ACTIVIDAD" />
@@ -1020,7 +1020,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ASISTENTE">
-            <EntityTypeMapping TypeName="Modelo.ASISTENTE">
+            <EntityTypeMapping TypeName="ModeloDato.ASISTENTE">
               <MappingFragment StoreEntitySet="ASISTENTE">
                 <ScalarProperty Name="ID_ASISTENTE" ColumnName="ID_ASISTENTE" />
                 <ScalarProperty Name="NOMBRE_ASISTENTE" ColumnName="NOMBRE_ASISTENTE" />
@@ -1031,7 +1031,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CAPACITACION">
-            <EntityTypeMapping TypeName="Modelo.CAPACITACION">
+            <EntityTypeMapping TypeName="ModeloDato.CAPACITACION">
               <MappingFragment StoreEntitySet="CAPACITACION">
                 <ScalarProperty Name="ID_CAPACITACION" ColumnName="ID_CAPACITACION" />
                 <ScalarProperty Name="DESCRIPCION_CAPACITACION" ColumnName="DESCRIPCION_CAPACITACION" />
@@ -1041,7 +1041,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CHECKLIST">
-            <EntityTypeMapping TypeName="Modelo.CHECKLIST">
+            <EntityTypeMapping TypeName="ModeloDato.CHECKLIST">
               <MappingFragment StoreEntitySet="CHECKLIST">
                 <ScalarProperty Name="ID_CHECKLIST" ColumnName="ID_CHECKLIST" />
                 <ScalarProperty Name="NOMBRE_CHECKLIST" ColumnName="NOMBRE_CHECKLIST" />
@@ -1050,7 +1050,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CLIENTE">
-            <EntityTypeMapping TypeName="Modelo.CLIENTE">
+            <EntityTypeMapping TypeName="ModeloDato.CLIENTE">
               <MappingFragment StoreEntitySet="CLIENTE">
                 <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
                 <ScalarProperty Name="RUT_CLIENTE" ColumnName="RUT_CLIENTE" />
@@ -1066,7 +1066,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONTRATO">
-            <EntityTypeMapping TypeName="Modelo.CONTRATO">
+            <EntityTypeMapping TypeName="ModeloDato.CONTRATO">
               <MappingFragment StoreEntitySet="CONTRATO">
                 <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
                 <ScalarProperty Name="FECHA_INICIO_CONTRATO" ColumnName="FECHA_INICIO_CONTRATO" />
@@ -1076,7 +1076,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DETALLE_FACTURA">
-            <EntityTypeMapping TypeName="Modelo.DETALLE_FACTURA">
+            <EntityTypeMapping TypeName="ModeloDato.DETALLE_FACTURA">
               <MappingFragment StoreEntitySet="DETALLE_FACTURA">
                 <ScalarProperty Name="ID_DETALLE_FACTURA" ColumnName="ID_DETALLE_FACTURA" />
                 <ScalarProperty Name="RUT_CLIENTE_FACTURA" ColumnName="RUT_CLIENTE_FACTURA" />
@@ -1091,7 +1091,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FACTURA">
-            <EntityTypeMapping TypeName="Modelo.FACTURA">
+            <EntityTypeMapping TypeName="ModeloDato.FACTURA">
               <MappingFragment StoreEntitySet="FACTURA">
                 <ScalarProperty Name="ID_FACTURA" ColumnName="ID_FACTURA" />
                 <ScalarProperty Name="RUT_CLIENTE_FACTURA" ColumnName="RUT_CLIENTE_FACTURA" />
@@ -1100,7 +1100,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OPCION_CHECKLIST">
-            <EntityTypeMapping TypeName="Modelo.OPCION_CHECKLIST">
+            <EntityTypeMapping TypeName="ModeloDato.OPCION_CHECKLIST">
               <MappingFragment StoreEntitySet="OPCION_CHECKLIST">
                 <ScalarProperty Name="ID_OPCION_CHECKLIST" ColumnName="ID_OPCION_CHECKLIST" />
                 <ScalarProperty Name="NOMBRE_OPCION" ColumnName="NOMBRE_OPCION" />
@@ -1111,7 +1111,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PERSONAL">
-            <EntityTypeMapping TypeName="Modelo.PERSONAL">
+            <EntityTypeMapping TypeName="ModeloDato.PERSONAL">
               <MappingFragment StoreEntitySet="PERSONAL">
                 <ScalarProperty Name="ID_PERSONAL" ColumnName="ID_PERSONAL" />
                 <ScalarProperty Name="NOMBRE_PERSO" ColumnName="NOMBRE_PERSO" />
@@ -1127,7 +1127,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="REPORTAR">
-            <EntityTypeMapping TypeName="Modelo.REPORTAR">
+            <EntityTypeMapping TypeName="ModeloDato.REPORTAR">
               <MappingFragment StoreEntitySet="REPORTAR">
                 <ScalarProperty Name="ID_REPORTAR" ColumnName="ID_REPORTAR" />
                 <ScalarProperty Name="DETALLE_REPORTAR" ColumnName="DETALLE_REPORTAR" />
@@ -1139,7 +1139,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RUBRO">
-            <EntityTypeMapping TypeName="Modelo.RUBRO">
+            <EntityTypeMapping TypeName="ModeloDato.RUBRO">
               <MappingFragment StoreEntitySet="RUBRO">
                 <ScalarProperty Name="ID_RUBRO" ColumnName="ID_RUBRO" />
                 <ScalarProperty Name="NOMBRE_RUBRO" ColumnName="NOMBRE_RUBRO" />
@@ -1148,7 +1148,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SOLICITUD">
-            <EntityTypeMapping TypeName="Modelo.SOLICITUD">
+            <EntityTypeMapping TypeName="ModeloDato.SOLICITUD">
               <MappingFragment StoreEntitySet="SOLICITUD">
                 <ScalarProperty Name="ID_SOLICITUD" ColumnName="ID_SOLICITUD" />
                 <ScalarProperty Name="FECHA_SOLICITUD" ColumnName="FECHA_SOLICITUD" />
@@ -1159,7 +1159,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_ACTIVIDAD">
-            <EntityTypeMapping TypeName="Modelo.TIPO_ACTIVIDAD">
+            <EntityTypeMapping TypeName="ModeloDato.TIPO_ACTIVIDAD">
               <MappingFragment StoreEntitySet="TIPO_ACTIVIDAD">
                 <ScalarProperty Name="ID_TIPOACTIVI" ColumnName="ID_TIPOACTIVI" />
                 <ScalarProperty Name="TIPO_ACTIVIDAD1" ColumnName="TIPO_ACTIVIDAD" />
@@ -1168,7 +1168,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_PERSONAL">
-            <EntityTypeMapping TypeName="Modelo.TIPO_PERSONAL">
+            <EntityTypeMapping TypeName="ModeloDato.TIPO_PERSONAL">
               <MappingFragment StoreEntitySet="TIPO_PERSONAL">
                 <ScalarProperty Name="ID_TIPOPERSONAL" ColumnName="ID_TIPOPERSONAL" />
                 <ScalarProperty Name="TIPO_PERSONAL1" ColumnName="TIPO_PERSONAL" />
@@ -1177,7 +1177,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_REPORTAR">
-            <EntityTypeMapping TypeName="Modelo.TIPO_REPORTAR">
+            <EntityTypeMapping TypeName="ModeloDato.TIPO_REPORTAR">
               <MappingFragment StoreEntitySet="TIPO_REPORTAR">
                 <ScalarProperty Name="ID_TIPO_REPORTAR" ColumnName="ID_TIPO_REPORTAR" />
                 <ScalarProperty Name="TIPO_REPORTAR1" ColumnName="TIPO_REPORTAR" />
@@ -1185,7 +1185,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_SOLICITUD">
-            <EntityTypeMapping TypeName="Modelo.TIPO_SOLICITUD">
+            <EntityTypeMapping TypeName="ModeloDato.TIPO_SOLICITUD">
               <MappingFragment StoreEntitySet="TIPO_SOLICITUD">
                 <ScalarProperty Name="ID_TIPOSOLICI" ColumnName="ID_TIPOSOLICI" />
                 <ScalarProperty Name="NOMBRE_TIPOSOLICITUD" ColumnName="NOMBRE_TIPOSOLICITUD" />

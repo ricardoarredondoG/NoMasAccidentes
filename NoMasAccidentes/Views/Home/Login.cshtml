@@ -21,41 +21,55 @@
                 <div class="card-action teal lighten-1 white-text">
                     <h3>Ingreso de sesión.</h3>
                 </div>
-                <div class="card-content">
-                    <div class="form-field">
-                        <label for="username">Usuario</label>
-                        <input type="text" id="Usuario ">
-                    </div>
-                    <br>
+                <form method="POST" action="/home/ingresar">
+                    <div class="card-content">
+                        @{
+                            if (!string.IsNullOrEmpty(ViewBag.Message))
+                            {
+                                
+                                <b style="color:red;">
 
-                    <div class="form-field">
-                        <label for="password">Clave</label>
-                        <input type="password" id="Clave">
+                                    @ViewBag.Message
 
-                    </div>
-                    <br>
+                                </b>
 
-                    <div id="select">
-                        <select>
-                            <option value="" disabled selected>Elige tu opción.</option>
-                            <option value="1">Administrador.</option>
-                            <option value="2">Cliente.</option>
-                            <option value="3">Personal.</option>
-                        </select>
-                    </div>
+                            }
+                        }
+                        <div class="form-field">
+                            <label for="username">Usuario</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <br>
 
-                    <br>
-                    <br>
+                        <div class="form-field">
+                            <label for="password">Clave</label>
+                            <input type="password" id="password" name="password" required>
 
-                    <div class="form-field">
-                        <button class="btn-large waves-effect waves-dark" style="width:100%">Ingreso.</button>
+                        </div>
+                        <br>
+
+                        <div id="tipo_usuario">
+                            <select name="tipo_usuario" required>
+                                <option value="" disabled selected>Elige tu opción.</option>
+                                <option value="1">Administrador.</option>
+                                <option value="2">Cliente.</option>
+                                <option value="3">Personal.</option>
+                            </select>
+                        </div>
+
                         <br>
                         <br>
-                        <button type="submit" id="btnCancelar" class="btn-large waves-effect waves-dark" style="width:100%">Cancelar.</button>
+
+                        <div class="form-field">
+                            <button class="btn-large waves-effect waves-dark" style="width:100%">Ingreso.</button>
+                            <br>
+                            <br>
+                            <button type="submit" id="btnCancelar" class="btn-large waves-effect waves-dark" style="width:100%">Cancelar.</button>
+
+                        </div>
 
                     </div>
-
-                </div>
+                </form>
 
             </div>
 
