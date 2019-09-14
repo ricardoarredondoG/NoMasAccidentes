@@ -21,12 +21,12 @@
                 <div class="card-action teal lighten-1 white-text">
                     <h3>Ingreso de sesión.</h3>
                 </div>
-                <form method="POST" action="/home/ingresar">
+                <form method="POST" action="/login/ingresar">
                     <div class="card-content">
                         @{
                             if (!string.IsNullOrEmpty(ViewBag.Message))
                             {
-                                
+
                                 <b style="color:red;">
 
                                     @ViewBag.Message
@@ -64,7 +64,7 @@
                             <button class="btn-large waves-effect waves-dark" style="width:100%">Ingresar</button>
                             <br>
                             <br>
-                            
+
 
                         </div>
 
@@ -81,10 +81,10 @@
 <script type="text/javascript">
     'use strict'
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('select').not('.disabled').formSelect();
     });
-    document.getElementById("btnCancelar").onclick = function() {
+    document.getElementById("btnCancelar").onclick = function () {
         location.href = "index.html";
     };
 </script>
