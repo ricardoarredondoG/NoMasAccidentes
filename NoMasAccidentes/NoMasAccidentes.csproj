@@ -213,12 +213,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\jquery.mCustomScrollbar.css" />
+    <Content Include="Content\material-design-iconic-font.min.css" />
     <Content Include="Content\materialize.min.css" />
+    <Content Include="Content\normalize.css" />
     <Content Include="Content\paginaInicioAdmin.css" />
     <Content Include="Content\paginaInicioCliente.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\sweetalert.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\Material-Design-Iconic-Font.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Imagenes\logo.png" />
+    <Content Include="Imagenes\user.png" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -229,9 +237,13 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\materialize.min.js" />
     <Content Include="Scripts\rut.js" />
+    <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -265,6 +277,30 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="fonts\Roboto-Bold.eot" />
+    <Content Include="fonts\Roboto-Bold.ttf" />
+    <Content Include="fonts\Roboto-Bold.woff" />
+    <Content Include="fonts\Roboto-Bold.woff2" />
+    <Content Include="fonts\Roboto-Light.eot" />
+    <Content Include="fonts\Roboto-Light.ttf" />
+    <Content Include="fonts\Roboto-Light.woff" />
+    <Content Include="fonts\Roboto-Light.woff2" />
+    <Content Include="fonts\Roboto-Medium.eot" />
+    <Content Include="fonts\Roboto-Medium.ttf" />
+    <Content Include="fonts\Roboto-Medium.woff" />
+    <Content Include="fonts\Roboto-Medium.woff2" />
+    <Content Include="fonts\Roboto-Regular.eot" />
+    <Content Include="fonts\Roboto-Regular.ttf" />
+    <Content Include="fonts\Roboto-Regular.woff" />
+    <Content Include="fonts\Roboto-Regular.woff2" />
+    <Content Include="fonts\Roboto-Thin.eot" />
+    <Content Include="fonts\Roboto-Thin.ttf" />
+    <Content Include="fonts\Roboto-Thin.woff" />
+    <Content Include="fonts\Roboto-Thin.woff2" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
