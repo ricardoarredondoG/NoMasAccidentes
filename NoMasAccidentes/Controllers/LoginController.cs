@@ -32,6 +32,7 @@ namespace NoMasAccidentes.Controllers
                 {
                     FormsAuthentication.SetAuthCookie(user.USERNAME_PERSO, true);
                     Session["nombreApellido"] = user.NOMBRE_PERSO + " " + user.APELLIDOP_PERSO;
+                    Session["tipoUsuario"] = 2;
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -49,7 +50,7 @@ namespace NoMasAccidentes.Controllers
                 {
                     FormsAuthentication.SetAuthCookie(user.USERNAME_PERSO, true);
                     Session["nombreApellido"] = user.NOMBRE_PERSO + " " + user.APELLIDOP_PERSO;
-
+                    Session["tipoUsuario"] = 1;
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -65,6 +66,7 @@ namespace NoMasAccidentes.Controllers
                 {
                     FormsAuthentication.SetAuthCookie(user.USERNAME_CLIENTE, true);
                     Session["nombreApellido"] = user.NOMBRE_CLIENTE + " " + user.APELLIDO_CLIENTE;
+                    Session["tipoUsuario"] = 3;
 
                     return RedirectToAction("Index", "Home");
                 }
