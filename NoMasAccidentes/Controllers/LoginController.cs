@@ -23,22 +23,66 @@ namespace NoMasAccidentes.Controllers
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
 
-            var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password);
-
-            if (user != null)
+            //Si es Personal
+            if (tipo_usuario == 2)
             {
-                FormsAuthentication.SetAuthCookie(user.USERNAME_PERSO, true);
+                var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password && e.TIPO_PERSONAL.ID_TIPOPERSONAL == 2 );
 
-                return RedirectToAction("Index", "Home");
+                if (user != null)
+                {
+                    FormsAuthentication.SetAuthCookie(user.USERNAME_PERSO, true);
+                    Session["nombreApellido"] = user.NOMBRE_PERSO + " " + user.APELLIDOP_PERSO;
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
+                }
             }
-            else
+            //Si Es Administrador
+            else if(tipo_usuario == 1)
             {
-                return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
+                var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password && e.TIPO_PERSONAL.ID_TIPOPERSONAL == 1);
+
+                if (user != null)
+                {
+                    FormsAuthentication.SetAuthCookie(user.USERNAME_PERSO, true);
+                    Session["nombreApellido"] = user.NOMBRE_PERSO + " " + user.APELLIDOP_PERSO;
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
+                }
+            }
+            //Si Es Cliente
+            else 
+            {
+                var user = bd.CLIENTE.FirstOrDefault(e => e.USERNAME_CLIENTE == username && e.PASSWORD_CLIENTE == password );
+                if (user != null)
+                {
+                    FormsAuthentication.SetAuthCookie(user.USERNAME_CLIENTE, true);
+                    Session["nombreApellido"] = user.NOMBRE_CLIENTE + " " + user.APELLIDO_CLIENTE;
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
+                }
             }
 
 
-            
         }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Login");
+        }
+
 
 
     }

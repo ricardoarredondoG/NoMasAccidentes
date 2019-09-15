@@ -24,6 +24,7 @@
                 <form method="POST" action="/login/ingresar">
                     <div class="card-content">
                         @{
+                          
                             if (!string.IsNullOrEmpty(ViewBag.Message))
                             {
 
@@ -52,8 +53,8 @@
                             <select name="tipo_usuario" required>
                                 <option value="" disabled selected>Elige tu opción.</option>
                                 <option value="1">Administrador.</option>
-                                <option value="2">Cliente.</option>
-                                <option value="3">Personal.</option>
+                                <option value="2">Personal.</option>
+                                <option value="3">Cliente.</option>
                             </select>
                         </div>
 
