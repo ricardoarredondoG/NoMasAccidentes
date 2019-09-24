@@ -6,23 +6,23 @@
 <div class="container">
     <div class="row">
         <h3 class="center-align">Administrar Personal</h3>
-        <form class="col s12">
+        <form class="col s12" href="/AdministrarPersonal/Buscar" method="post">
             <div class="row">
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese el Rut" id="first_name" type="text" class="validate">
-                    <label for="rut">Rut</label>
+                    <input placeholder="Ingrese el Usuario" id="usuario" name="usuario" type="text" class="validate">
+                    <label for="rut">Usuario</label>
                 </div>
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese el Nombre" id="first_name" type="text" class="validate">
+                    <input placeholder="Ingrese el Nombre" id="nombre" name="nombre" type="text" class="validate">
                     <label for="nombre">Nombre</label>
                 </div>
                 <div class="input-field col s4">
-                    <input placeholder="Ingrese el Correo Electronico" id="first_name" type="email" class="validate">
+                    <input placeholder="Ingrese el Correo Electronico" id="correo" name="correo" type="email" class="validate">
                     <label for="correo">Correo Electronico</label>
                 </div>
                 <div class="input-field col s4">
-                    <input placeholder="Ingrese el apellido" id="first_name" type="text" class="validate">
-                    <label for="apellido">Apellido</label>
+                    <input placeholder="Ingrese el apellido" id="appelidoP" type="text" name="apellidoP" class="validate">
+                    <label for="apellido">Apellido Paterno</label>
                 </div>
                 <div class="input-field col s4">
                     <div class="center-align">
@@ -36,15 +36,14 @@
         </form>
     </div>
 </div>
-
+@model NoMasAccidentes.ViewModels.IndexViewModel
     <div class="row">
         <div class="col s12">
             <table>
                 <thead>
                     <tr>
-                        <th data-field="id">Rut</th>
                         <th data-field="id">Usuario</th>
-                        <th data-field="name">Nombre</th>
+                        <th data-field="id">Nombre</th>
                         <th data-field="price">Apellido Paterno</th>
                         <th data-field="price">Apellido Materno</th>
                         <th data-field="price">Telefono</th>
@@ -54,20 +53,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>18.916.732-6</td>
-                        <td>ric.arredondo</td>
-                        <td>Ricardo</td>
-                        <td>Arredondo</td>
-                        <td>Gonzalez</td>
-                        <td>959233310</td>
-                        <td>ricard.arredondo@gmail.com</td>
-                        <td><button class="btn blue">Editar</button></td>
-                        <td><button class="btn red">Eliminar</button></td>
-                    </tr>
-                    
+                    @foreach (var personal in Model.personal)
+                    {
+                        <tr>
+                            <td>@personal.USERNAME_PERSO</td>
+                            <td>@personal.NOMBRE_PERSO</td>
+                            <td>@personal.APELLIDOP_PERSO</td>
+                            <td>@personal.APELLIDOM_PERSO</td>
+                            <td>@personal.TELEFONO_PERSO</td>
+                            <td>@personal.CORREO_PERSO</td>
+                            <td><button class="btn blue">Editar</button></td>
+                            <td><button class="btn red">Eliminar</button></td>
+                        </tr>
+                    }
+
+
                 </tbody>
+
             </table>
+            <div class="center-align">
+
+                @{Html.RenderPartial("_paginador", Model);}
+            </div>
+            
+
         </div>
     </div>
 </div>
