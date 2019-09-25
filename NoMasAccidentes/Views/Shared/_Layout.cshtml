@@ -122,7 +122,7 @@
             @RenderBody()
         </div>
         <!-- Footer -->
-        
+
     </section>
 
     <!-- Sweet Alert JS -->
@@ -140,5 +140,21 @@
 
     <!-- MaterialDark JS -->
     <script src="js/main.js"></script>
+
+    <!-- Modal JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+        });
+    </script>
+
+    <!-- Select JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+    </script>
 </body>
 </html>

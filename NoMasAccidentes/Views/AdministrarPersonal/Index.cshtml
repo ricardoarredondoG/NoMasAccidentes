@@ -27,6 +27,7 @@
                 <div class="input-field col s4">
                     <div class="center-align">
                         <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                        <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
                     </div>
 
 
@@ -39,6 +40,7 @@
 @model NoMasAccidentes.ViewModels.IndexViewModel
     <div class="row">
         <div class="col s12">
+            
             <table>
                 <thead>
                     <tr>
@@ -62,8 +64,8 @@
                             <td>@personal.APELLIDOM_PERSO</td>
                             <td>@personal.TELEFONO_PERSO</td>
                             <td>@personal.CORREO_PERSO</td>
-                            <td><button class="btn blue">Editar</button></td>
-                            <td><button class="btn red">Eliminar</button></td>
+                            <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                            <td><button class="btn red"><i class="zmdi zmdi-delete zmdi-hc-fw"></button></td>
                         </tr>
                     }
 
@@ -75,10 +77,57 @@
 
                 @{Html.RenderPartial("_paginador", Model);}
             </div>
-            
+            <!-- Modal Nuevo -->
+            <div id="modalNuevo" class="modal">
+                <div class="modal-content">
+                    <h5>Agregar Personal</h5>
+                    <div class="input-field col s6">
+                        <input placeholder="Ingrese el Nombre" id="nombre" name="nombre" type="text" class="validate" required>
+                        <label for="nombre">Nombre</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="Ingrese el Apellido Paterno" id="apellidoPaterno" name="apellidoPaterno" type="text" class="validate" required>
+                        <label for="nombre">Apellido Paterno</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="Ingrese el Apellido Materno" id="apellidoMaterno" name="apellidoNaterno" type="text" class="validate" required>
+                        <label for="nombre">Apellido Materno</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="Ingrese el Telefono" id="telefono" name="telefono" type="number" class="validate" required>
+                        <label for="telefono">Telefono</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input placeholder="Ingrese la Direccion" id="direccion" name="direccion" type="text" class="validate" required>
+                        <label for="direccion">Direccion</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="Ingrese el Correo Electronico" id="correo" name="correo" type="email" class="validate" required>
+                        <label for="correo">Correo Electronico</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select>
+                            <option value="" disabled selected>Seleccione Tipo de  Personal</option>
+                            <option value="1">Administrador</option>
+                            <option value="2">Profesional</option>
+                        </select>
+                        <label for="correo">Tipo Personal</label>
+                    </div>
+                    <div class="row">
+                        <div class="center-align">
+                            <button class="btn modal-trigger green" data-target="modalEditar">Guardar</button>
+                            <button class="btn modal-close red">Cerrar</button>
+                        </div>
+                    </div>
+                    
+                    
+
+                </div>
+                
+            </div>
 
         </div>
     </div>
-</div>
+
 
 
