@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3 class="black-text">Actividad</h3>
+
+<div class="container">
+    <div class = "row">
+        <h4 class="center_align black-text">Administrador actividad</h4>
+        <form class="col s12">
+            <div class="row">
+                <div>
+
+                    <div class="input-field col s12">
+                        <select>
+                            <option value="" disabled selected>Elije tu opción</option>
+                            <option value="1">Cliente</option>
+                        </select>
+                        <label>Personal</label>
+                    </div>
+                </div>
+                
+                <div class="input-field col s6">
+                    <input type="text" class="datepicker">
+                    <label for="datepicker">Calendario</label>
+                </div>
+                <div class="input-field col s12">
+                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                    <label for="textarea1">Descripción</label>
+                </div>
+                <div>
+                
+
+                </div>
+                <div class="input-field col s6">
+                    <div class="center_align">
+                        <button class="waves-effect waves-light btn">Ingresar</button>
+                       
+                    </div>
+                </div>
+
+                
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
+<script>
+   
+   
+    $(document).ready(function () {
+        $('select').formSelect();
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year,
+            today: 'Today',
+            clear: 'Clear',
+            close: 'Ok',
+            closeOnSelect: true // Close upon selecting a date,
+        });
+    });
+
+
+</script>
