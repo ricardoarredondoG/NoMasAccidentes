@@ -12,12 +12,12 @@ namespace NoMasAccidentes.Controllers
     {
         // GET: AdministrarPersonal
         [Authorize]
-        public ActionResult Index(int pagina= 1, string nombre= "", string apellidoP="", string usuario="", string correo="")
+        public ActionResult Index(int pagina = 1, string nombre = "", string apellidoP = "", string usuario = "", string correo = "")
         {
             var cantidadRegistrosPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var personal = bd.PERSONAL.ToList();
-           
+
             //Busqueda por Nombre
             if (nombre != "")
             {
@@ -58,6 +58,59 @@ namespace NoMasAccidentes.Controllers
 
 
             return View(modelo);
+        }
+
+        [HttpPost]
+        public JsonResult Crear(PersonalViewModel persona) {
+
+
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            NoMasAccidentes.Models.PERSONAL personal = new PERSONAL();
+
+            personal.DIRECCION_PERSO = persona.direccion_perso;
+            personal.APELLIDOM_PERSO = persona.apellidom_perso;
+            personal.APELLIDOP_PERSO = persona.apellidop_perso;
+            personal.CORREO_PERSO = persona.correo_pero;
+            personal.NOMBRE_PERSO = persona.nombre_perso;
+            personal.TELEFONO_PERSO = persona.telefono_perso;
+            personal.TIPO_PERSONAL_ID_TIPOPERSONAL = persona.tipo_personal;
+
+            //Generar Usuario
+
+                //Eliminar espacios en Blanco
+                var nombre = persona.nombre_perso.Replace(" ", "");
+                var apellido = persona.apellidop_perso.Replace(" ", "");
+                var username = "";
+                var username_encontrado = false;
+                var cantidad_caracter = 3;
+
+            //Buscar usuario
+            while (!username_encontrado)
+                {
+                    username = (nombre.Substring(0, cantidad_caracter)+"."+apellido).ToLower();
+
+                //Consulta
+
+                    if(bd.PERSONAL.ToList().FindAll(x => x.USERNAME_PERSO.Contains(username)).Count() == 0)
+                    {
+                        username_encontrado = true;
+                    }else
+                    {
+                        cantidad_caracter++;
+                    }
+
+                }
+            personal.USERNAME_PERSO = username;
+
+            //GenerarPassword
+            var guid = Guid.NewGuid();
+            var justNumbers = new String(guid.ToString().Where(Char.IsDigit).ToArray());
+            var password = int.Parse(justNumbers.Substring(4, 4));
+            personal.PASSWORD_PERSO = password.ToString();
+
+            bd.PERSONAL.Add(personal);
+            bd.SaveChanges();
+            return Json("d");
         }
     }
 }
