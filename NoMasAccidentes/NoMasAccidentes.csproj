@@ -49,10 +49,16 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.19.3.1\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -61,6 +67,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -126,119 +138,132 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdministrarPersonalController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ACTIVIDAD.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ASISTENTE.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaseModelo.cs" />
     <Compile Include="Models\CAPACITACION.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CHECKLIST.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CLIENTE.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CONTRATO.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DETALLE_FACTURA.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FACTURA.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModeloDatos.Context.cs">
+    <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloDatos.Context.tt</DependentUpon>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModeloDatos.cs">
+    <Compile Include="Models\Model1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModeloDatos.Designer.cs">
+    <Compile Include="Models\Model1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloDatos.edmx</DependentUpon>
+      <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\OPCION_CHECKLIST.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PERSONAL.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\REPORTAR.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RUBRO.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SOLICITUD.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_ACTIVIDAD.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_PERSONAL.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_REPORTAR.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_SOLICITUD.cs">
-      <DependentUpon>ModeloDatos.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\IndexViewModel.cs" />
+    <Compile Include="ViewModels\PersonalViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\jquery.mCustomScrollbar.css" />
+    <Content Include="Content\material-design-iconic-font.min.css" />
     <Content Include="Content\materialize.min.css" />
+    <Content Include="Content\normalize.css" />
     <Content Include="Content\paginaInicioAdmin.css" />
     <Content Include="Content\paginaInicioCliente.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\sweetalert.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\Material-Design-Iconic-Font.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\ModeloDatos.Context.tt">
+    <Content Include="Imagenes\logo.png" />
+    <Content Include="Imagenes\user.png" />
+    <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModeloDatos.Context.cs</LastGenOutput>
-      <DependentUpon>ModeloDatos.edmx</DependentUpon>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ModeloDatos.tt">
+    <Content Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModeloDatos.edmx</DependentUpon>
-      <LastGenOutput>ModeloDatos.cs</LastGenOutput>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <EntityDeploy Include="Models\ModeloDatos.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModeloDatos.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\ModeloDatos.edmx.diagram">
-      <DependentUpon>ModeloDatos.edmx</DependentUpon>
-    </Content>
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\materialize.min.js" />
     <Content Include="Scripts\rut.js" />
-    <Content Include="Web.config" />
+    <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -248,8 +273,44 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <None Include="packages.config" />
-    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="libman.json" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="fonts\Roboto-Bold.eot" />
+    <Content Include="fonts\Roboto-Bold.ttf" />
+    <Content Include="fonts\Roboto-Bold.woff" />
+    <Content Include="fonts\Roboto-Bold.woff2" />
+    <Content Include="fonts\Roboto-Light.eot" />
+    <Content Include="fonts\Roboto-Light.ttf" />
+    <Content Include="fonts\Roboto-Light.woff" />
+    <Content Include="fonts\Roboto-Light.woff2" />
+    <Content Include="fonts\Roboto-Medium.eot" />
+    <Content Include="fonts\Roboto-Medium.ttf" />
+    <Content Include="fonts\Roboto-Medium.woff" />
+    <Content Include="fonts\Roboto-Medium.woff2" />
+    <Content Include="fonts\Roboto-Regular.eot" />
+    <Content Include="fonts\Roboto-Regular.ttf" />
+    <Content Include="fonts\Roboto-Regular.woff" />
+    <Content Include="fonts\Roboto-Regular.woff2" />
+    <Content Include="fonts\Roboto-Thin.eot" />
+    <Content Include="fonts\Roboto-Thin.ttf" />
+    <Content Include="fonts\Roboto-Thin.woff" />
+    <Content Include="fonts\Roboto-Thin.woff2" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\AdministrarPersonal\Index.cshtml" />
+    <Content Include="Views\Shared\_paginador.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -13,10 +13,10 @@ namespace NoMasAccidentes.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EntitiNoMasAccidentes : DbContext
+    public partial class EntitiesNoMasAccidentes : DbContext
     {
-        public EntitiNoMasAccidentes()
-            : base("name=EntitiNoMasAccidentes")
+        public EntitiesNoMasAccidentes()
+            : base("name=EntitiesNoMasAccidentes")
         {
         }
     

@@ -1,0 +1,162 @@
+﻿
+@{
+    ViewBag.Title = "Administrar Personal";
+}
+
+<div class="container">
+    <div class="row">
+        <h3 class="center-align">Administrar Personal</h3>
+        <form class="col s12" href="/AdministrarPersonal/Buscar" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Usuario" id="usuario" name="usuario" type="text" class="validate">
+                    <label for="rut">Usuario</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Nombre" id="nombre" name="nombre" type="text" class="validate">
+                    <label for="nombre">Nombre</label>
+                </div>
+                <div class="input-field col s4">
+                    <input placeholder="Ingrese el Correo Electronico" id="correo" name="correo" type="email" class="validate">
+                    <label for="correo">Correo Electronico</label>
+                </div>
+                <div class="input-field col s4">
+                    <input placeholder="Ingrese el apellido" id="appelidoP" type="text" name="apellidoP" class="validate">
+                    <label for="apellido">Apellido Paterno</label>
+                </div>
+                <div class="input-field col s4">
+                    <div class="center-align">
+                        <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                        <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+                    </div>
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@model NoMasAccidentes.ViewModels.IndexViewModel
+<div class="row">
+    <div class="col s12">
+
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="id">Usuario</th>
+                    <th data-field="id">Nombre</th>
+                    <th data-field="price">Apellido Paterno</th>
+                    <th data-field="price">Apellido Materno</th>
+                    <th data-field="price">Telefono</th>
+                    <th data-field="price">Correo Electronico</th>
+                    <th data-field="price">Editar</th>
+                    <th data-field="price">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var personal in Model.personal)
+                {
+                    <tr>
+                        <td>@personal.USERNAME_PERSO</td>
+                        <td>@personal.NOMBRE_PERSO</td>
+                        <td>@personal.APELLIDOP_PERSO</td>
+                        <td>@personal.APELLIDOM_PERSO</td>
+                        <td>@personal.TELEFONO_PERSO</td>
+                        <td>@personal.CORREO_PERSO</td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn red"><i class="zmdi zmdi-delete zmdi-hc-fw"></button></td>
+                    </tr>
+                }
+
+
+            </tbody>
+
+        </table>
+        <div class="center-align">
+
+            @{Html.RenderPartial("_paginador", Model);}
+        </div>
+        <!-- Modal Nuevo -->
+
+
+        <div id="modalNuevo" class="modal">
+            <div class="modal-content">
+                <div id="mensaje" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Personal Registrado Correctamente</span></p>
+                    </div>
+                </div>
+                <h5>Agregar Personal</h5>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Nombre" id="txtNombre" name="nombre" type="text" class="validate">
+                    <label for="nombre">Nombre</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Apellido Paterno" id="txtApellidoPaterno" name="apellidoPaterno" type="text" class="validate" required>
+                    <label for="nombre">Apellido Paterno</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Apellido Materno" id="txtApellidoMaterno" name="apellidoNaterno" type="text" class="validate" required>
+                    <label for="nombre">Apellido Materno</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Telefono" id="txtTelefono" name="telefono" type="number" class="validate" required>
+                    <label for="telefono">Telefono</label>
+                </div>
+                <div class="input-field col s12">
+                    <input placeholder="Ingrese la Direccion" id="txtDireccion" name="direccion" type="text" class="validate" required>
+                    <label for="direccion">Direccion</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Correo Electronico" id="txtCorreo" name="correo" type="email" class="validate" required>
+                    <label for="correo">Correo Electronico</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="selectTipoPersonal">
+                        <option value="" disabled selected>Seleccione Tipo de  Personal</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Profesional</option>
+                    </select>
+                    <label for="correo">Tipo Personal</label>
+                </div>
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Guardar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#btnGuardar").click(function ()
+    {
+        $("#mensaje").show();
+        
+                var url = "@Url.Action("Crear", "AdministrarPersonal")";
+                var txtNombre = $("#txtNombre").val();
+                var txtApellidoPaterno = $("#txtApellidoPaterno").val();
+                var txtApellidoMaterno = $("#txtApellidoMaterno").val();
+                var txtTelefono = $("#txtTelefono").val();
+                var txtDireccion = $("#txtDireccion").val();
+                var txtCorreo = $("#txtCorreo").val();
+                var selectTipoPersonal = $("#selectTipoPersonal").val();
+                var data = { nombre_perso: txtNombre, apellidop_perso: txtApellidoPaterno, apellidom_perso: txtApellidoMaterno, direccion_perso: txtDireccion, telefono_perso: txtTelefono, correo_pero: txtCorreo, tipo_personal: selectTipoPersonal };
+
+                 $("#txtNombre").attr('required', 'required');
+                
+                $.post(url, data).done();
+
+            });
+</script>
+
+
+
+
