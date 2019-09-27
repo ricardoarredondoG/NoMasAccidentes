@@ -61,6 +61,7 @@ namespace NoMasAccidentes.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public JsonResult Crear(PersonalViewModel persona) {
 
 

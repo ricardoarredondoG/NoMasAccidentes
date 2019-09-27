@@ -31,7 +31,6 @@
                     </div>
 
 
-
                 </div>
             </div>
         </form>
@@ -151,6 +150,8 @@
                 var selectTipoPersonal = $("#selectTipoPersonal").val();
                 var data = { nombre_perso: txtNombre, apellidop_perso: txtApellidoPaterno, apellidom_perso: txtApellidoMaterno, direccion_perso: txtDireccion, telefono_perso: txtTelefono, correo_pero: txtCorreo, tipo_personal: selectTipoPersonal };
 
+                 $("#txtNombre").attr('required', 'required');
+                
                 $.post(url, data).done();
 
             });
