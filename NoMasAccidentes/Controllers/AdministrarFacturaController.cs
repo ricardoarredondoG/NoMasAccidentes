@@ -26,7 +26,7 @@ namespace NoMasAccidentes.Controllers
             modelo.PaginaActual = pagina;
             modelo.TotalDeRegistros = totalRegistros;
             modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
-            return View();
+            return View(modelo);
         }
     }
 }
