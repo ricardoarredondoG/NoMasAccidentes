@@ -154,6 +154,7 @@
     <Compile Include="Controllers\AdministrarActividadController.cs" />
     <Compile Include="Controllers\AdministrarAsistenteController.cs" />
     <Compile Include="Controllers\AdministrarClienteController.cs" />
+    <Compile Include="Controllers\AdministrarFacturaController.cs" />
     <Compile Include="Controllers\AdministrarPersonalController.cs" />
     <Compile Include="Controllers\AdministrarPlanesController.cs" />
     <Compile Include="Controllers\AdministrarRubroController.cs" />
@@ -346,6 +347,7 @@
     <Content Include="Views\AdministrarAsistente\Index.cshtml" />
     <Content Include="Views\AdministrarRubro\Index.cshtml" />
     <Content Include="Views\AdministrarPlanes\Index.cshtml" />
+    <Content Include="Views\AdministrarFactura\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

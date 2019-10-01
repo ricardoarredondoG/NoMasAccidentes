@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@model NoMasAccidentes.ViewModels.IndexViewModel
+<div class="row">
+    <div class="col s12">
+
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="id">Rut Cliente</th>
+                    <th data-field="id">Nombre Cliente</th>
+                    <th data-field="price">Mes</th>
+                    <th data-field="price">Año</th>
+                    <th data-field="price">Estado</th>
+                    <th data-field="price">Fecha Vencimiento</th>
+                    <th data-field="price">Valor Plan</th>
+                    <th data-field="price">Total Factura</th>
+                    <th data-field="price">PDF</th>
+                    <th data-field="price">Pagar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var factura in Model.factura)
+                {
+                    <tr>
+                        <td>
+                           
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            </table>
+    </div>
+</div>

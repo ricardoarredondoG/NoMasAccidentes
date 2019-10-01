@@ -17,6 +17,7 @@ namespace NoMasAccidentes.Models
         public CONTRATO()
         {
             this.DETALLE_FACTURA = new HashSet<DETALLE_FACTURA>();
+            this.FACTURA = new HashSet<FACTURA>();
         }
     
         public decimal ID_CONTRATO { get; set; }
@@ -29,5 +30,6 @@ namespace NoMasAccidentes.Models
         public virtual CLIENTE CLIENTE { get; set; }
         public virtual ICollection<DETALLE_FACTURA> DETALLE_FACTURA { get; set; }
         public virtual PLAN PLAN { get; set; }
+        public virtual ICollection<FACTURA> FACTURA { get; set; }
     }
 }
