@@ -32,10 +32,8 @@ namespace NoMasAccidentes.App_Start
                 // Lanzamos el job todos los días a las 
                 ITrigger every24hTrigger = TriggerBuilder.Create()
                     .WithIdentity("generarFactura", "app")
-                    .StartAt(DateBuilder.DateOf(02, 17, 0))
-                    .WithSimpleSchedule(s => s
-                        .WithIntervalInHours(24)
-                        .RepeatForever())
+                    .StartNow()
+                    .WithSchedule(CronScheduleBuilder.MonthlyOnDayAndHourAndMinute(1, 0, 1))
                     .Build();
 
                 // Asociamos el job y el trigger al demonio
