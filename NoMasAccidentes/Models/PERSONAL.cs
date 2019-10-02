@@ -29,6 +29,7 @@ namespace NoMasAccidentes.Models
         public string TELEFONO_PERSO { get; set; }
         public string CORREO_PERSO { get; set; }
         public decimal TIPO_PERSONAL_ID_TIPOPERSONAL { get; set; }
+        public string ACTIVO { get; set; }
     
         public virtual ICollection<ACTIVIDAD> ACTIVIDAD { get; set; }
         public virtual TIPO_PERSONAL TIPO_PERSONAL { get; set; }
