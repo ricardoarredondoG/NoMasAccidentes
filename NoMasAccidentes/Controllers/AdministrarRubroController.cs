@@ -45,6 +45,26 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
+        public JsonResult Eliminar(int id)
+        {
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var resultado = new baseRespuesta();
+
+            var rubro = bd.RUBRO.Find(id);
+            rubro.ACTIVO_RUBRO = "N";
+            bd.Entry(rubro).State = System.Data.EntityState.Modified;
+            bd.SaveChanges();
+            resultado.mensaje = "Rubro Eliminado Correctamente";
+
+
+
+
+
+            return Json(resultado);
+        }
+
+        [HttpPost]
+        [Authorize]
         public JsonResult Crear(RubroViewModel rub)
         {
 

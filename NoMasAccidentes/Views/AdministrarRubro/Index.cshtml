@@ -46,13 +46,15 @@
             <tbody>
                 @foreach (var rub in Model.rubro)
                 {
-                    <tr>
-                        <td>@rub.ID_RUBRO</td>
-                        <td>@rub.NOMBRE_RUBRO</td>
-                        <td>@rub.DESC_RUBRO</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                        <td><button class="btn red"><i class="zmdi zmdi-delete zmdi-hc-fw"></button></td>
-                    </tr>
+                    var datos = @rub.NOMBRE_RUBRO + "||" + rub.DESC_RUBRO;
+
+                <tr>
+                    <td>@rub.ID_RUBRO</td>
+                    <td>@rub.NOMBRE_RUBRO</td>
+                    <td>@rub.DESC_RUBRO</td>
+                    <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@rub.ID_RUBRO)" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                </tr>
                 }
 
 
