@@ -9,5 +9,9 @@ namespace NoMasAccidentes.ViewModels
     public class IndexViewModel : BaseModelo
     {
         public List<Models.PERSONAL> personal { get; set; }
+
+        public List<Models.CLIENTE> cliente { get; set; }
+
+
     }
 }
