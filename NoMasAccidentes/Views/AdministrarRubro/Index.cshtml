@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "Administrar Rubro";
+}
+
+
+<div class="container">
+    <div class="row">
+        <h3 class="center-align">Administrar Rubro</h3>
+        <form class="col s12" href="/AdministrarRubro/Buscar" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Rubro" id="rubro" name="rubro" type="text" class="validate">
+                    <label for="nombre">Rubro</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese la Descripción" id="descripcion" name="descripcion" type="text" class="validate">
+                    <label for="descripcion">Descripcion</label>
+                </div>
+
+                <div class="input-field col s4">
+                    <div class="center-align">
+                        <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                        <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@model NoMasAccidentes.ViewModels.IndexViewModel
+<div class="row">
+    <div class="col s12">
+
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="id">ID Rubro</th>
+                    <th data-field="price">Nombre Rubro</th>
+                    <th data-field="price">Descripción Rubro</th>
+                    <th data-field="price">Editar</th>
+                    <th data-field="price">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var rub in Model.rubro)
+                {
+                    <tr>
+                        <td>@rub.ID_RUBRO</td>
+                        <td>@rub.NOMBRE_RUBRO</td>
+                        <td>@rub.DESC_RUBRO</td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn red"><i class="zmdi zmdi-delete zmdi-hc-fw"></button></td>
+                    </tr>
+                }
+
+
+            </tbody>
+
+        </table>
+        <div class="center-align">
+
+            @{Html.RenderPartial("_paginador", Model);}
+        </div>
+        <!-- Modal Nuevo -->
+        <!-- Modal Nuevo -->
+
+
+        <div id="modalNuevo" class="modal">
+            <div class="modal-content">
+                <div id="mensaje" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Rubro Registrado Correctamente</span></p>
+                    </div>
+                </div>
+                <h5>Agregar Rubro</h5>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Nombre de Rubro" id="txtNombre" name="nombre" type="text" class="validate">
+                    <label for="nombre">Nombre Rubro</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese una Descripción al Rubro" id="txtDescripRubro" name="desc" type="text" class="validate" required>
+                    <label for="nombre">Apellido Paterno</label>
+                </div>
+                
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Guardar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#btnGuardar").click(function ()
+    {
+        $("#mensaje").show();
+
+                var url = "@Url.Action("Crear", "AdministrarRubro")";
+                var txtNombre = $("#txtNombre").val();
+                var txtDescripRubro = $("#txtDescripRubro").val();
+                var data = { nombre_rubro: txtNombre, desc_rubro: txtDescripRubro };
+
+                 $("#txtNombre").attr('required', 'required');
+
+                $.post(url, data).done();
+
+            });
+</script>
