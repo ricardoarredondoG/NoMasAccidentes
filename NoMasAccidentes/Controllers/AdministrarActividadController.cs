@@ -26,7 +26,7 @@ namespace NoMasAccidentes.Controllers
             var totalRegistros = actividad.Count();
             actividad = actividad.OrderBy(x => x.ID_ACTIVIDAD).Skip((pagina - 1) * cantidadRegistrosPorPagina).Take(cantidadRegistrosPorPagina).ToList();
 
-
+              
             var modelo = new ActividadViewModel();
 
             modelo.actividad = actividad;
