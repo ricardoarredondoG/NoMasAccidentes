@@ -5,15 +5,9 @@ using System.Web;
 
 namespace NoMasAccidentes.ViewModels
 {
-    public class ActividaViewModel
+    public class ActividadViewModel
     {
-        public String nombre_perso { get; set; }
-        public String apellidop_perso { get; set; }
-        public String apellidom_perso { get; set; }
-        public String direccion_perso { get; set; }
-        public String telefono_perso { get; set; }
-        public String correo_pero { get; set; }
-        public int tipo_personal { get; set; }
+        public List<Models.ACTIVIDAD> actividad { get; set; }
 
     }
 }

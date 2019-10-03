@@ -139,6 +139,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdministrarActividadController.cs" />
     <Compile Include="Controllers\AdministrarPersonalController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -312,7 +313,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\AdministrarPersonal\Index.cshtml" />
     <Content Include="Views\Shared\_paginador.cshtml" />
-    <Content Include="Views\Administrar Actividades\Index.cshtml" />
+    <Content Include="Views\AdministrarActividad\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
