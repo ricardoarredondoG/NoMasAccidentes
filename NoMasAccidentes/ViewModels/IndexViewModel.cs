@@ -9,5 +9,12 @@ namespace NoMasAccidentes.ViewModels
     public class IndexViewModel : BaseModelo
     {
         public List<Models.PERSONAL> personal { get; set; }
+
+        public List<Models.RUBRO> rubro { get; set; }
     }
+
+    //public class RubroViewModel : BaseModelo
+    //{
+        
+    //}
 }
