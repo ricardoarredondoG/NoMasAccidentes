@@ -3,6 +3,9 @@
     ViewBag.Title = "Administrar Personal";
 }
 
+
+
+
 <div class="container">
     <div class="row">
         <h3 class="center-align">Administrar Personal</h3>
@@ -56,60 +59,61 @@
             <tbody>
                 @foreach (var personal in Model.personal)
                 {
-                    <tr>
-                        <td>@personal.USERNAME_PERSO</td>
-                        <td>@personal.NOMBRE_PERSO</td>
-                        <td>@personal.APELLIDOP_PERSO</td>
-                        <td>@personal.APELLIDOM_PERSO</td>
-                        <td>@personal.TELEFONO_PERSO</td>
-                        <td>@personal.CORREO_PERSO</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                        <td><button class="btn red"><i class="zmdi zmdi-delete zmdi-hc-fw"></button></td>
-                    </tr>
-                }
+                    var datos = @personal.NOMBRE_PERSO + "||" + @personal.APELLIDOP_PERSO + "||" + @personal.APELLIDOM_PERSO + "||" + @personal.TELEFONO_PERSO + "||" + @personal.DIRECCION_PERSO+"||"+personal.CORREO_PERSO+"||"+personal.TIPO_PERSONAL;
 
+                <tr style='background-color: @(personal.ACTIVO.ToString() == "N" ? "#CCCCCC" : "" );'>
+                    <td>@personal.USERNAME_PERSO</td>
+                    <td>@personal.NOMBRE_PERSO</td>
+                    <td>@personal.APELLIDOP_PERSO</td>
+                    <td>@personal.APELLIDOM_PERSO</td>
+                    <td>@personal.TELEFONO_PERSO</td>
+                    <td>@personal.CORREO_PERSO</td>
+                    <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@personal.ID_PERSONAL)" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                </tr>
+            }
 
-            </tbody>
+                </tbody>
 
-        </table>
+            </table>
         <div class="center-align">
 
             @{Html.RenderPartial("_paginador", Model);}
         </div>
+
+
         <!-- Modal Nuevo -->
-
-
         <div id="modalNuevo" class="modal">
             <div class="modal-content">
-                <div id="mensaje" class="alert card green white-text" style="display:none">
+                <div id="div-alerta" class="alert card green white-text" style="display:none">
                     <div class="card-content">
-                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Personal Registrado Correctamente</span></p>
+                        <p id="mensaje"></p>
                     </div>
                 </div>
                 <h5>Agregar Personal</h5>
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese el Nombre" id="txtNombre" name="nombre" type="text" class="validate">
-                    <label for="nombre">Nombre</label>
+                    <input placeholder="Ingrese el Nombre" id="txtNombre" name="nombre" type="text" class="validate"  >
+                    <label for="nombre">(*) Nombre</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Apellido Paterno" id="txtApellidoPaterno" name="apellidoPaterno" type="text" class="validate" required>
-                    <label for="nombre">Apellido Paterno</label>
+                    <label for="nombre">(*) Apellido Paterno</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Apellido Materno" id="txtApellidoMaterno" name="apellidoNaterno" type="text" class="validate" required>
-                    <label for="nombre">Apellido Materno</label>
+                    <label for="nombre">(*) Apellido Materno</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Telefono" id="txtTelefono" name="telefono" type="number" class="validate" required>
-                    <label for="telefono">Telefono</label>
+                    <label for="telefono">(*) Telefono</label>
                 </div>
                 <div class="input-field col s12">
                     <input placeholder="Ingrese la Direccion" id="txtDireccion" name="direccion" type="text" class="validate" required>
-                    <label for="direccion">Direccion</label>
+                    <label for="direccion">(*) Direccion</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Correo Electronico" id="txtCorreo" name="correo" type="email" class="validate" required>
-                    <label for="correo">Correo Electronico</label>
+                    <label for="correo">(*) Correo Electronico</label>
                 </div>
                 <div class="input-field col s6">
                     <select id="selectTipoPersonal">
@@ -117,46 +121,160 @@
                         <option value="1">Administrador</option>
                         <option value="2">Profesional</option>
                     </select>
+                    <label for="correo">(*) Tipo Personal</label>
+                </div>
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn modal-trigger green" id="btnGuardar">Guardar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal Eliminar-->
+        <div id="modalEliminar" class="modal">
+            <div class="modal-content">
+                <div class="center-align">
+                    <div id="contenidoEliminar">
+                        <h5>¿Esta seguro que desea eliminar el personal?</h5>
+                        <button class="btn  green" id="confirmarEliminar"> Confirmar </button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                    <div id="div-alerta-eliminar" style="display:none">
+                        <div class="alert card green white-text">
+                            <div class="card-content">
+                                <p id="mensajeEliminar"></p>
+                            </div>
+                        </div>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Editar -->
+        <div id="modalEditar" class="modal">
+            <div class="modal-content">
+                <div id="div-alerta" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p id="mensaje"></p>
+                    </div>
+                </div>
+                <h5>Agregar Personal</h5>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Nombre" id="editTxtNombre" name="nombre" type="text" class="validate">
+                    <label for="nombre">Nombre</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Apellido Paterno" id="editTxtApellidoPaterno" name="apellidoPaterno" type="text" class="validate" required>
+                    <label for="nombre">Apellido Paterno</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Apellido Materno" id="editTxtApellidoMaterno" name="apellidoNaterno" type="text" class="validate" required>
+                    <label for="nombre">Apellido Materno</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Telefono" id="editTxtTelefono" name="telefono" type="number" class="validate" required>
+                    <label for="telefono">Telefono</label>
+                </div>
+                <div class="input-field col s12">
+                    <input placeholder="Ingrese la Direccion" id="editTxtDireccion" name="direccion" type="text" class="validate" required>
+                    <label for="direccion">Direccion</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Correo Electronico" id="editTxtCorreo" name="correo" type="email" class="validate" required>
+                    <label for="correo">Correo Electronico</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="editSelectTipoPersonal">
+                        <option value="" disabled >Seleccione Tipo de  Personal</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Profesional</option>
+                    </select>
                     <label for="correo">Tipo Personal</label>
                 </div>
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Guardar</button>
+                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Actualizar</button>
                         <button class="btn modal-close red">Cerrar</button>
-
-
                     </div>
                 </div>
-
             </div>
-
         </div>
+
+
+
     </div>
+
 </div>
+    <script>
 
-<script>
+        //Agregar Peronal
+        $("#btnGuardar").click(function () {
+            var url = "@Url.Action("Crear", "AdministrarPersonal")";
+            var txtNombre = $("#txtNombre").val();
+            var txtApellidoPaterno = $("#txtApellidoPaterno").val();
+            var txtApellidoMaterno = $("#txtApellidoMaterno").val();
+            var txtTelefono = $("#txtTelefono").val();
+            var txtDireccion = $("#txtDireccion").val();
+            var txtCorreo = $("#txtCorreo").val();
+            var selectTipoPersonal = $("#selectTipoPersonal").val();
+            var data = { nombre_perso: txtNombre, apellidop_perso: txtApellidoPaterno, apellidom_perso: txtApellidoMaterno, direccion_perso: txtDireccion, telefono_perso: txtTelefono, correo_pero: txtCorreo, tipo_personal: selectTipoPersonal };
 
-    $("#btnGuardar").click(function ()
-    {
-        $("#mensaje").show();
-        
-                var url = "@Url.Action("Crear", "AdministrarPersonal")";
-                var txtNombre = $("#txtNombre").val();
-                var txtApellidoPaterno = $("#txtApellidoPaterno").val();
-                var txtApellidoMaterno = $("#txtApellidoMaterno").val();
-                var txtTelefono = $("#txtTelefono").val();
-                var txtDireccion = $("#txtDireccion").val();
-                var txtCorreo = $("#txtCorreo").val();
-                var selectTipoPersonal = $("#selectTipoPersonal").val();
-                var data = { nombre_perso: txtNombre, apellidop_perso: txtApellidoPaterno, apellidom_perso: txtApellidoMaterno, direccion_perso: txtDireccion, telefono_perso: txtTelefono, correo_pero: txtCorreo, tipo_personal: selectTipoPersonal };
 
-                 $("#txtNombre").attr('required', 'required');
-                
-                $.post(url, data).done();
+            $.post(url, data).done(function (data) {
+                if (data.ok) {
+                    $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                    $("#txtNombre").val('');
+                    $("#txtApellidoPaterno").val('');
+                    $("#txtApellidoMaterno").val('');
+                    $("#txtTelefono").val('');
+                    $("#txtDireccion").val('');
+                    $("#txtCorreo").val('');
 
+                } else {
+                    $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+                }
+                $("#mensaje").html(data.mensaje);
+                $("#div-alerta").show();
             });
-</script>
+
+        });
+
+
+        //Eliminar Personal
+        var idPersonal = null;
+        function eliminar(id) {
+            idPersonal = id;
+        };
+
+        $("#confirmarEliminar").click(function () {
+            var url = "@Url.Action("Eliminar", "AdministrarPersonal")";
+            var data = { id: idPersonal };
+            $.post(url, data).done(function (data) {
+                $("#mensajeEliminar").html(data.mensaje);
+                $("#div-alerta-eliminar").show();
+                $("#contenidoEliminar").hide();
+            });
 
 
 
+        });
 
+        //Editar Personal
+        function editar(datos) {
+           
+            d = datos.split('||');
+            $('#editTxtNombre').val(d[0]);
+            $('#editTxtApellidoPaterno').val(d[1]);
+            $('#editTxtApellidoMaterno').val(d[2]);
+            $('#editTxtTelefono').val(d[3]);
+            $('#editTxtDireccion').val(d[4]);
+            $('#editTxtCorreo').val(d[5]);
+            $("#editSelectTipoPersonal").formSelect(2);
+            $("#editSelectTipoPersonal").material_select();
+
+        };
+
+    </script>

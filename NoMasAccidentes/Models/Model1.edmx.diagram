@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="ModeloDato.DETALLE_FACTURA" Width="1.5" PointX="10.5" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloDato.FACTURA" Width="1.5" PointX="8.25" PointY="17.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloDato.OPCION_CHECKLIST" Width="1.5" PointX="5.25" PointY="19.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloDato.PERSONAL" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.PERSONAL" Width="1.875" PointX="3" PointY="14.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloDato.REPORTAR" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloDato.RUBRO" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloDato.SOLICITUD" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
