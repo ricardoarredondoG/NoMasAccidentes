@@ -3,6 +3,7 @@ using NoMasAccidentes.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -86,15 +87,25 @@ namespace NoMasAccidentes.Controllers
             {
                 resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese Telefono</br>";
                 resultado.ok = false;
+            }else if(Int64.Parse(persona.telefono_perso) < 0 || Int64.Parse(persona.telefono_perso)>999999999 || persona.telefono_perso.Length != 9 )
+            {
+                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> El Telefono Ingresado no es Valido</br>";
+                resultado.ok = false;
             }
             if (persona.direccion_perso == null)
             {
                 resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese Direccion</br>";
                 resultado.ok = false;
             }
+            Regex oRegExp = new Regex(@"^[A-Za-z0-9_.\-]+@[A-Za-z0-9_\-]+\.([A-Za-z0-9_\-]+\.)*[A-Za-z][A-Za-z]+$", RegexOptions.IgnoreCase);
+            
             if (persona.correo_pero == null)
             {
                 resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese Correo Electronico</br>";
+                resultado.ok = false;
+            }else if (!oRegExp.Match(persona.correo_pero).Success)
+            {
+                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Correo Electronico no Valido</br>";
                 resultado.ok = false;
             }
             if (persona.tipo_personal != 1 && persona.tipo_personal != 2)

@@ -92,28 +92,28 @@
                 </div>
                 <h5>Agregar Personal</h5>
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese el Nombre" id="txtNombre" name="nombre" type="text" class="validate">
-                    <label for="nombre">Nombre</label>
+                    <input placeholder="Ingrese el Nombre" id="txtNombre" name="nombre" type="text" class="validate"  >
+                    <label for="nombre">(*) Nombre</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Apellido Paterno" id="txtApellidoPaterno" name="apellidoPaterno" type="text" class="validate" required>
-                    <label for="nombre">Apellido Paterno</label>
+                    <label for="nombre">(*) Apellido Paterno</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Apellido Materno" id="txtApellidoMaterno" name="apellidoNaterno" type="text" class="validate" required>
-                    <label for="nombre">Apellido Materno</label>
+                    <label for="nombre">(*) Apellido Materno</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Telefono" id="txtTelefono" name="telefono" type="number" class="validate" required>
-                    <label for="telefono">Telefono</label>
+                    <label for="telefono">(*) Telefono</label>
                 </div>
                 <div class="input-field col s12">
                     <input placeholder="Ingrese la Direccion" id="txtDireccion" name="direccion" type="text" class="validate" required>
-                    <label for="direccion">Direccion</label>
+                    <label for="direccion">(*) Direccion</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Correo Electronico" id="txtCorreo" name="correo" type="email" class="validate" required>
-                    <label for="correo">Correo Electronico</label>
+                    <label for="correo">(*) Correo Electronico</label>
                 </div>
                 <div class="input-field col s6">
                     <select id="selectTipoPersonal">
@@ -121,11 +121,11 @@
                         <option value="1">Administrador</option>
                         <option value="2">Profesional</option>
                     </select>
-                    <label for="correo">Tipo Personal</label>
+                    <label for="correo">(*) Tipo Personal</label>
                 </div>
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Guardar</button>
+                        <button class="btn modal-trigger green" id="btnGuardar">Guardar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
                 </div>
@@ -226,6 +226,13 @@
             $.post(url, data).done(function (data) {
                 if (data.ok) {
                     $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                    $("#txtNombre").val('');
+                    $("#txtApellidoPaterno").val('');
+                    $("#txtApellidoMaterno").val('');
+                    $("#txtTelefono").val('');
+                    $("#txtDireccion").val('');
+                    $("#txtCorreo").val('');
+
                 } else {
                     $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
                 }
