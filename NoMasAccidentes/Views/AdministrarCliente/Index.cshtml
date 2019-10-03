@@ -128,6 +128,11 @@
                     <label for="rubro">Rubro</label>
                 </div>
 
+                <div class="input-field col s6">
+                    <input type="text" name="activo" id="txtActivo" class="validate"  />
+                    <label for=" activo">¿Activo?</label>
+                </div>
+
          
                 <div class="row">
                     <div class="center-align">
@@ -155,11 +160,11 @@
         var txtDireccion = $("#txtDireccion").val();
         var txtMail = $("#txtMail").val();
         var txtRubro = $("#selectTipoRubro").val();
-
+        var txtActivo = $("#txtActivo").val();
         var data = {
             rut_cliente: txtRut,
             nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
-            direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro
+            direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro, txtActivo: txtActivo
         };
         $("#txtRut").attr('requerid', 'requerid');
         $.post(url, data).done();
