@@ -18,6 +18,7 @@ namespace NoMasAccidentes.ViewModels
         public string direc_cliente { get; set; }
         public string correo_cliente { get; set; }
         public int rubro_id_rubro { get; set; }
+        public char activo_cliente { get; set; }
         
 
     }

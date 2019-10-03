@@ -63,7 +63,7 @@ namespace NoMasAccidentes.Controllers
             clienteR.DIREC_CLIENTE = cliente.direc_cliente;
             clienteR.CORREO_CLIENTE = cliente.correo_cliente;
             clienteR.RUBRO_ID_RUBRO = cliente.rubro_id_rubro;
-
+           
             //Espacios en blanco
 
             var nombre = cliente.nombre_cliente.Replace(" ", "");
