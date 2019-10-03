@@ -43,25 +43,25 @@ namespace NoMasAccidentes.Controllers
             //return View();
         }
 
-        [HttpPost]
-        [Authorize]
-        public JsonResult Eliminar(int id)
-        {
-            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
-            var resultado = new baseRespuesta();
+        //[HttpPost]
+        //[Authorize]
+        //public JsonResult Eliminar(int id)
+        //{
+        //    EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+        //    var resultado = new baseRespuesta();
 
-            var rubro = bd.RUBRO.Find(id);
-            rubro.ACTIVO_RUBRO = "N";
-            bd.Entry(rubro).State = System.Data.EntityState.Modified;
-            bd.SaveChanges();
-            resultado.mensaje = "Rubro Eliminado Correctamente";
-
-
+        //    var rubro = bd.RUBRO.Find(id);
+        //    rubro.activo_rubro = "N";
+        //    bd.Entry(rubro).State = System.Data.EntityState.Modified;
+        //    bd.SaveChanges();
+        //    resultado.mensaje = "Rubro Eliminado Correctamente";
 
 
 
-            return Json(resultado);
-        }
+
+
+        //    return Json(resultado);
+        //}
 
         [HttpPost]
         [Authorize]
@@ -74,8 +74,7 @@ namespace NoMasAccidentes.Controllers
 
             rubro.NOMBRE_RUBRO = rub.nombre_rubro;
             rubro.DESC_RUBRO = rub.desc_rubro;
-
-            //Generar Usuario
+            
 
             //Eliminar espacios en Blanco
             var nombre = rub.nombre_rubro.Replace(" ", "");
@@ -87,6 +86,12 @@ namespace NoMasAccidentes.Controllers
             bd.RUBRO.Add(rubro);
             bd.SaveChanges();
             return Json("d");
+        }
+
+        public class baseRespuesta
+        {
+            public bool ok { get; set; }
+            public string mensaje { get; set; }
         }
     }
 }

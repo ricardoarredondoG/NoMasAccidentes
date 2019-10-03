@@ -13,7 +13,7 @@ namespace NoMasAccidentes.ViewModels
 
         public String nombre_rubro { get; set; }
         public String desc_rubro { get; set; }
-
+        public String activo_rubro { get; set; }
 
     }
 

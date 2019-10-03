@@ -52,49 +52,49 @@
                     <td>@rub.ID_RUBRO</td>
                     <td>@rub.NOMBRE_RUBRO</td>
                     <td>@rub.DESC_RUBRO</td>
-                    <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@rub.ID_RUBRO)" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                    <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                    <td><button class="btn red"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
                 </tr>
-                }
+            }
 
 
-            </tbody>
+        </tbody>
 
-        </table>
-        <div class="center-align">
+    </table>
+    <div class="center-align">
 
-            @{Html.RenderPartial("_paginador", Model);}
-        </div>
-        <!-- Modal Nuevo -->
-        <!-- Modal Nuevo -->
-
-
-        <div id="modalNuevo" class="modal">
-            <div class="modal-content">
-                <div id="mensaje" class="alert card green white-text" style="display:none">
-                    <div class="card-content">
-                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Rubro Registrado Correctamente</span></p>
-                    </div>
-                </div>
-                <h5>Agregar Rubro</h5>
-                <div class="input-field col s6">
-                    <input placeholder="Ingrese el Nombre de Rubro" id="txtNombre" name="nombre" type="text" class="validate">
-                    <label for="nombre">Nombre Rubro</label>
-                </div>
-                <div class="input-field col s6">
-                    <input placeholder="Ingrese una Descripción al Rubro" id="txtDescripRubro" name="desc" type="text" class="validate" required>
-                    <label for="nombre">Apellido Paterno</label>
-                </div>
-                
-                <div class="row">
-                    <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Guardar</button>
-                        <button class="btn modal-close red">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @{Html.RenderPartial("_paginador", Model);}
     </div>
+    <!-- Modal Nuevo -->
+                    <!-- Modal Nuevo -->
+
+
+                    <div id="modalNuevo" class="modal">
+                        <div class="modal-content">
+                            <div id="mensaje" class="alert card green white-text" style="display:none">
+                                <div class="card-content">
+                                    <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Rubro Registrado Correctamente</span></p>
+                                </div>
+                            </div>
+                            <h5>Agregar Rubro</h5>
+                            <div class="input-field col s6">
+                                <input placeholder="Ingrese el Nombre de Rubro" id="txtNombre" name="nombre" type="text" class="validate">
+                                <label for="nombre">Nombre Rubro</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input placeholder="Ingrese una Descripción al Rubro" id="txtDescripRubro" name="desc" type="text" class="validate" required>
+                                <label for="nombre">Apellido Paterno</label>
+                            </div>
+
+                            <div class="row">
+                                <div class="center-align">
+                                    <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Guardar</button>
+                                    <button class="btn modal-close red">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 </div>
 
 <script>
