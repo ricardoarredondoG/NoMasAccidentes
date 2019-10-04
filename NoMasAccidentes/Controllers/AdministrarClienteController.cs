@@ -161,9 +161,9 @@ namespace NoMasAccidentes.Controllers
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var resul = new baseRespuesta();
-            var clienteR = bd.CLIENTE.Find(id);
-            clienteR.ACTIVO_CLIENTE = "N";
-            bd.Entry(clienteR).State = System.Data.EntityState.Modified;
+            var cliente = bd.CLIENTE.Find(id);
+            cliente.ACTIVO_CLIENTE = "N";
+            bd.Entry(cliente).State = System.Data.EntityState.Modified;
             bd.SaveChanges();
             resul.mensaje = "Cliente eliminado correctamente";
             return Json(resul);
