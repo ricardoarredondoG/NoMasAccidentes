@@ -33,6 +33,7 @@ namespace NoMasAccidentes.Models
         public decimal RUBRO_ID_RUBRO { get; set; }
         public string USERNAME_CLIENTE { get; set; }
         public string PASSWORD_CLIENTE { get; set; }
+        public string ACTIVO_CLIENTE { get; set; }
     
         public virtual ICollection<ACTIVIDAD> ACTIVIDAD { get; set; }
         public virtual ICollection<ASISTENTE> ASISTENTE { get; set; }
