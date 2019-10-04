@@ -187,7 +187,7 @@
             nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
             direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro
         };
-        $post(url, data).done(function (data) {
+        $.post(url, data).done(function (data) {
             if (data.ok) {
                 $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
             } else {
@@ -206,7 +206,7 @@
 
     $("#confirmarEliminar").click(function () {
         var url = "@Url.Action("EliminarC", "AdministrarCliente")";
-        var data = { id: idPersonal };
+        var data = { id: idCliente };
         $.post(url, data).done(function (data) {
             $("#mensajeEliminar").html(data.mensaje);
             $("#div-alerta-eliminar").show();
