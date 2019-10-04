@@ -59,7 +59,8 @@
             <tbody>
                 @foreach (var cliente in Model.cliente)
                 {
-                <tr>
+                    var datos = @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
+                <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
                     <td>@cliente.USERNAME_CLIENTE</td>
                     <td>@cliente.NOMBRE_CLIENTE</td>
                     <td>@cliente.APELLIDO_CLIENTE</td>
@@ -67,7 +68,7 @@
                     <td>@cliente.CORREO_CLIENTE</td>
                     <td>@cliente.RUBRO_ID_RUBRO</td>
                     <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@cliente.ID_CLIENTE"><i class="zmdi zmdi-delete zmdi-hc-fw"></i>></button></td>
+                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@cliente.ID_CLIENTE" @(cliente.ACTIVO_CLIENTE.ToString()=="N"?"disabled":"")><i class="zmdi zmdi-delete zmdi-hc-fw"></i>></button></td>
                 </tr>
                 }
 
@@ -139,7 +140,32 @@
                 </div>
             </div>
         </div>
+
+        <!--Eliminar-->
+        <div id="modalEliminar" class="modal">
+            <div class="modal-content">
+                <div class="center-align">
+                    <div id="contenidoEliminar">
+                        <h5>¿Se encuentra seguro de eliminar al cliente?</h5>
+                        <button class="btn green" id="confirmarEliminar">Confirmar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                    <div id="div-alerta-eliminar" style="display:none">
+                        <div class="alert card green white-text">
+                            <div class="card-content">
+                                <p id="mensajeEliminar"></p>
+                            </div>
+                        </div>
+                    <button class="btn modal-close red">Cerrar</button>
+                 </div>
+            </div>
+        </div>
     </div>
+
+        <!--Editar-->
+
+
+        </div>
 </div>
 
 
@@ -156,16 +182,39 @@
         var txtDireccion = $("#txtDireccion").val();
         var txtMail = $("#txtMail").val();
         var txtRubro = $("#selectTipoRubro").val();
-        var txtActivo = $("#txtActivo").val();
         var data = {
             rut_cliente: txtRut,
             nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
-            direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro, txtActivo: txtActivo
+            direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro
         };
-        $("#txtRut").attr('requerid', 'requerid');
-        $.post(url, data).done();
+        $post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+            } else {
+                $("#div-alerta").removeClass("alert card green white-text").addClass("alert card green white-text").slideDown(200);
+            }
+            $("#mensaje").html(data.mensaje);
+            $("#div-alerta").show();
+            
+        });
+        
+    });
+    var idCliente = null;
+    function eliminar(id) {
+        idCliente = id;
+    };
+
+    $("#confirmarEliminar").click(function () {
+        var url = "@Url.Action("EliminarC", "AdministrarCliente")";
+        var data = { id: idPersonal };
+        $.post(url, data).done(function (data) {
+            $("#mensajeEliminar").html(data.mensaje);
+            $("#div-alerta-eliminar").show();
+            $("#contenidoEliminar").hide();
+        });
 
     });
+
 
 
 
@@ -217,5 +266,6 @@
         rut.setCustomValidity('');
     }
 
+    
 
 </script>
