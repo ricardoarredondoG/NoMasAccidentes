@@ -86,7 +86,7 @@ namespace NoMasAccidentes.Controllers
                 resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese correo</br>";
                 resul.ok = false;
             }
-            if (cliente.rubro_id_rubro !=1 && cliente.rubro_id_rubro !=2)
+            if (cliente.rubro_id_rubro != 1 && cliente.rubro_id_rubro != 2)
             {
                 resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Seleccione rubro</br>";
                 resul.ok = false;
@@ -146,15 +146,15 @@ namespace NoMasAccidentes.Controllers
                 bd.SaveChanges();
                 resul.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Cliente Registrado Correctamente</br>";
                 resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-account-add zmdi-hc-fw'></i>Usuario: " + username + "</br>";
-                resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-account-add zmdi-hc-fw'></i>Password: " + password ;
+                resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-account-add zmdi-hc-fw'></i>Password: " + password;
             }
             else
             {
                 resul.mensaje = "<b>Error</b></br>" + resul.mensaje;
             }
-                return Json(resul);
+            return Json(resul);
         }
-            
+
         [HttpPost]
         [Authorize]
         public JsonResult EliminarC(int id)

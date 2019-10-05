@@ -204,16 +204,18 @@
         idCliente = id;
     };
 
-    $("#confirmarEliminar").click(function () {
-        var url = "@Url.Action("EliminarC", "AdministrarCliente")";
-        var data = { id: idCliente };
-        $.post(url, data).done(function (data) {
-            $("#mensajeEliminar").html(data.mensaje);
-            $("#div-alerta-eliminar").show();
-            $("#contenidoEliminar").hide();
-        });
+    $(document).ready(function () {
+        $("#confirmarEliminar").click(function () {
+            var url = "@Url.Action("EliminarC", "AdministrarCliente")";
+            var data = { id: idCliente };
+            $.post(url, data).done(function (data) {
+                $("#mensajeEliminar").html(data.mensaje);
+                $("#div-alerta-eliminar").show();
+                $("#contenidoEliminar").hide();
+            });
 
-    });
+        });
+    )};
 
 
 
