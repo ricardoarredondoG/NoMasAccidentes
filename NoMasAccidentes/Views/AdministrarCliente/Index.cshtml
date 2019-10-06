@@ -60,16 +60,16 @@
                 @foreach (var cliente in Model.cliente)
                 {
                     var datos = @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
-                <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
-                    <td>@cliente.USERNAME_CLIENTE</td>
-                    <td>@cliente.NOMBRE_CLIENTE</td>
-                    <td>@cliente.APELLIDO_CLIENTE</td>
-                    <td>@cliente.DIREC_CLIENTE</td>
-                    <td>@cliente.CORREO_CLIENTE</td>
-                    <td>@cliente.RUBRO_ID_RUBRO</td>
-                    <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@cliente.ID_CLIENTE" @(cliente.ACTIVO_CLIENTE.ToString()=="N"?"disabled":"")><i class="zmdi zmdi-delete zmdi-hc-fw"></i>></button></td>
-                </tr>
+                    <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
+                        <td>@cliente.USERNAME_CLIENTE</td>
+                        <td>@cliente.NOMBRE_CLIENTE</td>
+                        <td>@cliente.APELLIDO_CLIENTE</td>
+                        <td>@cliente.DIREC_CLIENTE</td>
+                        <td>@cliente.CORREO_CLIENTE</td>
+                        <td>@cliente.RUBRO_ID_RUBRO</td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "") ><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC"  onclick="eliminarC(@cliente.ID_CLIENTE" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                    </tr>
                 }
 
 
@@ -80,7 +80,7 @@
             @{ Html.RenderPartial("_paginador", Model);}
 
         </div>
-      
+
 
         <div id="modalNuevo" class="modal">
             <div class="modal-content">
@@ -130,7 +130,7 @@
                 </div>
 
 
-         
+
                 <div class="row">
                     <div class="center-align">
                         <button class="btn modal-trigger blue" data-target="modalEditar" id="btnGuardarC">Guardar</button>
@@ -147,7 +147,7 @@
                 <div class="center-align">
                     <div id="contenidoEliminar">
                         <h5>¿Se encuentra seguro de eliminar al cliente?</h5>
-                        <button class="btn green" id="confirmarEliminar">Confirmar</button>
+                        <button class="btn green" id="btnConfirmarEliminar">Confirmar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
                     <div id="div-alerta-eliminar" style="display:none">
@@ -156,56 +156,112 @@
                                 <p id="mensajeEliminar"></p>
                             </div>
                         </div>
-                    <button class="btn modal-close red">Cerrar</button>
-                 </div>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
         <!--Editar-->
-
-
+        <!-- Modal Editar -->
+        <div id="modalEditar" class="modal">
+            <div class="modal-content">
+                <div id="div-alerta" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p id="mensaje"></p>
+                    </div>
+                </div>
+                <h5>Agregar Cliente</h5>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el rut" id="editTxtRut" name="rut" type="text" class="validate">
+                    <label for="rut">rut</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el nombre" id="editTxtNombre" name="nombre" type="text" class="validate" required>
+                    <label for="nombre">Apellido nombre</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Apellido" id="editTxtApellido" name="apellido" type="text" class="validate" required>
+                    <label for="apellido">Apellido</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Telefono" id="editTxtTelefono" name="telefono" type="number" class="validate" required>
+                    <label for="telefono">Telefono</label>
+                </div>
+                <div class="input-field col s12">
+                    <input placeholder="Ingrese la Direccion" id="editTxtDireccion" name="direccion" type="text" class="validate" required>
+                    <label for="direccion">Direccion</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Correo Electronico" id="editTxtCorreo" name="correo" type="email" class="validate" required>
+                    <label for="correo">Correo Electronico</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="editSelectTipoRubro" name="tipoRubro">
+                        <option value="" disabled>Seleccione Tipo de  Personal</option>
+                        <option value="1">Textil</option>
+                        <option value="2">Minero</option>
+                    </select>
+                    <label for="tipoRubro">Tipo rubro</label>
+                </div>
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Actualizar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
+    </div>
 </div>
 
 
 <script>
-    $("#btnGuardarC").click(function () {
+    'use strict'
+    $(document).ready(function () {
+        $("#btnGuardarC").click(function () {
 
-        $("#mensaje").show();
+            $("#mensaje").show();
 
-        var url = "@Url.Action("CrearCliente", "AdministrarCliente")";
-        var txtRut = $("#txtRut").val();
-        var txtNombre = $("#txtNombre").val();
-        var txtApellido = $("#txtApellido").val();
-        var txtTelefono = $("#txtTelefono").val();
-        var txtDireccion = $("#txtDireccion").val();
-        var txtMail = $("#txtMail").val();
-        var txtRubro = $("#selectTipoRubro").val();
-        var data = {
-            rut_cliente: txtRut,
-            nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
-            direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro
-        };
-        $.post(url, data).done(function (data) {
-            if (data.ok) {
-                $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
-            } else {
-                $("#div-alerta").removeClass("alert card green white-text").addClass("alert card green white-text").slideDown(200);
-            }
-            $("#mensaje").html(data.mensaje);
-            $("#div-alerta").show();
-            
+            var url = "@Url.Action("CrearCliente", "AdministrarCliente")";
+            var txtRut = $("#txtRut").val();
+            var txtNombre = $("#txtNombre").val();
+            var txtApellido = $("#txtApellido").val();
+            var txtTelefono = $("#txtTelefono").val();
+            var txtDireccion = $("#txtDireccion").val();
+            var txtMail = $("#txtMail").val();
+            var txtRubro = $("#selectTipoRubro").val();
+            var data = {
+                rut_cliente: txtRut,
+                nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
+                direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro
+            };
+            $.post(url, data).done(function (data) {
+                if (data.ok) {
+                    $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                } else {
+                    $("#div-alerta").removeClass("alert card green white-text").addClass("alert card green white-text").slideDown(200);
+                }
+                $("#mensaje").html(data.mensaje);
+                $("#div-alerta").show();
+
+            });
+
+        });
+        $("#eliminarC").click(function () {
+
+            var idCliente = null;
+            function eliminarC(id) {
+                idCliente = id;
+
+            };
+
         });
         
-    });
-    var idCliente = null;
-    function eliminar(id) {
-        idCliente = id;
-    };
 
-    $(document).ready(function () {
-        $("#confirmarEliminar").click(function () {
+        $("#btnConfirmarEliminar").click(function () {
             var url = "@Url.Action("EliminarC", "AdministrarCliente")";
             var data = { id: idCliente };
             $.post(url, data).done(function (data) {
@@ -215,10 +271,24 @@
             });
 
         });
-    )};
 
 
 
+        function editar(datos) {
+
+            d = datos.split('||');
+            $('#editTxtRut').val(d[0]);
+            $('#editTxtNombre').val(d[1]);
+            $('#editTxtApellido').val(d[2]);
+            $('#editTxtTelefono').val(d[3]);
+            $('#editTxtDireccion').val(d[4]);
+            $('#editTxtCorreo').val(d[5]);
+            $("#editSelectTipoRubro").formSelect(2);
+            $("#editSelectTipoRubro").material_select();
+
+        };
+
+    });
 
     function checkRut(rut) {
         // Despejar Puntos
