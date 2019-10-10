@@ -61,14 +61,15 @@
                 {
                     var datos = @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
                     <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
+                      
                         <td>@cliente.USERNAME_CLIENTE</td>
                         <td>@cliente.NOMBRE_CLIENTE</td>
                         <td>@cliente.APELLIDO_CLIENTE</td>
                         <td>@cliente.DIREC_CLIENTE</td>
                         <td>@cliente.CORREO_CLIENTE</td>
-                        <td>@cliente.RUBRO_ID_RUBRO</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "") ><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC"  onclick="eliminarC(@cliente.ID_CLIENTE" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                        <td>@cliente.RUBRO.NOMBRE_RUBRO</td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" id ="editar"onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "") ><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC"  onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
                     </tr>
                 }
 
@@ -123,8 +124,11 @@
                 <div class="input-field col s6">
                     <select id="selectTipoRubro" name="rubro">
                         <option value="" disabled selected>Seleccione rubro</option>
-                        <option value="1">Textil</option>
-                        <option value="2">Minero</option>
+                        @foreach (var rubro in Model.rubro)
+                        {
+                        <option value="@rubro.ID_RUBRO">@rubro.NOMBRE_RUBRO</option>
+                        }
+
                     </select>
                     <label for="rubro">Rubro</label>
                 </div>
@@ -133,7 +137,7 @@
 
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger blue" data-target="modalEditar" id="btnGuardarC">Guardar</button>
+                        <button class="btn modal-trigger blue"  id="btnGuardarC">Guardar</button>
                         <button class="btn modal-close blue" id="btnCerrar">Limpiar</button>
 
                     </div>
@@ -206,7 +210,7 @@
                 </div>
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Actualizar</button>
+                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardarC">Actualizar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
                 </div>
@@ -219,8 +223,8 @@
 
 
 <script>
-    'use strict'
-    $(document).ready(function () {
+ 
+ 
         $("#btnGuardarC").click(function () {
 
             $("#mensaje").show();
@@ -250,7 +254,7 @@
             });
 
         });
-        $("#eliminarC").click(function () {
+            
 
             var idCliente = null;
             function eliminarC(id) {
@@ -258,7 +262,7 @@
 
             };
 
-        });
+       
         
 
         $("#btnConfirmarEliminar").click(function () {
@@ -283,12 +287,12 @@
             $('#editTxtTelefono').val(d[3]);
             $('#editTxtDireccion').val(d[4]);
             $('#editTxtCorreo').val(d[5]);
-            $("#editSelectTipoRubro").formSelect(2);
-            $("#editSelectTipoRubro").material_select();
+            //$("#editSelectTipoRubro").formSelect(2);
+           // $("#editSelectTipoRubro").material_select();
 
         };
 
-    });
+   
 
     function checkRut(rut) {
         // Despejar Puntos

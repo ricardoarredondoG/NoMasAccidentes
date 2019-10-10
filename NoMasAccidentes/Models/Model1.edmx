@@ -26,6 +26,7 @@
           <Property Name="APELLIDOM_ASISTENTE" Type="varchar2" MaxLength="50" Nullable="false" />
           <Property Name="APELLIDOP_ASISTENTE" Type="varchar2" MaxLength="50" Nullable="false" />
           <Property Name="CLIENTE_ID_CLIENTE" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACTIVO_ASISTENTE" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="CAPACITACION">
           <Key>
@@ -516,6 +517,7 @@
           <Property Name="CLIENTE_ID_CLIENTE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
           <NavigationProperty Name="CLIENTE" Relationship="Self.ASISTENTE_CLIENTE_FK" FromRole="ASISTENTE" ToRole="CLIENTE" />
           <NavigationProperty Name="CAPACITACION" Relationship="Self.CAPACITACION_ASISTENTE_FK" FromRole="ASISTENTE" ToRole="CAPACITACION" />
+          <Property Name="ACTIVO_ASISTENTE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="CAPACITACION">
           <Key>
@@ -1023,6 +1025,7 @@
           <EntitySetMapping Name="ASISTENTE">
             <EntityTypeMapping TypeName="ModeloDato.ASISTENTE">
               <MappingFragment StoreEntitySet="ASISTENTE">
+                <ScalarProperty Name="ACTIVO_ASISTENTE" ColumnName="ACTIVO_ASISTENTE" />
                 <ScalarProperty Name="ID_ASISTENTE" ColumnName="ID_ASISTENTE" />
                 <ScalarProperty Name="NOMBRE_ASISTENTE" ColumnName="NOMBRE_ASISTENTE" />
                 <ScalarProperty Name="APELLIDOM_ASISTENTE" ColumnName="APELLIDOM_ASISTENTE" />
