@@ -103,7 +103,7 @@ namespace NoMasAccidentes.Controllers
                 resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Correo Electronico no Valido</br>";
                 resul.ok = false;
             }
-            if (cliente.rubro_id_rubro != 1 && cliente.rubro_id_rubro != 2)
+            if (cliente.rubro_id_rubro != 0)
             {
                 resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Seleccione rubro</br>";
                 resul.ok = false;
