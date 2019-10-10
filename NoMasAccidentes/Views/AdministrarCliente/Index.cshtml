@@ -1,0 +1,347 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="container">
+    <div class="row">
+        <h3 class="center-align">Registrar cliente</h3>
+        <form class="col s12" href="/AdministrarCliente/Buscar" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese rut del cliente" id="rut" name="rut" required oninput="checkRut(this)"  type="text" class="validate">
+                    <label for="rut">Rut cliente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese nombre del cliente" id="nombre" name="nombre" type="text" class="validate">
+                    <label for="nombre">Nombre del cliente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese apellido del cliente" id="apellido" name="apellido" type="text" class="validate">
+                    <label for="apellido">Apellido del cliente</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <input placeholder="Ingrese correo electronico" id="mail" name="mail" type="email" class="validate">
+                    <label for="mail">Mail del cliente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <div class="center-align">
+                        <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                        <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@model NoMasAccidentes.ViewModels.IndexViewModel
+<div class="row">
+    <div class="col s12">
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="id">Usuario</th>
+                    <th data-field="id">Nombre</th>
+                    <th data-field="price">Apellido</th>
+                    <th data-field="price">Direccion</th>
+                    <th data-field="price">Mail</th>
+                    <th data-field="price">Rubro</th>
+                    <th data-field="price">Editar</th>
+                    <th data-field="price">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cliente in Model.cliente)
+                {
+                    var datos = @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
+                    <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
+                      
+                        <td>@cliente.USERNAME_CLIENTE</td>
+                        <td>@cliente.NOMBRE_CLIENTE</td>
+                        <td>@cliente.APELLIDO_CLIENTE</td>
+                        <td>@cliente.DIREC_CLIENTE</td>
+                        <td>@cliente.CORREO_CLIENTE</td>
+                        <td>@cliente.RUBRO.NOMBRE_RUBRO</td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" id ="editar"onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "") ><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC"  onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                    </tr>
+                }
+
+
+            </tbody>
+
+        </table>
+        <div class="center-align">
+            @{ Html.RenderPartial("_paginador", Model);}
+
+        </div>
+
+
+        <div id="modalNuevo" class="modal">
+            <div class="modal-content">
+                <div id="mensaje" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Cliente registrado correctamente</span></p>
+                    </div>
+                </div>
+                <h5>Agregar Cliente</h5>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese rut del cliente" id="txtRut" required oninput="checkRut(this)" name="rut" type="text" class="validate">
+                    <label for="rut">Rut cliente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese nombre del cliente" id="txtNombre" name="nombre" type="text" class="validate">
+                    <label for="nombre">Nombre del cliente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese apellido del cliente" id="txtApellido" name="apellido" type="text" class="validate">
+                    <label for="apellido">Apellido del cliente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese telefono del cliente" id="txtTelefono" name="telefono" type="number" class="validate">
+                    <label for="telefono">Telefono</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <input placeholder="Ingrese direccion del cliente" id="txtDireccion" name="direccion" type="text" class="validate">
+                    <label for="direccion">Direccion del cliente</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <input placeholder="Ingrese correo electronico" id="txtMail" name="mail" type="email" class="validate">
+                    <label for="mail">Mail del cliente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <select id="selectTipoRubro" name="rubro">
+                        <option value="" disabled selected>Seleccione rubro</option>
+                        @foreach (var rubro in Model.rubro)
+                        {
+                        <option value="@rubro.ID_RUBRO">@rubro.NOMBRE_RUBRO</option>
+                        }
+
+                    </select>
+                    <label for="rubro">Rubro</label>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn modal-trigger blue"  id="btnGuardarC">Guardar</button>
+                        <button class="btn modal-close blue" id="btnCerrar">Limpiar</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Eliminar-->
+        <div id="modalEliminar" class="modal">
+            <div class="modal-content">
+                <div class="center-align">
+                    <div id="contenidoEliminar">
+                        <h5>¿Se encuentra seguro de eliminar al cliente?</h5>
+                        <button class="btn green" id="btnConfirmarEliminar">Confirmar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                    <div id="div-alerta-eliminar" style="display:none">
+                        <div class="alert card green white-text">
+                            <div class="card-content">
+                                <p id="mensajeEliminar"></p>
+                            </div>
+                        </div>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Editar-->
+        <!-- Modal Editar -->
+        <div id="modalEditar" class="modal">
+            <div class="modal-content">
+                <div id="div-alerta" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p id="mensaje"></p>
+                    </div>
+                </div>
+                <h5>Agregar Cliente</h5>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el rut" id="editTxtRut" name="rut" type="text" class="validate">
+                    <label for="rut">rut</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el nombre" id="editTxtNombre" name="nombre" type="text" class="validate" required>
+                    <label for="nombre">Apellido nombre</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Apellido" id="editTxtApellido" name="apellido" type="text" class="validate" required>
+                    <label for="apellido">Apellido</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Telefono" id="editTxtTelefono" name="telefono" type="number" class="validate" required>
+                    <label for="telefono">Telefono</label>
+                </div>
+                <div class="input-field col s12">
+                    <input placeholder="Ingrese la Direccion" id="editTxtDireccion" name="direccion" type="text" class="validate" required>
+                    <label for="direccion">Direccion</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Correo Electronico" id="editTxtCorreo" name="correo" type="email" class="validate" required>
+                    <label for="correo">Correo Electronico</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="editSelectTipoRubro" name="tipoRubro">
+                        <option value="" disabled>Seleccione Tipo de  Personal</option>
+                        <option value="1">Textil</option>
+                        <option value="2">Minero</option>
+                    </select>
+                    <label for="tipoRubro">Tipo rubro</label>
+                </div>
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardarC">Actualizar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script>
+ 
+ 
+        $("#btnGuardarC").click(function () {
+
+            $("#mensaje").show();
+
+            var url = "@Url.Action("CrearCliente", "AdministrarCliente")";
+            var txtRut = $("#txtRut").val();
+            var txtNombre = $("#txtNombre").val();
+            var txtApellido = $("#txtApellido").val();
+            var txtTelefono = $("#txtTelefono").val();
+            var txtDireccion = $("#txtDireccion").val();
+            var txtMail = $("#txtMail").val();
+            var txtRubro = $("#selectTipoRubro").val();
+            var data = {
+                rut_cliente: txtRut,
+                nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
+                direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro
+            };
+            $.post(url, data).done(function (data) {
+                if (data.ok) {
+                    $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                } else {
+                    $("#div-alerta").removeClass("alert card green white-text").addClass("alert card green white-text").slideDown(200);
+                }
+                $("#mensaje").html(data.mensaje);
+                $("#div-alerta").show();
+
+            });
+
+        });
+            
+
+            var idCliente = null;
+            function eliminarC(id) {
+                idCliente = id;
+
+            };
+
+       
+        
+
+        $("#btnConfirmarEliminar").click(function () {
+            var url = "@Url.Action("EliminarC", "AdministrarCliente")";
+            var data = { id: idCliente };
+            $.post(url, data).done(function (data) {
+                $("#mensajeEliminar").html(data.mensaje);
+                $("#div-alerta-eliminar").show();
+                $("#contenidoEliminar").hide();
+            });
+
+        });
+
+
+
+        function editar(datos) {
+
+            d = datos.split('||');
+            $('#editTxtRut').val(d[0]);
+            $('#editTxtNombre').val(d[1]);
+            $('#editTxtApellido').val(d[2]);
+            $('#editTxtTelefono').val(d[3]);
+            $('#editTxtDireccion').val(d[4]);
+            $('#editTxtCorreo').val(d[5]);
+            //$("#editSelectTipoRubro").formSelect(2);
+           // $("#editSelectTipoRubro").material_select();
+
+        };
+
+   
+
+    function checkRut(rut) {
+        // Despejar Puntos
+        var valor = rut.value.replace('.', '');
+        // Despejar Guión
+        valor = valor.replace('-', '');
+
+        // Aislar Cuerpo y Dígito Verificador
+        cuerpo = valor.slice(0, -1);
+        dv = valor.slice(-1).toUpperCase();
+
+        // Formatear RUN
+        rut.value = cuerpo + '-' + dv
+
+        // Si no cumple con el mínimo ej. (n.nnn.nnn)
+        if (cuerpo.length < 7) { rut.setCustomValidity("RUT Incompleto"); return false; }
+
+        // Calcular Dígito Verificador
+        suma = 0;
+        multiplo = 2;
+
+        // Para cada dígito del Cuerpo
+        for (i = 1; i <= cuerpo.length; i++) {
+
+            // Obtener su Producto con el Múltiplo Correspondiente
+            index = multiplo * valor.charAt(cuerpo.length - i);
+
+            // Sumar al Contador General
+            suma = suma + index;
+
+            // Consolidar Múltiplo dentro del rango [2,7]
+            if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+
+        }
+
+        // Calcular Dígito Verificador en base al Módulo 11
+        dvEsperado = 11 - (suma % 11);
+
+        // Casos Especiales (0 y K)
+        dv = (dv == 'K') ? 10 : dv;
+        dv = (dv == 0) ? 11 : dv;
+
+        // Validar que el Cuerpo coincide con su Dígito Verificador
+        if (dvEsperado != dv) { rut.setCustomValidity("RUT Inválido"); return false; }
+
+        // Si todo sale bien, eliminar errores (decretar que es válido)
+        rut.setCustomValidity('');
+    }
+
+    
+
+</script>
