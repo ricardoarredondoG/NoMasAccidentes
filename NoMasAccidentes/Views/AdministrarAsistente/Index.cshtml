@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <h3 class="center-align">Registrar asistente</h3>
+        <form class="col s12" href="/AdministrarCliente/Buscar" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese nombre del asistente" id="nombreA" name="nombre"  type="text" class="validate">
+                    <label for="rut">Nombre del asistente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese apellido paterno del asistente" id="apellidoPA" name="apellidoP" type="text" class="validate">
+                    <label for="nombre">Apellido paterno del asistente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese apellido materno del asistente" id="apellidoMA" name="apellidoM" type="text" class="validate">
+                    <label for="apellido">Apellido materno del asistente</label>
+                </div>
+
+
+
+                <div class="input-field col s6">
+                    <div class="center-align">
+                        <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                        <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@model NoMasAccidentes.ViewModels.IndexViewModel
+<div class="row">
+    <div class="col s12">
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="id">Nombre</th>
+                    <th data-field="price">Apellido Paterno</th>
+                    <th data-field="price">Apellido Materno</th>
+                    <th data-field="price">Editar</th>
+                    <th data-field="price">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var asistente in Model.asistente)
+                {
+                    var datos = @asistente.NOMBRE_ASISTENTE + "||" + @asistente.APELLIDOP_ASISTENTE + "||" + @asistente.APELLIDOM_ASISTENTE;
+                <tr style='background-color: @(asistente.ACTIVO_ASISTENTE.ToString()=="N" ? "#CCCCCC" :"");'>
+                    <td>@asistente.NOMBRE_ASISTENTE</td>
+                    <td>@asistente.APELLIDOP_ASISTENTE</td>
+                    <td>@asistente.APELLIDOM_ASISTENTE  </td>
+                </tr>
+
+
+                }
+
+            </tbody>
+        </table>
+        <div id="modalNuevo" class="modal">
+            <div class="modal-content">
+                <div id="div-alerta" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p id="mensaje"></p>
+                    </div>
+                </div>
+                <h5>Agregar asistente</h5>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese nombre del asistente" id="txtNombre" name="nombre" type="text" class="validate" required>
+                    <label for="nombre">(*)Nombre del asistente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese apellido paterno del asistente" id="txtApellidoP" name="apellidoP" type="text" class="validate" required>
+                    <label for="apellidoP">Apellido paterno del asistente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese apellido materno del cliente" id="txtApellidoM" name="apellidoM" type="text" class="validate" required>
+                    <label for="apellidoM">Apellido materno del asistente</label>
+                </div>
+
+
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese id del cliente" id="txtIdCliente" name="idCliente" type="text" class="validate" required>
+                    <label for="apellidoM">Ingrese id del cliente</label>
+                </div>
+
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn modal-trigger blue" id="btnGuardarA">Guardar</button>
+                        <button class="btn modal-close blue" id="btnCerrar">Cerrar</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#btnGuardarA").click(function () {
+
+        var url = "@Url.Action("CrearA", "AdministrarAsistente")";
+        var txtNombre = $("#txtNombre").val();
+        var txtApellidoP = $("#txtApellidoP").val();
+        var txtApellidoM = $("#txtApellidoM").val();
+        var txtIdCliente = $("#txtIdCliente").val();
+        var data = { nombreAsistente: txtNombre, apellidoP : txtApellidoP, apellidoM : txtApellidoM, idCliente : txtIdCliente };
+
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                $("#txtNombre").val('');
+                $("#txtApellidoP").val('');
+                $("#txtApellidoM").val('');
+                $("#txtIdCliente").val('');
+            } else {
+                $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+            }
+            $("#mensaje").html(data.mensaje);
+            $("#div-alerta").show();
+        });
+    });
+
+
+
+</script>
+
+
