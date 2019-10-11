@@ -40,6 +40,7 @@
         <AssociationConnector Association="ModeloDato.PERSONAL_TIPO_PERSONAL_FK" ManuallyRouted="false" />
         <AssociationConnector Association="ModeloDato.REPORTAR_TIPO_REPORTAR_FK" ManuallyRouted="false" />
         <AssociationConnector Association="ModeloDato.SOLICITUD_TIPO_SOLICITUD_FK" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ModeloDato.TIPO_CONTRATO" Width="1.875" PointX="8.875" PointY="1.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

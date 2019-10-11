@@ -26,6 +26,7 @@
           <Property Name="APELLIDOM_ASISTENTE" Type="varchar2" MaxLength="50" Nullable="false" />
           <Property Name="APELLIDOP_ASISTENTE" Type="varchar2" MaxLength="50" Nullable="false" />
           <Property Name="CLIENTE_ID_CLIENTE" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACTIVO_ASISTENTE" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="CAPACITACION">
           <Key>
@@ -58,6 +59,7 @@
           <Property Name="RUBRO_ID_RUBRO" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="USERNAME_CLIENTE" Type="varchar2" MaxLength="50" Nullable="false" />
           <Property Name="PASSWORD_CLIENTE" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="ACTIVO_CLIENTE" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="CONTRATO">
           <Key>
@@ -132,7 +134,7 @@
             <PropertyRef Name="ID_RUBRO" />
           </Key>
           <Property Name="ID_RUBRO" Type="number" Precision="38" Scale="0" Nullable="false" />
-          <Property Name="NOMBRE_RUBRO" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="NOMBRE_RUBRO" Type="varchar2" MaxLength="100" Nullable="false" />
           <Property Name="DESC_RUBRO" Type="varchar2" MaxLength="300" Nullable="false" />
         </EntityType>
         <EntityType Name="SOLICITUD">
@@ -152,6 +154,15 @@
           <Property Name="ID_TIPOACTIVI" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="TIPO_ACTIVIDAD" Type="varchar2" MaxLength="50" Nullable="false" />
           <Property Name="VALOR_ACTIVIDAD" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TIPO_CONTRATO">
+          <Key>
+            <PropertyRef Name="ID_TIPO_CONTRATO" />
+          </Key>
+          <Property Name="ID_TIPO_CONTRATO" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="70" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="varchar2" MaxLength="300" Nullable="false" />
+          <Property Name="VALOR" Type="number" Precision="38" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="TIPO_PERSONAL">
           <Key>
@@ -407,6 +418,7 @@
           <EntitySet Name="RUBRO" EntityType="Self.RUBRO" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="SOLICITUD" EntityType="Self.SOLICITUD" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="TIPO_ACTIVIDAD" EntityType="Self.TIPO_ACTIVIDAD" Schema="ADMINISTRADOR" store:Type="Tables" />
+          <EntitySet Name="TIPO_CONTRATO" EntityType="Self.TIPO_CONTRATO" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="TIPO_PERSONAL" EntityType="Self.TIPO_PERSONAL" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="TIPO_REPORTAR" EntityType="Self.TIPO_REPORTAR" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="TIPO_SOLICITUD" EntityType="Self.TIPO_SOLICITUD" Schema="ADMINISTRADOR" store:Type="Tables" />
@@ -516,6 +528,7 @@
           <Property Name="CLIENTE_ID_CLIENTE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
           <NavigationProperty Name="CLIENTE" Relationship="Self.ASISTENTE_CLIENTE_FK" FromRole="ASISTENTE" ToRole="CLIENTE" />
           <NavigationProperty Name="CAPACITACION" Relationship="Self.CAPACITACION_ASISTENTE_FK" FromRole="ASISTENTE" ToRole="CAPACITACION" />
+          <Property Name="ACTIVO_ASISTENTE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="CAPACITACION">
           <Key>
@@ -558,6 +571,7 @@
           <NavigationProperty Name="CONTRATO" Relationship="Self.CONTRATO_CLIENTE_FK" FromRole="CLIENTE" ToRole="CONTRATO" />
           <NavigationProperty Name="REPORTAR" Relationship="Self.REPORTAR_CLIENTE_FK" FromRole="CLIENTE" ToRole="REPORTAR" />
           <NavigationProperty Name="SOLICITUD" Relationship="Self.SOLICITUD_CLIENTE_FK" FromRole="CLIENTE" ToRole="SOLICITUD" />
+          <Property Name="ACTIVO_CLIENTE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="CONTRATO">
           <Key>
@@ -1000,7 +1014,17 @@
             <End Role="TIPO_SOLICITUD" EntitySet="TIPO_SOLICITUD" />
             <End Role="SOLICITUD" EntitySet="SOLICITUD" />
           </AssociationSet>
+          <EntitySet Name="TIPO_CONTRATO" EntityType="ModeloDato.TIPO_CONTRATO" />
         </EntityContainer>
+        <EntityType Name="TIPO_CONTRATO">
+          <Key>
+            <PropertyRef Name="ID_TIPO_CONTRATO" />
+          </Key>
+          <Property Name="ID_TIPO_CONTRATO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="VALOR" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1023,6 +1047,7 @@
           <EntitySetMapping Name="ASISTENTE">
             <EntityTypeMapping TypeName="ModeloDato.ASISTENTE">
               <MappingFragment StoreEntitySet="ASISTENTE">
+                <ScalarProperty Name="ACTIVO_ASISTENTE" ColumnName="ACTIVO_ASISTENTE" />
                 <ScalarProperty Name="ID_ASISTENTE" ColumnName="ID_ASISTENTE" />
                 <ScalarProperty Name="NOMBRE_ASISTENTE" ColumnName="NOMBRE_ASISTENTE" />
                 <ScalarProperty Name="APELLIDOM_ASISTENTE" ColumnName="APELLIDOM_ASISTENTE" />
@@ -1053,6 +1078,7 @@
           <EntitySetMapping Name="CLIENTE">
             <EntityTypeMapping TypeName="ModeloDato.CLIENTE">
               <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="ACTIVO_CLIENTE" ColumnName="ACTIVO_CLIENTE" />
                 <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
                 <ScalarProperty Name="RUT_CLIENTE" ColumnName="RUT_CLIENTE" />
                 <ScalarProperty Name="NOMBRE_CLIENTE" ColumnName="NOMBRE_CLIENTE" />
@@ -1192,6 +1218,16 @@
                 <ScalarProperty Name="ID_TIPOSOLICI" ColumnName="ID_TIPOSOLICI" />
                 <ScalarProperty Name="NOMBRE_TIPOSOLICITUD" ColumnName="NOMBRE_TIPOSOLICITUD" />
                 <ScalarProperty Name="DESCRIPCION_TIPOSOLICITUD" ColumnName="DESCRIPCION_TIPOSOLICITUD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_CONTRATO">
+            <EntityTypeMapping TypeName="ModeloDato.TIPO_CONTRATO">
+              <MappingFragment StoreEntitySet="TIPO_CONTRATO">
+                <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="ID_TIPO_CONTRATO" ColumnName="ID_TIPO_CONTRATO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
