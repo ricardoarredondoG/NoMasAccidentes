@@ -26,7 +26,7 @@ namespace NoMasAccidentes.Controllers
             //Si es Personal
             if (tipo_usuario == 2)
             {
-                var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password && e.TIPO_PERSONAL.ID_TIPOPERSONAL == 2 );
+                var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password && e.TIPO_PERSONAL.ID_TIPOPERSONAL == 2 && e.ACTIVO=="S");
 
                 if (user != null)
                 {
@@ -44,7 +44,7 @@ namespace NoMasAccidentes.Controllers
             //Si Es Administrador
             else if(tipo_usuario == 1)
             {
-                var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password && e.TIPO_PERSONAL.ID_TIPOPERSONAL == 1);
+                var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password && e.TIPO_PERSONAL.ID_TIPOPERSONAL == 1 && e.ACTIVO == "S");
 
                 if (user != null)
                 {
