@@ -12,7 +12,7 @@ namespace NoMasAccidentes.ViewModels
 
         public List<Models.RUBRO> rubro { get; set; }
 
-        public List<Models.TIPO_CONTRATO> tipoContrato { get; set; }
+        public List<Models.PLAN> plan { get; set; }
     }
 
     //public class RubroViewModel : BaseModelo

@@ -12,37 +12,37 @@ namespace NoMasAccidentes.Controllers
     {
         // GET: AdministrarPlanes
         [Authorize]
-        public ActionResult Index(int pagina=1, String nombreTipoContrato="", int precioDesde=0, int precioHasta=0 )
+        public ActionResult Index(int pagina=1, String nombrePlan="", int precioDesde=0, int precioHasta=0 )
         {
             var cantidadRegistrosPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
-            var tipoContrato = bd.TIPO_CONTRATO.ToList();
+            var plan = bd.PLAN.ToList();
 
             //Busqueda por Nombre
-            if (nombreTipoContrato != "")
+            if (nombrePlan != "")
             {
-                tipoContrato = tipoContrato.FindAll(x => x.NOMBRE.ToLower().Contains(nombreTipoContrato.ToLower()));
+                plan = plan.FindAll(x => x.NOMBRE.ToLower().Contains(nombrePlan.ToLower()));
             }
 
             //Busqueda por Precio Desde
             if (precioDesde != 0)
             {
-                tipoContrato = tipoContrato.FindAll(x => x.VALOR >= precioDesde);
+                plan = plan.FindAll(x => x.VALOR >= precioDesde);
             }
             //Busqueda por Precio Hasta
             if (precioHasta != 0)
             {
-                tipoContrato = tipoContrato.FindAll(x => x.VALOR <= precioHasta);
+                plan = plan.FindAll(x => x.VALOR <= precioHasta);
             }
 
-            var totalRegistros = tipoContrato.Count();
-            tipoContrato = tipoContrato.OrderBy(x => x.ID_TIPO_CONTRATO).Skip((pagina - 1) * cantidadRegistrosPorPagina).Take(cantidadRegistrosPorPagina).ToList();
+            var totalRegistros = plan.Count();
+            plan = plan.OrderBy(x => x.ID_PLAN).Skip((pagina - 1) * cantidadRegistrosPorPagina).Take(cantidadRegistrosPorPagina).ToList();
 
             var modelo = new IndexViewModel();
             modelo.PaginaActual = pagina;
             modelo.TotalDeRegistros = totalRegistros;
             modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
-            modelo.tipoContrato = tipoContrato;
+            modelo.plan = plan;
 
             return View(modelo);
         }

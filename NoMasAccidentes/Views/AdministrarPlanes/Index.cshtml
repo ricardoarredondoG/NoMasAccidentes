@@ -5,11 +5,11 @@
 
 <div class="container">
     <div class="row">
-        <h3 class="center-align">Administrar Tipo Contrato</h3>
+        <h3 class="center-align">Administrar Planes</h3>
         <form class="col s12" href="/AdministrarPlanes/Buscar" method="post">
             <div class="row">
                 <div class="input-field col s12">
-                    <input placeholder="Ingrese el Nombre" id="nombreTipoContrato" name="nombreTipoContrato" type="text" class="validate">
+                    <input placeholder="Ingrese el Nombre" id="nombrePlan" name="nombrePlan" type="text" class="validate">
                     <label for="rut">Nombre</label>
                 </div>
                 <div class="input-field col s4">
@@ -45,12 +45,12 @@
             </thead>
             <tbody>
                 @model NoMasAccidentes.ViewModels.IndexViewModel
-                @foreach (var tipoContrato in Model.tipoContrato)
+                @foreach (var plan in Model.plan)
                 {
                     <tr>
-                        <td>@tipoContrato.NOMBRE</td>
-                        <td>@tipoContrato.DESCRIPCION</td>
-                        <td>$@string.Format("{0:N0}", tipoContrato.VALOR)</td>
+                        <td>@plan.NOMBRE</td>
+                        <td>@plan.DESCRIPCION</td>
+                        <td>$@string.Format("{0:N0}", plan.VALOR)</td>
 
                         <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                         <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
