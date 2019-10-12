@@ -42,6 +42,6 @@ namespace NoMasAccidentes.Models
         public DbSet<TIPO_PERSONAL> TIPO_PERSONAL { get; set; }
         public DbSet<TIPO_REPORTAR> TIPO_REPORTAR { get; set; }
         public DbSet<TIPO_SOLICITUD> TIPO_SOLICITUD { get; set; }
-        public DbSet<TIPO_CONTRATO> TIPO_CONTRATO { get; set; }
+        public DbSet<PLAN> PLAN { get; set; }
     }
 }
