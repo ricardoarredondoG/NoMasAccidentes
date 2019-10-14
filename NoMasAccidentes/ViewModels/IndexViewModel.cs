@@ -16,7 +16,7 @@ namespace NoMasAccidentes.ViewModels
 
         public List<Models.RUBRO> rubro { get; set; }
 
-        public List<Models.RUBRO> rubro { get; set; }
+       
     }
 
     //public class RubroViewModel : BaseModelo
