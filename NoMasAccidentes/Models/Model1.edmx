@@ -126,6 +126,7 @@
           <Property Name="NOMBRE" Type="varchar2" MaxLength="70" Nullable="false" />
           <Property Name="DESCRIPCION" Type="varchar2" MaxLength="300" Nullable="false" />
           <Property Name="VALOR" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACTIVO" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="REPORTAR">
           <Key>
@@ -1024,6 +1025,7 @@
           <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
           <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="VALOR" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ACTIVO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1224,6 +1226,7 @@
           <EntitySetMapping Name="PLAN">
             <EntityTypeMapping TypeName="ModeloDato.PLAN">
               <MappingFragment StoreEntitySet="PLAN">
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
                 <ScalarProperty Name="VALOR" ColumnName="VALOR" />
                 <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />

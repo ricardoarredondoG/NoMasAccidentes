@@ -18,5 +18,6 @@ namespace NoMasAccidentes.Models
         public string NOMBRE { get; set; }
         public string DESCRIPCION { get; set; }
         public decimal VALOR { get; set; }
+        public string ACTIVO { get; set; }
     }
 }
