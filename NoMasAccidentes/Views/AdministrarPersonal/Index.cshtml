@@ -52,6 +52,7 @@
                     <th data-field="price">Apellido Materno</th>
                     <th data-field="price">Telefono</th>
                     <th data-field="price">Correo Electronico</th>
+                    <th data-field="price">Tipo Personal</th>
                     <th data-field="price">Editar</th>
                     <th data-field="price">Eliminar</th>
                 </tr>
@@ -68,7 +69,8 @@
                     <td>@personal.APELLIDOM_PERSO</td>
                     <td>@personal.TELEFONO_PERSO</td>
                     <td>@personal.CORREO_PERSO</td>
-                    <td><button class="btn modal-trigger blue" data-target="modalEditar"  onclick="editar('@datos')" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                    <td>@personal.TIPO_PERSONAL.TIPO_PERSONAL1</td>
+                    <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                     <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@personal.ID_PERSONAL)" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
                 </tr>
             }
