@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ModeloDato.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ModeloDato.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ACTIVIDAD">
           <Key>
             <PropertyRef Name="ID_ACTIVIDAD" />
@@ -118,6 +118,16 @@
           <Property Name="TIPO_PERSONAL_ID_TIPOPERSONAL" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="ACTIVO" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
+        <EntityType Name="PLAN">
+          <Key>
+            <PropertyRef Name="ID_PLAN" />
+          </Key>
+          <Property Name="ID_PLAN" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="70" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="varchar2" MaxLength="300" Nullable="false" />
+          <Property Name="VALOR" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACTIVO" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
         <EntityType Name="REPORTAR">
           <Key>
             <PropertyRef Name="ID_REPORTAR" />
@@ -134,7 +144,7 @@
             <PropertyRef Name="ID_RUBRO" />
           </Key>
           <Property Name="ID_RUBRO" Type="number" Precision="38" Scale="0" Nullable="false" />
-          <Property Name="NOMBRE_RUBRO" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="NOMBRE_RUBRO" Type="varchar2" MaxLength="100" Nullable="false" />
           <Property Name="DESC_RUBRO" Type="varchar2" MaxLength="300" Nullable="false" />
         </EntityType>
         <EntityType Name="SOLICITUD">
@@ -405,6 +415,7 @@
           <EntitySet Name="FACTURA" EntityType="Self.FACTURA" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="OPCION_CHECKLIST" EntityType="Self.OPCION_CHECKLIST" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="PERSONAL" EntityType="Self.PERSONAL" Schema="ADMINISTRADOR" store:Type="Tables" />
+          <EntitySet Name="PLAN" EntityType="Self.PLAN" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="REPORTAR" EntityType="Self.REPORTAR" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="RUBRO" EntityType="Self.RUBRO" Schema="ADMINISTRADOR" store:Type="Tables" />
           <EntitySet Name="SOLICITUD" EntityType="Self.SOLICITUD" Schema="ADMINISTRADOR" store:Type="Tables" />
@@ -1004,7 +1015,18 @@
             <End Role="TIPO_SOLICITUD" EntitySet="TIPO_SOLICITUD" />
             <End Role="SOLICITUD" EntitySet="SOLICITUD" />
           </AssociationSet>
+          <EntitySet Name="PLAN" EntityType="ModeloDato.PLAN" />
         </EntityContainer>
+        <EntityType Name="PLAN">
+          <Key>
+            <PropertyRef Name="ID_PLAN" />
+          </Key>
+          <Property Name="ID_PLAN" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="VALOR" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ACTIVO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1198,6 +1220,17 @@
                 <ScalarProperty Name="ID_TIPOSOLICI" ColumnName="ID_TIPOSOLICI" />
                 <ScalarProperty Name="NOMBRE_TIPOSOLICITUD" ColumnName="NOMBRE_TIPOSOLICITUD" />
                 <ScalarProperty Name="DESCRIPCION_TIPOSOLICITUD" ColumnName="DESCRIPCION_TIPOSOLICITUD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLAN">
+            <EntityTypeMapping TypeName="ModeloDato.PLAN">
+              <MappingFragment StoreEntitySet="PLAN">
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="ID_PLAN" ColumnName="ID_PLAN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -32,7 +32,6 @@ namespace NoMasAccidentes
                       "~/Content/sweetalert.css"));
 
             bundles.Add(new ScriptBundle("~/home/bundles/js").Include(
-                        "~/Scripts/jquery.mCustomScrollbar.concat.min.js",
                         "~/Scripts/jquery-2.2.0.min.js",
                         "~/Scripts/main.js",
                         "~/Scripts/materialize.min.js",

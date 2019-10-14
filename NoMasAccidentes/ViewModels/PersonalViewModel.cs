@@ -7,6 +7,7 @@ namespace NoMasAccidentes.ViewModels
 {
     public class PersonalViewModel
     {
+        public int id_personal { get; set; }
         public String nombre_perso { get; set; }
         public String apellidop_perso { get; set; }
         public String apellidom_perso { get; set; }

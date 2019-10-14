@@ -12,17 +12,12 @@ namespace NoMasAccidentes.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RUBRO
+    public partial class PLAN
     {
-        public RUBRO()
-        {
-            this.CLIENTE = new HashSet<CLIENTE>();
-        }
-    
-        public decimal ID_RUBRO { get; set; }
-        public string NOMBRE_RUBRO { get; set; }
-        public string DESC_RUBRO { get; set; }
-    
-        public virtual ICollection<CLIENTE> CLIENTE { get; set; }
+        public decimal ID_PLAN { get; set; }
+        public string NOMBRE { get; set; }
+        public string DESCRIPCION { get; set; }
+        public decimal VALOR { get; set; }
+        public string ACTIVO { get; set; }
     }
 }

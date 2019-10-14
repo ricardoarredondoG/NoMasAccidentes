@@ -52,6 +52,7 @@
                     <th data-field="price">Apellido Materno</th>
                     <th data-field="price">Telefono</th>
                     <th data-field="price">Correo Electronico</th>
+                    <th data-field="price">Tipo Personal</th>
                     <th data-field="price">Editar</th>
                     <th data-field="price">Eliminar</th>
                 </tr>
@@ -59,7 +60,7 @@
             <tbody>
                 @foreach (var personal in Model.personal)
                 {
-                    var datos = @personal.NOMBRE_PERSO + "||" + @personal.APELLIDOP_PERSO + "||" + @personal.APELLIDOM_PERSO + "||" + @personal.TELEFONO_PERSO + "||" + @personal.DIRECCION_PERSO+"||"+personal.CORREO_PERSO+"||"+personal.TIPO_PERSONAL;
+                    var datos = @personal.NOMBRE_PERSO + "||" + @personal.APELLIDOP_PERSO + "||" + @personal.APELLIDOM_PERSO + "||" + @personal.TELEFONO_PERSO + "||" + @personal.DIRECCION_PERSO+"||"+personal.CORREO_PERSO+"||"+personal.TIPO_PERSONAL.ID_TIPOPERSONAL+"||"+personal.ID_PERSONAL;
 
                 <tr style='background-color: @(personal.ACTIVO.ToString() == "N" ? "#CCCCCC" : "" );'>
                     <td>@personal.USERNAME_PERSO</td>
@@ -68,6 +69,7 @@
                     <td>@personal.APELLIDOM_PERSO</td>
                     <td>@personal.TELEFONO_PERSO</td>
                     <td>@personal.CORREO_PERSO</td>
+                    <td>@personal.TIPO_PERSONAL.TIPO_PERSONAL1</td>
                     <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                     <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@personal.ID_PERSONAL)" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
                 </tr>
@@ -156,9 +158,9 @@
         <!-- Modal Editar -->
         <div id="modalEditar" class="modal">
             <div class="modal-content">
-                <div id="div-alerta" class="alert card green white-text" style="display:none">
+                <div id="div-alerta-editar" class="alert card green white-text" style="display:none">
                     <div class="card-content">
-                        <p id="mensaje"></p>
+                        <p id="mensajeEditar"></p>
                     </div>
                 </div>
                 <h5>Agregar Personal</h5>
@@ -187,7 +189,7 @@
                     <label for="correo">Correo Electronico</label>
                 </div>
                 <div class="input-field col s6">
-                    <select id="editSelectTipoPersonal">
+                    <select id="editSelectTipoPersonal" >
                         <option value="" disabled >Seleccione Tipo de  Personal</option>
                         <option value="1">Administrador</option>
                         <option value="2">Profesional</option>
@@ -196,7 +198,7 @@
                 </div>
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Actualizar</button>
+                        <button class="btn green"id="btnEditar">Actualizar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
                 </div>
@@ -208,7 +210,9 @@
     </div>
 
 </div>
-    <script>
+    <script type="text/javascript">
+        $('select').formSelect();
+        
 
         //Agregar Peronal
         $("#btnGuardar").click(function () {
@@ -262,9 +266,11 @@
 
         });
 
+
         //Editar Personal
         function editar(datos) {
-           
+
+            //Llenar campos
             d = datos.split('||');
             $('#editTxtNombre').val(d[0]);
             $('#editTxtApellidoPaterno').val(d[1]);
@@ -272,9 +278,48 @@
             $('#editTxtTelefono').val(d[3]);
             $('#editTxtDireccion').val(d[4]);
             $('#editTxtCorreo').val(d[5]);
-            $("#editSelectTipoPersonal").formSelect(2);
-            $("#editSelectTipoPersonal").material_select();
-
+            $('#editSelectTipoPersonal').val(d[6]);
+            $('#editSelectTipoPersonal').formSelect();
         };
+
+
+        $("#btnEditar").click(function () {
+
+            var id = d[7];
+            //Definir URL
+            var url = "@Url.Action("Editar", "AdministrarPersonal")";
+            var txtNombre = $("#editTxtNombre").val();
+            var txtApellidoPaterno = $("#editTxtApellidoPaterno").val();
+            var txtApellidoMaterno = $("#editTxtApellidoMaterno").val();
+            var txtTelefono = $("#editTxtTelefono").val();
+            var txtDireccion = $("#editTxtDireccion").val();
+            var txtCorreo = $("#editTxtCorreo").val();
+            var selectTipoPersonal = $("#editSelectTipoPersonal").val();
+            var data = { id_personal: id, nombre_perso: txtNombre, apellidop_perso: txtApellidoPaterno, apellidom_perso: txtApellidoMaterno, direccion_perso: txtDireccion, telefono_perso: txtTelefono, correo_pero: txtCorreo, tipo_personal: selectTipoPersonal };
+
+            $.post(url, data).done(function (data) {
+                if (data.ok) {
+                    $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                    $("#txtNombre").val('');
+                    $("#txtApellidoPaterno").val('');
+                    $("#txtApellidoMaterno").val('');
+                    $("#txtTelefono").val('');
+                    $("#txtDireccion").val('');
+                    $("#txtCorreo").val('');
+
+                } else {
+                    $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+                }
+                $("#mensajeEditar").html(data.mensaje);
+                $("#div-alerta-editar").show();
+            });
+
+
+
+        });
+
+            
+
+       
 
     </script>
