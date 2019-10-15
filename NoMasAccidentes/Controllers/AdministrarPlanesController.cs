@@ -93,6 +93,29 @@ namespace NoMasAccidentes.Controllers
             resultado.mensaje = "Plan Eliminado Correctamente";
             return Json(resultado);
         }
+
+        [HttpPost]
+        [Authorize]
+        public JsonResult Editar(PlanViewModel plan)
+        {
+            var resultado = new baseRespuesta();
+            resultado = validaciones(plan);
+            if (resultado.ok == true)
+            {
+                EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+                var planId = bd.PLAN.Find(plan.id_plan);
+                planId.NOMBRE = plan.nombre;
+                planId.DESCRIPCION = plan.descripcion;
+                planId.VALOR = Int32.Parse(plan.valor);
+                bd.Entry(planId).State = System.Data.EntityState.Modified;
+                bd.SaveChanges();
+                resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Plan Modificado Correctamente";
+
+            }
+
+            return Json(resultado);
+        }
+
         public class baseRespuesta
         {
             public bool ok { get; set; }

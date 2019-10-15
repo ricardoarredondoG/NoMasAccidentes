@@ -47,12 +47,13 @@
                 @model NoMasAccidentes.ViewModels.IndexViewModel
                 @foreach (var plan in Model.plan)
                 {
+                    var datos = plan.NOMBRE + "||" + plan.VALOR + "||" + plan.DESCRIPCION+"||"+plan.ID_PLAN;
                     <tr style='background-color: @(plan.ACTIVO.ToString() == "N" ? "#CCCCCC" : "" );'>
                         <td>@plan.NOMBRE</td>
                         <td>@plan.DESCRIPCION</td>
                         <td>$@string.Format("{0:N0}", plan.VALOR)</td>
 
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar"  @(plan.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(plan.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                         <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@plan.ID_PLAN)" @(plan.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
                     </tr>
                 }
@@ -116,9 +117,39 @@
             </div>
         </div>
 
+        <div id="modalEditar" class="modal">
+            <div class="modal-content">
+                <div id="div-alerta-editar" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p id="mensajeEditar"></p>
+                    </div>
+                </div>
+                <h5>Editar Plan</h5>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Nombre" id="editTxtNombre" name="nombre" type="text" class="validate">
+                    <label for="nombre">(*) Nombre</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Valor $" id="editTxtValor" name="valor" onkeyup="formatValor(this)" type="text" class="validate" required>
+                    <label for="Valor $">(*) Valor $</label>
+                </div>
+                <div class="input-field col s12">
+                    <label for="descripcion">(*) Descripcion</label>
+                    <br />
+                    <textarea placeholder="Ingrese la Descripcion" id="editTxtDescripcion" name="descripcion" class="validate"></textarea>
+                </div>
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn green" id="btnEditar">Actualizar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
-<script type="text/javascript">
+        <script type="text/javascript">
 
     //Fromatea Valor
     function formatValor(input) {
@@ -178,6 +209,41 @@
 
 
 
+            });
+
+            //Editar Personal
+            function editar(datos) {
+
+                //Llenar campos
+                d = datos.split('||');
+                $('#editTxtNombre').val(d[0]);
+                $('#editTxtValor').val(d[1]);
+                $('#editTxtDescripcion').val(d[2]);
+            };
+
+            $("#btnEditar").click(function () {
+
+            var id = d[3];
+            //Definir URL
+            var url = "@Url.Action("Editar", "AdministrarPlanes")";
+            var txtNombre = $("#editTxtNombre").val();
+            var txtValor = $("#editTxtValor").val();
+            var txtDescripcion = $("#editTxtDescripcion").val();
+            var data = { nombre: txtNombre, valor: txtValor, descripcion: txtDescripcion, id_plan: id };
+            $.post(url, data).done(function (data) {
+                if (data.ok) {
+                    $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+
+                } else {
+                    $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+                }
+                $("#mensajeEditar").html(data.mensaje);
+                $("#div-alerta-editar").show();
+            });
+
+
+
         });
 
-</script>
+
+        </script>
