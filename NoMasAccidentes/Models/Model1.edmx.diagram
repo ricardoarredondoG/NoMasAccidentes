@@ -41,6 +41,7 @@
         <AssociationConnector Association="ModeloDato.REPORTAR_TIPO_REPORTAR_FK" ManuallyRouted="false" />
         <AssociationConnector Association="ModeloDato.SOLICITUD_TIPO_SOLICITUD_FK" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ModeloDato.PLAN" Width="2.125" PointX="9" PointY="1.625" />
+        <AssociationConnector Association="ModeloDato.CONTRATO_PLAN_FK" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

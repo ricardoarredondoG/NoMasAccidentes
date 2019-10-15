@@ -69,6 +69,8 @@
           <Property Name="FECHA_INICIO_CONTRATO" Type="date" Nullable="false" />
           <Property Name="FECHA_FIN_CONTRATO" Type="date" Nullable="false" />
           <Property Name="CLIENTE_ID_CLIENTE" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACTIVO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="PLAN_ID_PLAN" Type="number" Precision="38" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="DETALLE_FACTURA">
           <Key>
@@ -296,6 +298,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="CONTRATO_PLAN_FK">
+          <End Role="PLAN" Type="Self.PLAN" Multiplicity="1" />
+          <End Role="CONTRATO" Type="Self.CONTRATO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLAN">
+              <PropertyRef Name="ID_PLAN" />
+            </Principal>
+            <Dependent Role="CONTRATO">
+              <PropertyRef Name="PLAN_ID_PLAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="DETALLE_FACTURA_ACTIVIDAD_FK">
           <End Role="ACTIVIDAD" Type="Self.ACTIVIDAD" Multiplicity="1" />
           <End Role="DETALLE_FACTURA" Type="Self.DETALLE_FACTURA" Multiplicity="*" />
@@ -459,6 +473,10 @@
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="CONTRATO" EntitySet="CONTRATO" />
           </AssociationSet>
+          <AssociationSet Name="CONTRATO_PLAN_FK" Association="Self.CONTRATO_PLAN_FK">
+            <End Role="PLAN" EntitySet="PLAN" />
+            <End Role="CONTRATO" EntitySet="CONTRATO" />
+          </AssociationSet>
           <AssociationSet Name="DETALLE_FACTURA_ACTIVIDAD_FK" Association="Self.DETALLE_FACTURA_ACTIVIDAD_FK">
             <End Role="ACTIVIDAD" EntitySet="ACTIVIDAD" />
             <End Role="DETALLE_FACTURA" EntitySet="DETALLE_FACTURA" />
@@ -584,6 +602,9 @@
           <Property Name="CLIENTE_ID_CLIENTE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
           <NavigationProperty Name="CLIENTE" Relationship="Self.CONTRATO_CLIENTE_FK" FromRole="CONTRATO" ToRole="CLIENTE" />
           <NavigationProperty Name="DETALLE_FACTURA" Relationship="Self.DETALLE_FACTURA_CONTRATO_FK" FromRole="CONTRATO" ToRole="DETALLE_FACTURA" />
+          <Property Name="ACTIVO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PLAN_ID_PLAN" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <NavigationProperty Name="PLAN" Relationship="ModeloDato.CONTRATO_PLAN_FK" FromRole="CONTRATO" ToRole="PLAN" />
         </EntityType>
         <EntityType Name="DETALLE_FACTURA">
           <Key>
@@ -1016,6 +1037,10 @@
             <End Role="SOLICITUD" EntitySet="SOLICITUD" />
           </AssociationSet>
           <EntitySet Name="PLAN" EntityType="ModeloDato.PLAN" />
+          <AssociationSet Name="CONTRATO_PLAN_FK" Association="ModeloDato.CONTRATO_PLAN_FK">
+            <End Role="PLAN" EntitySet="PLAN" />
+            <End Role="CONTRATO" EntitySet="CONTRATO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PLAN">
           <Key>
@@ -1026,7 +1051,20 @@
           <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="VALOR" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
           <Property Name="ACTIVO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="CONTRATO" Relationship="ModeloDato.CONTRATO_PLAN_FK" FromRole="PLAN" ToRole="CONTRATO" />
         </EntityType>
+        <Association Name="CONTRATO_PLAN_FK">
+          <End Type="ModeloDato.PLAN" Role="PLAN" Multiplicity="1" />
+          <End Type="ModeloDato.CONTRATO" Role="CONTRATO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLAN">
+              <PropertyRef Name="ID_PLAN" />
+            </Principal>
+            <Dependent Role="CONTRATO">
+              <PropertyRef Name="PLAN_ID_PLAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1097,6 +1135,8 @@
           <EntitySetMapping Name="CONTRATO">
             <EntityTypeMapping TypeName="ModeloDato.CONTRATO">
               <MappingFragment StoreEntitySet="CONTRATO">
+                <ScalarProperty Name="PLAN_ID_PLAN" ColumnName="PLAN_ID_PLAN" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
                 <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
                 <ScalarProperty Name="FECHA_INICIO_CONTRATO" ColumnName="FECHA_INICIO_CONTRATO" />
                 <ScalarProperty Name="FECHA_FIN_CONTRATO" ColumnName="FECHA_FIN_CONTRATO" />
