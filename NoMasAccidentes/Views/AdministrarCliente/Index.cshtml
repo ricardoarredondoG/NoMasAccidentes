@@ -46,10 +46,11 @@
         <table>
             <thead>
                 <tr>
-                    <th data-field="id">Usuario</th>
+                    <th data-field="id">Rut</th>
                     <th data-field="id">Nombre</th>
                     <th data-field="price">Apellido</th>
                     <th data-field="price">Direccion</th>
+                    <th data-field="price">Telefono</th>
                     <th data-field="price">Mail</th>
                     <th data-field="price">Rubro</th>
                     <th data-field="price">Editar</th>
@@ -59,18 +60,19 @@
             <tbody>
                 @foreach (var cliente in Model.cliente)
                 {
-                    var datos = @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
-                    <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
-                      
-                        <td>@cliente.USERNAME_CLIENTE</td>
-                        <td>@cliente.NOMBRE_CLIENTE</td>
-                        <td>@cliente.APELLIDO_CLIENTE</td>
-                        <td>@cliente.DIREC_CLIENTE</td>
-                        <td>@cliente.CORREO_CLIENTE</td>
-                        <td>@cliente.RUBRO.NOMBRE_RUBRO</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar" id ="editar"onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "") ><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC"  onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
-                    </tr>
+                    var datos = @cliente.RUT_CLIENTE + "||" + @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
+                <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
+                    <td>@cliente.RUT_CLIENTE</td>
+                    <td>@cliente.NOMBRE_CLIENTE</td>
+                    <td>@cliente.APELLIDO_CLIENTE</td>
+                    <td>@cliente.DIREC_CLIENTE</td>
+                    <td>@cliente.CORREO_CLIENTE</td>
+                    <td>@cliente.RUBRO.NOMBRE_RUBRO</td>
+                    <td>@cliente.USERNAME_CLIENTE</td>
+
+                    <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC" onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                </tr>
                 }
 
 
@@ -180,9 +182,9 @@
                     <input placeholder="Ingrese el rut" id="editTxtRut" name="rut" type="text" class="validate">
                     <label for="rut">rut</label>
                 </div>
-                <div class="input-field col s6">
+                <div class="input-field col s6">            
                     <input placeholder="Ingrese el nombre" id="editTxtNombre" name="nombre" type="text" class="validate" required>
-                    <label for="nombre">Apellido nombre</label>
+                    <label for="nombre">Nombre del cliente</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Apellido" id="editTxtApellido" name="apellido" type="text" class="validate" required>
@@ -203,8 +205,10 @@
                 <div class="input-field col s6">
                     <select id="editSelectTipoRubro" name="tipoRubro">
                         <option value="" disabled>Seleccione Tipo de  Personal</option>
-                        <option value="1">Textil</option>
-                        <option value="2">Minero</option>
+                        @foreach (var rubro in Model.rubro)
+                        {
+                            <option value="@rubro.ID_RUBRO">@rubro.NOMBRE_RUBRO</option>
+                        }
                     </select>
                     <label for="tipoRubro">Tipo rubro</label>
                 </div>
@@ -287,7 +291,7 @@
             $('#editTxtTelefono').val(d[3]);
             $('#editTxtDireccion').val(d[4]);
             $('#editTxtCorreo').val(d[5]);
-            //$("#editSelectTipoRubro").formSelect(2);
+          //  $("#editSelectTipoRubro").formSelect(1);
            // $("#editSelectTipoRubro").material_select();
 
         };
