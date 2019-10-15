@@ -1,7 +1,4 @@
-﻿<!--
-* Copyright 2016 Carlos Eduardo Alfaro Orellana
--->
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +7,9 @@
 
     @Styles.Render("~/home/Content/css")
     @Scripts.Render("~/home/bundles/js")
+    @RenderSection("scripts", false)
 </head>
+s
 <body>
     <!-- Nav Lateral -->
     <section class="NavLateral full-width">
@@ -32,11 +31,36 @@
                     <li>
                         <a href='@Url.Action("Index", "AdministrarPersonal")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-alt zmdi-hc-fw"></i> Administrar Personal</a>
                     </li>
+
                     <li class="NavLateralDivider"></li>
                     <li>
-                        <a href='@Url.Action("Index", "AdministrarClientes")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i> Administrar Clientes</a>
+                        <a href='@Url.Action("Index", "AdministrarAsistente")' class="waves-effect waves-light"><i class="zmdi zmdi-account-circle zmdi-hc-fw"></i> Administrar Asistente</a>
+                    </li>
+                    <li class="NavLateralDivider"></li>
+                    <li>
+                        <a href="#" class="NavLateral-DropDown  waves-effect waves-light"><i class="zmdi zmdi-accounts-list  zmdi-hc-fw"></i> <i class="zmdi zmdi-chevron-down NavLateral-CaretDown"></i> Administrar Clientes</a>
+                        <ul class="full-width">
+                            <li>
+                                <a href='@Url.Action("Index", "AdministrarCliente")' class="waves-effect waves-light"><i class="zmdi zmdi-account-o zmdi-hc-fw"></i> Clientes</a>
+                            </li>
+                            <li>
+                                <a href='@Url.Action("Index", "AdministrarRubro")' class="waves-effect waves-light"><i class="zmdi zmdi-receipt zmdi-hc-fw"></i> Rubros</a>
+                            </li>
+                        </ul>
                     </li>
 
+
+                    <li class="NavLateralDivider"></li>
+                    <li>
+                        <a href="#" class="NavLateral-DropDown  waves-effect waves-light"><i class="zmdi zmdi-collection-text  zmdi-hc-fw"></i> <i class="zmdi zmdi-chevron-down NavLateral-CaretDown"></i> Administrar Contratos</a>
+                        <ul class="full-width">
+                            <li><a href='@Url.Action("Index", "AdministrarPlanes")' class="waves-effect waves-light"><i class="zmdi zmdi-money  zmdi-hc-fw"></i> Planes</a></li>
+                        </ul>
+                    </li>
+                    <li class="NavLateralDivider"></li>
+                    <li>
+                        <a href='@Url.Action("Index", "AdministrarActividad")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i> Administrar Actividades</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -125,21 +149,9 @@
 
     </section>
 
-    <!-- Sweet Alert JS -->
-    <script src="js/sweetalert.min.js"></script>
-
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/jquery-2.2.0.min.js"><\/script>')</script>
-
-    <!-- Materialize JS -->
-    <script src="js/materialize.min.js"></script>
-
-    <!-- Malihu jQuery custom content scroller JS -->
-    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-
-    <!-- MaterialDark JS -->
-    <script src="js/main.js"></script>
 
     <!-- Modal JS -->
     <script>
@@ -149,12 +161,6 @@
         });
     </script>
 
-    <!-- Select JS -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems);
-        });
-    </script>
+
 </body>
 </html>
