@@ -126,7 +126,6 @@ namespace NoMasAccidentes.Controllers
         {
             var resultado = new baseRespuesta();
             resultado.ok = true;
-            var parseValor = 0;
             //Validaciones
             if (plan.nombre == null)
             {

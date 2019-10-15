@@ -23,8 +23,11 @@ namespace NoMasAccidentes.Models
         public System.DateTime FECHA_INICIO_CONTRATO { get; set; }
         public System.DateTime FECHA_FIN_CONTRATO { get; set; }
         public decimal CLIENTE_ID_CLIENTE { get; set; }
+        public string ACTIVO { get; set; }
+        public decimal PLAN_ID_PLAN { get; set; }
     
         public virtual CLIENTE CLIENTE { get; set; }
         public virtual ICollection<DETALLE_FACTURA> DETALLE_FACTURA { get; set; }
+        public virtual PLAN PLAN { get; set; }
     }
 }
