@@ -139,6 +139,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdministrarActividadController.cs" />
     <Compile Include="Controllers\AdministrarAsistenteController.cs" />
     <Compile Include="Controllers\AdministrarClienteController.cs" />
     <Compile Include="Controllers\AdministrarPersonalController.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="ViewModels\AsistenteViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
+    <Compile Include="ViewModels\ActividadViewModel.cs" />
     <Compile Include="ViewModels\PersonalViewModel.cs" />
     <Compile Include="ViewModels\PlanViewModel.cs" />
     <Compile Include="ViewModels\RubroViewModel.cs" />
@@ -323,6 +325,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\AdministrarPersonal\Index.cshtml" />
     <Content Include="Views\Shared\_paginador.cshtml" />
+    <Content Include="Views\AdministrarActividad\Index.cshtml" />
     <Content Include="Views\AdministrarCliente\Index.cshtml" />
     <Content Include="Views\AdministrarAsistente\Index.cshtml" />
     <Content Include="Views\AdministrarRubro\Index.cshtml" />
