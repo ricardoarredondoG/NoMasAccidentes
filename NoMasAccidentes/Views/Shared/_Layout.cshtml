@@ -1,44 +1,163 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> @ViewBag.Title - No Más Accidentes</title>
+
+    @Styles.Render("~/home/Content/css")
+    @Scripts.Render("~/home/bundles/js")
+    @RenderSection("scripts", false)
 </head>
 s
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+    <!-- Nav Lateral -->
+    <section class="NavLateral full-width">
+        <div class="NavLateral-FontMenu full-width ShowHideMenu"></div>
+        <div class="NavLateral-content full-width">
+            <header class="NavLateral-title full-width center-align">
+                No Más Accidentes<i class="zmdi zmdi-close NavLateral-title-btn ShowHideMenu"></i>
+            </header>
+            <figure class="full-width NavLateral-logo">
+                <img src="@Url.Content("~/Imagenes/logo.png")" alt="material-logo" class="responsive-img center-box">
+                <figcaption class="center-align">Intranet</figcaption>
+            </figure>
+            <div class="NavLateral-Nav">
+                <ul class="full-width">
+                    <li>
+                        <a href='@Url.Action("Index", "Home")' class="waves-effect waves-light"><i class="zmdi zmdi-desktop-mac zmdi-hc-fw"></i> Inicio</a>
+                    </li>
+                    <li class="NavLateralDivider"></li>
+                    <li>
+                        <a href='@Url.Action("Index", "AdministrarPersonal")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-alt zmdi-hc-fw"></i> Administrar Personal</a>
+                    </li>
+
+                    <li class="NavLateralDivider"></li>
+                    <li>
+                        <a href='@Url.Action("Index", "AdministrarAsistente")' class="waves-effect waves-light"><i class="zmdi zmdi-account-circle zmdi-hc-fw"></i> Administrar Asistente</a>
+                    </li>
+                    <li class="NavLateralDivider"></li>
+                    <li>
+                        <a href="#" class="NavLateral-DropDown  waves-effect waves-light"><i class="zmdi zmdi-accounts-list  zmdi-hc-fw"></i> <i class="zmdi zmdi-chevron-down NavLateral-CaretDown"></i> Administrar Clientes</a>
+                        <ul class="full-width">
+                            <li>
+                                <a href='@Url.Action("Index", "AdministrarCliente")' class="waves-effect waves-light"><i class="zmdi zmdi-account-o zmdi-hc-fw"></i> Clientes</a>
+                            </li>
+                            <li>
+                                <a href='@Url.Action("Index", "AdministrarRubro")' class="waves-effect waves-light"><i class="zmdi zmdi-receipt zmdi-hc-fw"></i> Rubros</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="NavLateralDivider"></li>
+                    <li>
+                        <a href="#" class="NavLateral-DropDown  waves-effect waves-light"><i class="zmdi zmdi-collection-text  zmdi-hc-fw"></i> <i class="zmdi zmdi-chevron-down NavLateral-CaretDown"></i> Administrar Contratos</a>
+                        <ul class="full-width">
+                            <li><a href='@Url.Action("Index", "AdministrarPlanes")' class="waves-effect waves-light"><i class="zmdi zmdi-money  zmdi-hc-fw"></i> Planes</a></li>
+                        </ul>
+                    </li>
+
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-        </footer>
-    </div>
+    </section>
+    <!-- Page content -->
+    <section class="ContentPage full-width">
+        <!-- Nav Info -->
+        <div class="ContentPage-Nav full-width">
+            <ul class="full-width">
+                <li class="btn-MobileMenu ShowHideMenu"><a href="#" class="tooltipped waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Menu"><i class="zmdi zmdi-more-vert"></i></a></li>
+                <li><figure><img src="@Url.Content("~/Imagenes/user.png")" alt="UserImage"></figure></li>
+                <li style="padding:0 5px;">@Session["nombreApellido"]</li>
+                <li><a href="/Login/Logout" class="tooltipped waves-effect waves-light btn-ExitSystem" data-position="bottom" data-delay="50" data-tooltip="Logout"><i class="zmdi zmdi-power"></i></a></li>
+                <li><a href="#" class="tooltipped waves-effect waves-light btn-Search" data-position="bottom" data-delay="50" data-tooltip="Search"><i class="zmdi zmdi-search"></i></a></li>
+                <li>
+                    <a href="#" class="tooltipped waves-effect waves-light btn-Notification" data-position="bottom" data-delay="50" data-tooltip="Notifications">
+                        <i class="zmdi zmdi-notifications"></i>
+                        <span class="ContentPage-Nav-indicator bg-danger">2</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- Notifications area -->
+        <section class="z-depth-3 NotificationArea">
+            <div class="full-width center-align NotificationArea-title">Notifications <i class="zmdi zmdi-close btn-Notification"></i></div>
+            <a href="#" class="waves-effect Notification">
+                <div class="Notification-icon"><i class="zmdi zmdi-accounts-alt bg-info"></i></div>
+                <div class="Notification-text">
+                    <p>
+                        <i class="zmdi zmdi-circle tooltipped" data-position="left" data-delay="50" data-tooltip="Notification as UnRead"></i>
+                        <strong>New User Registration</strong>
+                        <br>
+                        <small>Just Now</small>
+                    </p>
+                </div>
+            </a>
+            <a href="#" class="waves-effect Notification">
+                <div class="Notification-icon"><i class="zmdi zmdi-cloud-download bg-primary"></i></div>
+                <div class="Notification-text">
+                    <p>
+                        <i class="zmdi zmdi-circle-o tooltipped" data-position="left" data-delay="50" data-tooltip="Notification as Read"></i>
+                        <strong>New Updates</strong>
+                        <br>
+                        <small>30 Mins Ago</small>
+                    </p>
+                </div>
+            </a>
+            <a href="#" class="waves-effect Notification">
+                <div class="Notification-icon"><i class="zmdi zmdi-upload bg-success"></i></div>
+                <div class="Notification-text">
+                    <p>
+                        <i class="zmdi zmdi-circle tooltipped" data-position="left" data-delay="50" data-tooltip="Notification as UnRead"></i>
+                        <strong>Archive uploaded</strong>
+                        <br>
+                        <small>31 Mins Ago</small>
+                    </p>
+                </div>
+            </a>
+            <a href="#" class="waves-effect Notification">
+                <div class="Notification-icon"><i class="zmdi zmdi-mail-send bg-danger"></i></div>
+                <div class="Notification-text">
+                    <p>
+                        <i class="zmdi zmdi-circle-o tooltipped" data-position="left" data-delay="50" data-tooltip="Notification as Read"></i>
+                        <strong>New Mail</strong>
+                        <br>
+                        <small>37 Mins Ago</small>
+                    </p>
+                </div>
+            </a>
+            <a href="#" class="waves-effect Notification">
+                <div class="Notification-icon"><i class="zmdi zmdi-folder bg-primary"></i></div>
+                <div class="Notification-text">
+                    <p>
+                        <i class="zmdi zmdi-circle-o tooltipped" data-position="left" data-delay="50" data-tooltip="Notification as Read"></i>
+                        <strong>Folder delete</strong>
+                        <br>
+                        <small>1 hours Ago</small>
+                    </p>
+                </div>
+            </a>
+        </section>
+        <div class="row">
+            @RenderBody()
+        </div>
+        <!-- Footer -->
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    </section>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-2.2.0.min.js"><\/script>')</script>
+
+    <!-- Modal JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+        });
+    </script>
+
+
 </body>
 </html>

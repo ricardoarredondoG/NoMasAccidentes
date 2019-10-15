@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9715fb10ebb64185b30e4dbcbb794046" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="ModeloDato.ACTIVIDAD" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.ASISTENTE" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.CAPACITACION" Width="1.5" PointX="7.5" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.CHECKLIST" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.CLIENTE" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.CONTRATO" Width="1.5" PointX="5.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.DETALLE_FACTURA" Width="1.5" PointX="10.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.FACTURA" Width="1.5" PointX="8.25" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.OPCION_CHECKLIST" Width="1.5" PointX="5.25" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.PERSONAL" Width="1.875" PointX="3" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.REPORTAR" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.RUBRO" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.SOLICITUD" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.TIPO_ACTIVIDAD" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.TIPO_PERSONAL" Width="1.5" PointX="0.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.TIPO_REPORTAR" Width="1.5" PointX="6" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.TIPO_SOLICITUD" Width="1.5" PointX="6" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="ModeloDato.ACTIVIDAD_CHECKLIST_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.ACTIVIDAD_CLIENTE_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.ACTIVIDAD_PERSONAL_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.ACTIVIDAD_TIPO_ACTIVIDAD_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.CAPACITACION_ACTIVIDAD_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.DETALLE_FACTURA_ACTIVIDAD_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.ASISTENTE_CLIENTE_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.CAPACITACION_ASISTENTE_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.OPCION_CHECKLIST_CHECKLIST_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.CLIENTE_RUBRO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.CONTRATO_CLIENTE_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.REPORTAR_CLIENTE_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.SOLICITUD_CLIENTE_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.DETALLE_FACTURA_CONTRATO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.DETALLE_FACTURA_FACTURA_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.PERSONAL_TIPO_PERSONAL_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.REPORTAR_TIPO_REPORTAR_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloDato.SOLICITUD_TIPO_SOLICITUD_FK" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ModeloDato.PLAN" Width="2.125" PointX="9" PointY="1.625" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -8,16 +8,36 @@ namespace NoMasAccidentes
         // Para obtener más información sobre las uniones, visite https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/js").Include(
+            //Login
+
+            bundles.Add(new ScriptBundle("~/login/bundles/js").Include(
                         "~/Scripts/jquery-3.2.1.min.js",
                         "~/Scripts/materialize.min.js",
                         "~/Scripts/rut.js"));
 
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/login/Content/css").Include(
                       "~/Content/materialize.min.css",
                       "~/Content/paginaInicioAdmin.css",
                       "~/Content/paginaInicioCliente.css"));
+
+            //Home
+
+            bundles.Add(new StyleBundle("~/home/Content/css").Include(
+                      "~/Content/materialize.min.css",
+                      "~/Content/jquery.mCustomScrollbar.css",
+                      "~/Content/material-design-iconic-font.min.css",
+                      "~/Content/normalize.css",
+                      "~/Content/style.css",
+                      "~/Content/sweetalert.css"));
+
+            bundles.Add(new ScriptBundle("~/home/bundles/js").Include(
+                        "~/Scripts/jquery-2.2.0.min.js",
+                        "~/Scripts/main.js",
+                        "~/Scripts/materialize.min.js",
+                        "~/Scripts/sweetalert.min.js"));
+
+
         }
     }
 }

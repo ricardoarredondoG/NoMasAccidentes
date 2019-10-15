@@ -13,10 +13,10 @@ namespace NoMasAccidentes.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EntitiNoMasAccidentes : DbContext
+    public partial class EntitiesNoMasAccidentes : DbContext
     {
-        public EntitiNoMasAccidentes()
-            : base("name=EntitiNoMasAccidentes")
+        public EntitiesNoMasAccidentes()
+            : base("name=EntitiesNoMasAccidentes")
         {
         }
     
@@ -42,5 +42,6 @@ namespace NoMasAccidentes.Models
         public DbSet<TIPO_PERSONAL> TIPO_PERSONAL { get; set; }
         public DbSet<TIPO_REPORTAR> TIPO_REPORTAR { get; set; }
         public DbSet<TIPO_SOLICITUD> TIPO_SOLICITUD { get; set; }
+        public DbSet<PLAN> PLAN { get; set; }
     }
 }
