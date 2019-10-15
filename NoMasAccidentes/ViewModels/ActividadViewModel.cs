@@ -7,7 +7,9 @@ namespace NoMasAccidentes.ViewModels
 {
     public class ActividadViewModel
     {
-        public List<Models.ACTIVIDAD> actividad { get; set; }
-
+        public DateTime fecha { get; set; }
+        public String descripcion { get; set; }
+        public int tipo { get; set; }
+        
     }
 }

@@ -75,7 +75,7 @@ namespace NoMasAccidentes.Controllers
             personal.NOMBRE_PERSO = persona.nombre_perso;
             personal.TELEFONO_PERSO = persona.telefono_perso;
             personal.TIPO_PERSONAL_ID_TIPOPERSONAL = persona.tipo_personal;
-
+            
             //Generar Usuario
 
                 //Eliminar espacios en Blanco
