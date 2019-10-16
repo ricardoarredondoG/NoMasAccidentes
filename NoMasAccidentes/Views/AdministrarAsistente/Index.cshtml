@@ -123,6 +123,9 @@
     </div>
 </div>
 <script>
+    $('select').formSelect();
+
+
     $("#btnGuardarA").click(function () {
 
         var url = "@Url.Action("CrearA", "AdministrarAsistente")";
@@ -130,7 +133,7 @@
         var txtApellidoP = $("#txtApellidoP").val();
         var txtApellidoM = $("#txtApellidoM").val();
         var selectIdCliente = $("#selectIdCliente").val();
-        var data = { nombreAsistente: txtNombre, apellidoP: txtApellidoP, apellidoM: txtApellidoM, idCliente: selectIdCliente };
+        var data = { nombre_asistente: txtNombre, apellidop_asistente: txtApellidoP, apellidoM_asistente: txtApellidoM, cliente_id_cliente: selectIdCliente };
 
         $.post(url, data).done(function (data) {
             if (data.ok) {

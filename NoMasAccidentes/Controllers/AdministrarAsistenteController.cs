@@ -17,7 +17,8 @@ namespace NoMasAccidentes.Controllers
                 EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
                 var asistente = bd.ASISTENTE.ToList();
 
-                
+                var cliente = bd.CLIENTE.ToList();
+
                 if (nombre != "")
                 {
                 asistente = asistente.FindAll(x => x.NOMBRE_ASISTENTE.ToLower().Contains(nombre.ToLower()));
@@ -42,7 +43,7 @@ namespace NoMasAccidentes.Controllers
                 modelo.PaginaActual = pagina;
                 modelo.RegistrosPorPagina = cantidadRegistroPorPagina;
                 modelo.TotalDeRegistros = totalRegistros;
-
+            modelo.cliente = cliente;
 
                 return View(modelo);
 
@@ -67,7 +68,7 @@ namespace NoMasAccidentes.Controllers
             {
                 resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese apellido materno.</br>";
             }
-            if (asistente.cliente_id_cliente != 0) 
+            if (asistente.cliente_id_cliente == 0) 
             {
                 resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese id del cliente.</br>";
                 resul.ok = false;
