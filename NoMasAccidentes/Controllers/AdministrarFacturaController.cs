@@ -1,5 +1,6 @@
 ﻿using NoMasAccidentes.Models;
 using NoMasAccidentes.ViewModels;
+using Rotativa;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,29 @@ namespace NoMasAccidentes.Controllers
             modelo.TotalDeRegistros = totalRegistros;
             modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
             return View(modelo);
+        }
+
+        public ActionResult Factura(int idFactura = 0)
+        {
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var factura = bd.FACTURA.Find(idFactura);
+            return View(factura);
+        }
+
+        
+        public ActionResult FacturaPDF(int id = 0)
+        {
+            if(id != 0)
+            {
+                return new ActionAsPdf("Factura", new { idFactura = id })
+                {
+                    FileName = "Factura.pdf"
+                };
+            }else
+            {
+                return Index();
+            }
+            
         }
     }
 }
