@@ -46,6 +46,7 @@
                     <th data-field="id">Nombre</th>
                     <th data-field="price">Apellido Paterno</th>
                     <th data-field="price">Apellido Materno</th>
+                    <th data-field="price">Id asistente</th>
                     <th data-field="price">Editar</th>
                     <th data-field="price">Eliminar</th>
                 </tr>
@@ -53,18 +54,23 @@
             <tbody>
                 @foreach (var asistente in Model.asistente)
                 {
-                    var datos = @asistente.NOMBRE_ASISTENTE + "||" + @asistente.APELLIDOP_ASISTENTE + "||" + @asistente.APELLIDOM_ASISTENTE;
-                <tr style='background-color: @(asistente.ACTIVO_ASISTENTE.ToString()=="N" ? "#CCCCCC" :"");'>
-                    <td>@asistente.NOMBRE_ASISTENTE</td>
-                    <td>@asistente.APELLIDOP_ASISTENTE</td>
-                    <td>@asistente.APELLIDOM_ASISTENTE  </td>
-                </tr>
+                    var datos = @asistente.NOMBRE_ASISTENTE + "||" + @asistente.APELLIDOP_ASISTENTE + "||" + @asistente.APELLIDOM_ASISTENTE + "||" + @asistente.ID_ASISTENTE;
+                    <tr style='background-color: @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "#CCCCCC" : "");'>
+                        <td>@asistente.NOMBRE_ASISTENTE</td>
+                        <td>@asistente.APELLIDOP_ASISTENTE</td>
+                        <td>@asistente.APELLIDOM_ASISTENTE  </td>
+                        <td>@asistente.ID_ASISTENTE</td>
+                    </tr>
 
 
                 }
 
             </tbody>
+
         </table>
+        <div class="center-align">
+            @{ Html.RenderPartial("_paginador", Model);}
+        </div>
         <div id="modalNuevo" class="modal">
             <div class="modal-content">
                 <div id="div-alerta" class="alert card green white-text" style="display:none">
@@ -75,7 +81,7 @@
                 <h5>Agregar asistente</h5>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese nombre del asistente" id="txtNombre" name="nombre" type="text" class="validate" required>
-                    <label for="nombre">(*)Nombre del asistente</label>
+                    <label for="nombre">Nombre del asistente</label>
                 </div>
 
                 <div class="input-field col s6">
@@ -90,8 +96,19 @@
 
 
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese id del cliente" id="txtIdCliente" name="idCliente" type="text" class="validate" required>
-                    <label for="apellidoM">Ingrese id del cliente</label>
+                    <select id="selectIdCliente" name="tipoId">
+                        <option value="" disabled selected>Seleccione id del cliente</option>
+                        
+                            @foreach (var cliente in Model.cliente)
+                            {
+                                <option value="@cliente.ID_CLIENTE">@cliente.NOMBRE_CLIENTE</option>
+                            }
+                        }
+                        
+
+
+                    </select>
+                    <label for="tipoId">id</label>
                 </div>
 
                 <div class="row">
@@ -112,16 +129,13 @@
         var txtNombre = $("#txtNombre").val();
         var txtApellidoP = $("#txtApellidoP").val();
         var txtApellidoM = $("#txtApellidoM").val();
-        var txtIdCliente = $("#txtIdCliente").val();
-        var data = { nombreAsistente: txtNombre, apellidoP : txtApellidoP, apellidoM : txtApellidoM, idCliente : txtIdCliente };
+        var selectIdCliente = $("#selectIdCliente").val();
+        var data = { nombreAsistente: txtNombre, apellidoP: txtApellidoP, apellidoM: txtApellidoM, idCliente: selectIdCliente };
 
         $.post(url, data).done(function (data) {
             if (data.ok) {
                 $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
-                $("#txtNombre").val('');
-                $("#txtApellidoP").val('');
-                $("#txtApellidoM").val('');
-                $("#txtIdCliente").val('');
+             
             } else {
                 $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
             }

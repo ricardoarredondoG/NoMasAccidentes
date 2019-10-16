@@ -19,8 +19,5 @@ namespace NoMasAccidentes.ViewModels
         public List<Models.PLAN> plan { get; set; }
     }
 
-    //public class RubroViewModel : BaseModelo
-    //{
-        
-    //}
+   
 }
