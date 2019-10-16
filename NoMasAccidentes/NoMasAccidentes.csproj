@@ -61,6 +61,9 @@
     <Reference Include="Quartz, Version=2.6.2.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <HintPath>..\packages\Quartz.2.6.2\lib\net40\Quartz.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -251,6 +254,7 @@
     <Content Include="Content\paginaInicioAdmin.css" />
     <Content Include="Content\paginaInicioCliente.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\styleFactura.css" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -268,6 +272,10 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery.mCustomScrollbar.concat.min.js" />
@@ -333,6 +341,7 @@
     <Content Include="fonts\Roboto-Thin.ttf" />
     <Content Include="fonts\Roboto-Thin.woff" />
     <Content Include="fonts\Roboto-Thin.woff2" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -348,6 +357,7 @@
     <Content Include="Views\AdministrarRubro\Index.cshtml" />
     <Content Include="Views\AdministrarPlanes\Index.cshtml" />
     <Content Include="Views\AdministrarFactura\Index.cshtml" />
+    <Content Include="Views\AdministrarFactura\Factura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

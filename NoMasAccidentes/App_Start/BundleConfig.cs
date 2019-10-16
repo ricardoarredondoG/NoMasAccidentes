@@ -38,6 +38,10 @@ namespace NoMasAccidentes
                         "~/Scripts/sweetalert.min.js"));
 
 
+            //Factura
+            bundles.Add(new StyleBundle("~/factura/Content/css").Include(
+                      "~/Content/styleFactura.css"));
+
         }
     }
 }
