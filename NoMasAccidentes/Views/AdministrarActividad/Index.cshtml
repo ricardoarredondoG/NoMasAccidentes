@@ -46,20 +46,22 @@
                     <th data-field="id">Actividad</th>
                     <th data-field="id">Fecha Actividad</th>
                     <th data-field="price">Descripción</th>
-                     
+                    <th data-field="price">Editar</th>
+                    <th data-field="price">Eliminar</th> 
                 </tr>
             </thead>
             <tbody>
                 @foreach (var actividad in Model.actividad)
                 {
+                    var datos = @actividad.ID_ACTIVIDAD + "||" + actividad.FECHA_ACTIVIDAD + "||" + actividad.DESCRIPCION_ACTIVIDAD + "||" + actividad.PERSONAL_ID_PERSONAL + "||" + actividad.TIPO_ACTIVIDAD_ID_TIPOACTIVI + "||" + actividad.CHECKLIST_ID_CHECKLIST;
                 <tr>
                     <td>@actividad.FECHA_ACTIVIDAD</td>
                     <td>@actividad.ID_ACTIVIDAD</td>
                     <td>@actividad.DESCRIPCION_ACTIVIDAD</td>
-                    
 
-                    <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                    <td><button class="btn red"><i class="zmdi zmdi-delete zmdi-hc-fw"></button></td>
+
+                    <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(actividad. personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@personal.ID_PERSONAL)" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
                 </tr>
                 }
 
@@ -91,7 +93,7 @@
                     <input placeholder="Tipo Actividad" id="txtTipo" name="actividad" type="text" class="validate" required>
                     <label for="nombre">Tipo Actvidad</label>
                 </div>
-                
+
                 <!-- <div class="input-field col s6">
         <select id="selectTipoPersonal">
             <option value="" disabled selected>Seleccione Tipo de  Personal</option>
@@ -102,17 +104,26 @@
     </div>-->
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Guardar</button>
+                        <button class="btn modal-trigger green" data-target="modalEditar" id="editar">Guardar</button>
                         <button class="btn modal-close red">Cerrar</button>
 
 
                     </div>
                 </div>
 
-            </div>
+                <!-- Modal Editar -->
+                <div id="modalEditar" class="modal">
+                    <div class="modal-content">
+                        <div id="div-alerta" class="alert card green white-text" style="display:none">
+                            <div class="card-content">
+                                <p id="mensaje"></p>
+                            </div>
+                        </div>
 
-        </div>
-    </div>
+                    </div>
+
+                </div>
+            </div>
 </div>
 
 <script>

@@ -22,8 +22,5 @@ namespace NoMasAccidentes.ViewModels
         public List <Models.FACTURA> factura { get; set; }
     }
 
-    //public class RubroViewModel : BaseModelo
-    //{
-        
-    //}
+   
 }
