@@ -20,9 +20,13 @@ namespace NoMasAccidentes.Models
         }
     
         public decimal ID_FACTURA { get; set; }
-        public string RUT_CLIENTE_FACTURA { get; set; }
-        public decimal MONTO_FACTURA { get; set; }
+        public decimal CONTRATO_ID_CONTRATO { get; set; }
+        public System.DateTime FECHA { get; set; }
+        public string PAGADO { get; set; }
+        public decimal TOTAL { get; set; }
+        public System.DateTime FECHA_VENCIMIENTO { get; set; }
     
+        public virtual CONTRATO CONTRATO { get; set; }
         public virtual ICollection<DETALLE_FACTURA> DETALLE_FACTURA { get; set; }
     }
 }

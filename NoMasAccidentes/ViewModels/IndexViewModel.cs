@@ -17,6 +17,9 @@ namespace NoMasAccidentes.ViewModels
         public List<Models.RUBRO> rubro { get; set; }
 
         public List<Models.PLAN> plan { get; set; }
+        public List<Models.ACTIVIDAD> actividad { get; set; }
+
+        public List <Models.FACTURA> factura { get; set; }
     }
 
    

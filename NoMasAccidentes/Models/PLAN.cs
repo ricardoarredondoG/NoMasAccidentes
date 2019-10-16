@@ -14,10 +14,17 @@ namespace NoMasAccidentes.Models
     
     public partial class PLAN
     {
+        public PLAN()
+        {
+            this.CONTRATO = new HashSet<CONTRATO>();
+        }
+    
         public decimal ID_PLAN { get; set; }
         public string NOMBRE { get; set; }
         public string DESCRIPCION { get; set; }
         public decimal VALOR { get; set; }
         public string ACTIVO { get; set; }
+    
+        public virtual ICollection<CONTRATO> CONTRATO { get; set; }
     }
 }
