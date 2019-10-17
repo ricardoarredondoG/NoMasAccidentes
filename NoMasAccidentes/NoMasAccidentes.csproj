@@ -161,6 +161,8 @@
     <Compile Include="Controllers\AdministrarPersonalController.cs" />
     <Compile Include="Controllers\AdministrarPlanesController.cs" />
     <Compile Include="Controllers\AdministrarRubroController.cs" />
+    <Compile Include="Controllers\AdministrarTipoActividadController.cs" />
+    <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -240,11 +242,13 @@
     <Compile Include="Scheduled\Factura.cs" />
     <Compile Include="ViewModels\AsistenteViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
+    <Compile Include="ViewModels\ContratoViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\ActividadViewModel.cs" />
     <Compile Include="ViewModels\PersonalViewModel.cs" />
     <Compile Include="ViewModels\PlanViewModel.cs" />
     <Compile Include="ViewModels\RubroViewModel.cs" />
+    <Compile Include="ViewModels\TipoActividadViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\jquery.mCustomScrollbar.css" />
@@ -303,6 +307,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\RubroViewModel\" />
+    <Folder Include="Views\TipoActividadViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -358,6 +363,8 @@
     <Content Include="Views\AdministrarPlanes\Index.cshtml" />
     <Content Include="Views\AdministrarFactura\Index.cshtml" />
     <Content Include="Views\AdministrarFactura\Factura.cshtml" />
+    <Content Include="Views\Contrato\Index.cshtml" />
+    <Content Include="Views\AdministrarTipoActividad\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
