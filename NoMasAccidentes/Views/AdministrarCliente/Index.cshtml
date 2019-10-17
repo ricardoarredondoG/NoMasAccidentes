@@ -49,8 +49,8 @@
                     <th data-field="id">Rut</th>
                     <th data-field="id">Nombre</th>
                     <th data-field="price">Apellido</th>
-                    <th data-field="price">Direccion</th>
                     <th data-field="price">Telefono</th>
+                    <th data-field="price">Direccion</th>
                     <th data-field="price">Mail</th>
                     <th data-field="price">Rubro</th>
                     <th data-field="price">Editar</th>
@@ -60,16 +60,17 @@
             <tbody>
                 @foreach (var cliente in Model.cliente)
                 {
-                    var datos = @cliente.RUT_CLIENTE + "||" + @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
+                    var datos = @cliente.RUT_CLIENTE + "||" + @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE +"||"+ @cliente.TELEFONO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
                 <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
                     <td>@cliente.RUT_CLIENTE</td>
                     <td>@cliente.NOMBRE_CLIENTE</td>
                     <td>@cliente.APELLIDO_CLIENTE</td>
+                    <td>@cliente.TELEFONO_CLIENTE</td>
                     <td>@cliente.DIREC_CLIENTE</td>
                     <td>@cliente.CORREO_CLIENTE</td>
                     <td>@cliente.RUBRO.NOMBRE_RUBRO</td>
                     <td>@cliente.USERNAME_CLIENTE</td>
-
+                    
                     <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                     <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC" onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
                 </tr>
@@ -135,7 +136,7 @@
                     <label for="rubro">Rubro</label>
                 </div>
 
-
+    
 
                 <div class="row">
                     <div class="center-align">
@@ -204,7 +205,7 @@
                 </div>
                 <div class="input-field col s6">
                     <select id="editSelectTipoRubro" name="tipoRubro">
-                        <option value="" disabled>Seleccione Tipo de  Personal</option>
+                        <option value="" disabled       >Seleccione Tipo de  Personal</option>
                         @foreach (var rubro in Model.rubro)
                         {
                             <option value="@rubro.ID_RUBRO">@rubro.NOMBRE_RUBRO</option>
@@ -245,7 +246,7 @@
                 rut_cliente: txtRut,
                 nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
                 direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro
-            };
+            };  
             $.post(url, data).done(function (data) {
                 if (data.ok) {
                     $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
@@ -282,17 +283,17 @@
 
 
 
-        function editar(datos) {
+    function editar(datos) {
 
-            d = datos.split('||');
-            $('#editTxtRut').val(d[0]);
-            $('#editTxtNombre').val(d[1]);
-            $('#editTxtApellido').val(d[2]);
-            $('#editTxtTelefono').val(d[3]);
-            $('#editTxtDireccion').val(d[4]);
-            $('#editTxtCorreo').val(d[5]);
-          //  $("#editSelectTipoRubro").formSelect(1);
-           // $("#editSelectTipoRubro").material_select();
+        d = datos.split('||');
+        $('#editTxtRut').val(d[0]);
+        $('#editTxtNombre').val(d[1]);
+        $('#editTxtApellido').val(d[2]);
+        $('#editTxtTelefono').val(d[3]);
+        $('#editTxtDireccion').val(d[4]);
+        $('#editTxtCorreo').val(d[5]);
+        $("#editSelectTipoRubro").select.val(d[6]);
+        //    $("#editSelectTipoRubro").material_select();
 
         };
 
