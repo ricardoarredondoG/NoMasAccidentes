@@ -50,7 +50,7 @@ namespace NoMasAccidentes.Controllers
             actividades.DESCRIPCION_ACTIVIDAD = actividad.descripcion;
             actividades.FECHA_ACTIVIDAD = actividad.fecha;
             actividades.TIPO_ACTIVIDAD_ID_TIPOACTIVI = 1;
-            actividades.CHECKLIST_ID_CHECKLIST = 3;
+            actividades.CHECKLIST_ID_CHECKLIST = 2;
             actividades.PERSONAL_ID_PERSONAL = 1;
             actividades.CLIENTE_ID_CLIENTE = 2;
 
