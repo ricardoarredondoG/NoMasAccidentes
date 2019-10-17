@@ -46,20 +46,24 @@
                     <th data-field="id">Actividad</th>
                     <th data-field="id">Fecha Actividad</th>
                     <th data-field="price">Descripción</th>
-                     
+                    <th data-field="price">Editar</th>
+                    <th data-field="price">Eliminar</th> 
                 </tr>
             </thead>
             <tbody>
                 @foreach (var actividad in Model.actividad)
                 {
+                    var datos = @actividad.ID_ACTIVIDAD + "||" + actividad.FECHA_ACTIVIDAD + "||" + actividad.DESCRIPCION_ACTIVIDAD + "||" + actividad.PERSONAL_ID_PERSONAL + "||" + actividad.TIPO_ACTIVIDAD_ID_TIPOACTIVI + "||" + actividad.CHECKLIST_ID_CHECKLIST;
                 <tr>
-                    <td>@actividad.FECHA_ACTIVIDAD</td>
-                    <td>@actividad.ID_ACTIVIDAD</td>
-                    <td>@actividad.DESCRIPCION_ACTIVIDAD</td>
-                    
 
-                    <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                    <td><button class="btn red"><i class="zmdi zmdi-delete zmdi-hc-fw"></button></td>
+
+
+                    <td>@actividad.ID_ACTIVIDAD</td>
+                    <td>@actividad.FECHA_ACTIVIDAD</td>
+                    <td>@actividad.DESCRIPCION_ACTIVIDAD</td>
+                    <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar()"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+
                 </tr>
                 }
 
@@ -91,7 +95,7 @@
                     <input placeholder="Tipo Actividad" id="txtTipo" name="actividad" type="text" class="validate" required>
                     <label for="nombre">Tipo Actvidad</label>
                 </div>
-                
+
                 <!-- <div class="input-field col s6">
         <select id="selectTipoPersonal">
             <option value="" disabled selected>Seleccione Tipo de  Personal</option>
@@ -108,12 +112,10 @@
 
                     </div>
                 </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
+             </div>
+           </div>
+         </div>
+       </div>
 
 <script>
 

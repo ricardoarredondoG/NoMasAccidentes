@@ -26,8 +26,5 @@ namespace NoMasAccidentes.ViewModels
         public List<Models.TIPO_ACTIVIDAD> tipo_actividad { get; set; }
     }
 
-    //public class RubroViewModel : BaseModelo
-    //{
-        
-    //}
+   
 }
