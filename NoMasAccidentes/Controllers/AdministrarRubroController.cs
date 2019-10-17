@@ -88,10 +88,47 @@ namespace NoMasAccidentes.Controllers
             return Json("d");
         }
 
+        [HttpPost]
+        [Authorize]
+        public JsonResult Eliminar(int id)
+        {
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var resultado = new baseRespuesta();
+
+            var rubro = bd.RUBRO.Find(id);
+            rubro.ACTIVO_RUBRO = "N";
+            bd.Entry(rubro).State = System.Data.EntityState.Modified;
+            bd.SaveChanges();
+            resultado.mensaje = "Rubro Eliminado Correctamente";
+
+            return Json(resultado);
+        }
+
         public class baseRespuesta
         {
             public bool ok { get; set; }
             public string mensaje { get; set; }
+        }
+
+        public baseRespuesta validaciones(RubroViewModel rubro)
+        {
+            var resultado = new baseRespuesta();
+            resultado.ok = true;
+            //Validaciones
+            if (rubro.nombre_rubro == null)
+            {
+                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese Nombre de Rubro</br>";
+                resultado.ok = false;
+            }
+            if (rubro.desc_rubro == null)
+            {
+                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese Descripción del Rubro</br>";
+                resultado.ok = false;
+            }
+
+
+
+            return resultado;
         }
     }
 }

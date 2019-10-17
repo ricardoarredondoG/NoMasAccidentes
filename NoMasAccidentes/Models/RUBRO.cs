@@ -22,6 +22,7 @@ namespace NoMasAccidentes.Models
         public decimal ID_RUBRO { get; set; }
         public string NOMBRE_RUBRO { get; set; }
         public string DESC_RUBRO { get; set; }
+        public string ACTIVO_RUBRO { get; set; }
     
         public virtual ICollection<CLIENTE> CLIENTE { get; set; }
     }

@@ -151,6 +151,7 @@
           <Property Name="ID_RUBRO" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="NOMBRE_RUBRO" Type="varchar2" MaxLength="100" Nullable="false" />
           <Property Name="DESC_RUBRO" Type="varchar2" MaxLength="300" Nullable="false" />
+          <Property Name="ACTIVO_RUBRO" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="SOLICITUD">
           <Key>
@@ -693,6 +694,7 @@
           <Property Name="NOMBRE_RUBRO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DESC_RUBRO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="CLIENTE" Relationship="Self.CLIENTE_RUBRO_FK" FromRole="RUBRO" ToRole="CLIENTE" />
+          <Property Name="ACTIVO_RUBRO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="SOLICITUD">
           <Key>
@@ -1242,6 +1244,7 @@
           <EntitySetMapping Name="RUBRO">
             <EntityTypeMapping TypeName="ModeloDato.RUBRO">
               <MappingFragment StoreEntitySet="RUBRO">
+                <ScalarProperty Name="ACTIVO_RUBRO" ColumnName="ACTIVO_RUBRO" />
                 <ScalarProperty Name="ID_RUBRO" ColumnName="ID_RUBRO" />
                 <ScalarProperty Name="NOMBRE_RUBRO" ColumnName="NOMBRE_RUBRO" />
                 <ScalarProperty Name="DESC_RUBRO" ColumnName="DESC_RUBRO" />
