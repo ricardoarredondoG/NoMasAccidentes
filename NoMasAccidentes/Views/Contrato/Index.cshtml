@@ -3,29 +3,28 @@
     ViewBag.Title = "Index";
 }
 
-
 <div class="container">
     <div class="row">
-        <h3 class="center-align">Registrar cliente</h3>
-        <form class="col s12" href="/AdministrarCliente/Buscar" method="post">
+        <h3 class="center-align">Registrar Contrato</h3>
+        <form class="col s12" href="/AdministrarContrato/Buscar" method="post">
             <div class="row">
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese rut del cliente" id="rut" name="rut" required oninput="checkRut(this)"  type="text" class="validate">
-                    <label for="rut">Rut cliente</label>
+                    <input placeholder="Ingrese Fecha de Inicio" id="fechaI" name="fechaI" type="date" class="validate">
+                    <label for="fechaI">Fecha de Inicio</label>
                 </div>
 
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese nombre del cliente" id="nombre" name="nombre" type="text" class="validate">
-                    <label for="nombre">Nombre del cliente</label>
+                    <input placeholder="Ingrese Fecha de Termino" id="fechaT" name="fechaT" type="date" class="validate">
+                    <label for="fechaT">Fecha de Termino</label>
                 </div>
 
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese apellido del cliente" id="apellido" name="apellido" type="text" class="validate">
-                    <label for="apellido">Apellido del cliente</label>
+                    <input placeholder="Ingrese id Cliente" id="cliente" name="cliente" type="number" class="validate">
+                    <label for="cliente">Apellido del cliente</label>
                 </div>
 
                 <div class="input-field col s12">
-                    <input placeholder="Ingrese correo electronico" id="mail" name="mail" type="email" class="validate">
+                    <input placeholder="Ingrese id Plan" id="plan" name="plan" type="number" class="validate">
                     <label for="mail">Mail del cliente</label>
                 </div>
 
@@ -46,34 +45,24 @@
         <table>
             <thead>
                 <tr>
-                    <th data-field="id">Rut</th>
-                    <th data-field="id">Nombre</th>
-                    <th data-field="price">Apellido</th>
-                    <th data-field="price">Telefono</th>
-                    <th data-field="price">Direccion</th>
-                    <th data-field="price">Mail</th>
-                    <th data-field="price">Rubro</th>
-                    <th data-field="price">Editar</th>
-                    <th data-field="price">Eliminar</th>
+                    <th data-field="id">Fecha de Inicio</th>
+                    <th data-field="id">Fecha de Termino</th>
+                    <th data-field="price">Cliente</th>
+                    <th data-field="price">Plan</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var cliente in Model.cliente)
+                @foreach (var contrato in Model.contrato)
                 {
-                    var datos = @cliente.RUT_CLIENTE + "||" + @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE +"||"+ @cliente.TELEFONO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
-                <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
-                    <td>@cliente.RUT_CLIENTE</td>
-                    <td>@cliente.NOMBRE_CLIENTE</td>
-                    <td>@cliente.APELLIDO_CLIENTE</td>
-                    <td>@cliente.TELEFONO_CLIENTE</td>
-                    <td>@cliente.DIREC_CLIENTE</td>
-                    <td>@cliente.CORREO_CLIENTE</td>
-                    <td>@cliente.RUBRO.NOMBRE_RUBRO</td>
-                    <td>@cliente.USERNAME_CLIENTE</td>
-                    
-                    <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC" onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
-                </tr>
+                    var datos = @contrato.FECHA_INICIO_CONTRATO + "||" + @contrato.FECHA_FIN_CONTRATO + "||" + @contrato.CLIENTE_ID_CLIENTE + "||" + @contrato.PLAN_ID_PLAN;
+                    <tr style='background-color: @(contrato.ACTIVO.ToString()=="N" ? "#CCCCCC" :"");'>
+                        <td>@contrato.FECHA_INICIO_CONTRATO.ToString("dd/MM/yyyy")</td>
+                        <td>@contrato.FECHA_FIN_CONTRATO.ToString("dd/MM/yyyy")</td>
+                        <td>@contrato.CLIENTE_ID_CLIENTE</td>
+                        <td>@contrato.PLAN_ID_PLAN</td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')" @(contrato.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC" onclick="eliminarC(@contrato.ID_CONTRATO)" @(contrato.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                    </tr>
                 }
 
 
@@ -90,57 +79,50 @@
             <div class="modal-content">
                 <div id="mensaje" class="alert card green white-text" style="display:none">
                     <div class="card-content">
-                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Cliente registrado correctamente</span></p>
+                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Contrato registrado correctamente</span></p>
                     </div>
                 </div>
-                <h5>Agregar Cliente</h5>
+                <h5>Agregar Contrato</h5>
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese rut del cliente" id="txtRut" required oninput="checkRut(this)" name="rut" type="text" class="validate">
-                    <label for="rut">Rut cliente</label>
-                </div>
-
-                <div class="input-field col s6">
-                    <input placeholder="Ingrese nombre del cliente" id="txtNombre" name="nombre" type="text" class="validate">
-                    <label for="nombre">Nombre del cliente</label>
+                    <input placeholder="Ingrese Fecha de inicio" id="txtFechaI" name="fechaI" type="date" class="validate">
+                    <label for="fechaI">Fecha de Inicio</label>
                 </div>
 
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese apellido del cliente" id="txtApellido" name="apellido" type="text" class="validate">
-                    <label for="apellido">Apellido del cliente</label>
+                    <input placeholder="Ingrese Fecha de termino" id="txtFechaT" name="fechaT" type="date" class="validate">
+                    <label for="fechaT">Fecha de Termino</label>
                 </div>
+
 
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese telefono del cliente" id="txtTelefono" name="telefono" type="number" class="validate">
-                    <label for="telefono">Telefono</label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input placeholder="Ingrese direccion del cliente" id="txtDireccion" name="direccion" type="text" class="validate">
-                    <label for="direccion">Direccion del cliente</label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input placeholder="Ingrese correo electronico" id="txtMail" name="mail" type="email" class="validate">
-                    <label for="mail">Mail del cliente</label>
-                </div>
-
-                <div class="input-field col s6">
-                    <select id="selectTipoRubro" name="rubro">
-                        <option value="" disabled selected>Seleccione rubro</option>
-                        @foreach (var rubro in Model.rubro)
+                    <select id="selectCliente" name="cliente">
+                        <option value="" disabled selected>Seleccione Cliente</option>
+                        @foreach (var cliente in Model.cliente)
                         {
-                        <option value="@rubro.ID_RUBRO">@rubro.NOMBRE_RUBRO</option>
+                            <option value="@cliente.ID_CLIENTE">@cliente.NOMBRE_CLIENTE</option>
                         }
 
                     </select>
-                    <label for="rubro">Rubro</label>
+                    <label for="cliente">Cliente</label>
                 </div>
 
-    
+                <div class="input-field col s6">
+                    <select id="selectPlan" name="plan">
+                        <option value="" disabled selected>Seleccione Rubro</option>
+                        @foreach (var plan in Model.plan)
+                        {
+                            <option value="@plan.ID_PLAN">@plan.NOMBRE</option>
+                        }
+
+                    </select>
+                    <label for="plan">Plan</label>
+                </div>
+
+
 
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger blue"  id="btnGuardarC">Guardar</button>
+                        <button class="btn modal-trigger blue" id="btnGuardarC">Guardar</button>
                         <button class="btn modal-close blue" id="btnCerrar">Limpiar</button>
 
                     </div>
@@ -183,7 +165,7 @@
                     <input placeholder="Ingrese el rut" id="editTxtRut" name="rut" type="text" class="validate">
                     <label for="rut">rut</label>
                 </div>
-                <div class="input-field col s6">            
+                <div class="input-field col s6">
                     <input placeholder="Ingrese el nombre" id="editTxtNombre" name="nombre" type="text" class="validate" required>
                     <label for="nombre">Nombre del cliente</label>
                 </div>
@@ -205,10 +187,10 @@
                 </div>
                 <div class="input-field col s6">
                     <select id="editSelectTipoRubro" name="tipoRubro">
-                        <option value="" disabled       >Seleccione Tipo de  Personal</option>
-                        @foreach (var rubro in Model.rubro)
+                        <option value="" disabled>Seleccione Tipo de  Personal</option>
+                        @foreach (var plan in Model.plan)
                         {
-                            <option value="@rubro.ID_RUBRO">@rubro.NOMBRE_RUBRO</option>
+                            <option value="@plan.ID_PLAN">@plan.NOMBRE</option>
                         }
                     </select>
                     <label for="tipoRubro">Tipo rubro</label>
@@ -228,25 +210,21 @@
 
 
 <script>
- 
- 
+
+
         $("#btnGuardarC").click(function () {
 
             $("#mensaje").show();
 
-            var url = "@Url.Action("CrearCliente", "AdministrarCliente")";
-            var txtRut = $("#txtRut").val();
-            var txtNombre = $("#txtNombre").val();
-            var txtApellido = $("#txtApellido").val();
-            var txtTelefono = $("#txtTelefono").val();
-            var txtDireccion = $("#txtDireccion").val();
-            var txtMail = $("#txtMail").val();
-            var txtRubro = $("#selectTipoRubro").val();
+            var url = "@Url.Action("CrearContrato", "Contrato")";
+            var txtFechaI = $("#txtFechaI").val();
+            var txtFechaT = $("#txtFechaT").val();
+            var selectCliente = $("#selectCliente").val();
+            var selectPlan = $("#selectPlan").val();
             var data = {
-                rut_cliente: txtRut,
-                nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
-                direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro
-            };  
+                fecha_inicio_contrato: txtFechaI,
+                fecha_fin_contrato: txtFechaT, cliente_id_cliente: selectCliente, plan_id_plan: selectPlan
+            };
             $.post(url, data).done(function (data) {
                 if (data.ok) {
                     $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
@@ -259,20 +237,20 @@
             });
 
         });
-            
 
-            var idCliente = null;
-            function eliminarC(id) {
-                idCliente = id;
+
+            var idContrato = null;
+            function eliminarContrato(id) {
+                idContrato = id;
 
             };
 
-       
-        
+
+
 
         $("#btnConfirmarEliminar").click(function () {
-            var url = "@Url.Action("EliminarC", "AdministrarCliente")";
-            var data = { id: idCliente };
+            var url = "@Url.Action("EliminarContrato", "Contrato")";
+            var data = { id: idContrato };
             $.post(url, data).done(function (data) {
                 $("#mensajeEliminar").html(data.mensaje);
                 $("#div-alerta-eliminar").show();
@@ -283,21 +261,17 @@
 
 
 
-    function editar(datos) {
+        function editar(datos) {
 
-        d = datos.split('||');
-        $('#editTxtRut').val(d[0]);
-        $('#editTxtNombre').val(d[1]);
-        $('#editTxtApellido').val(d[2]);
-        $('#editTxtTelefono').val(d[3]);
-        $('#editTxtDireccion').val(d[4]);
-        $('#editTxtCorreo').val(d[5]);
-        $("#editSelectTipoRubro").select.val(d[6]);
-        //    $("#editSelectTipoRubro").material_select();
+            d = datos.split('||');
+            $('#editTxtRut').val(d[0]);
+            $('#editTxtNombre').val(d[1]);
+          //  $("#editSelectTipoRubro").formSelect(1);
+           // $("#editSelectTipoRubro").material_select();
 
         };
 
-   
+
 
     function checkRut(rut) {
         // Despejar Puntos
@@ -349,3 +323,4 @@
 
         $('select').formSelect();
 </script>
+
