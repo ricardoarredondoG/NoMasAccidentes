@@ -15,17 +15,11 @@ namespace NoMasAccidentes.Models
     public partial class DETALLE_FACTURA
     {
         public decimal ID_DETALLE_FACTURA { get; set; }
-        public string RUT_CLIENTE_FACTURA { get; set; }
-        public System.DateTime FECHA_VENTA_FACTURA { get; set; }
-        public System.DateTime FECHA_VENC_FACTURA { get; set; }
-        public string DETALLE_FACTURA1 { get; set; }
-        public decimal MONTO_FACTURA { get; set; }
-        public decimal ACTIVIDAD_ID_ACTIVIDAD { get; set; }
+        public string NOMBRE_ACTIVIDAD_EXTRA { get; set; }
+        public decimal VALOR_ACTIVIDAD_EXTRA { get; set; }
         public decimal FACTURA_ID_FACTURA { get; set; }
-        public decimal CONTRATO_ID_CONTRATO { get; set; }
+        public string DETALLE_ACTIVIDAD { get; set; }
     
-        public virtual ACTIVIDAD ACTIVIDAD { get; set; }
-        public virtual CONTRATO CONTRATO { get; set; }
         public virtual FACTURA FACTURA { get; set; }
     }
 }

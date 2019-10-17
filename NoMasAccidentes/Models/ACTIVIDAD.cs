@@ -17,7 +17,6 @@ namespace NoMasAccidentes.Models
         public ACTIVIDAD()
         {
             this.CAPACITACION = new HashSet<CAPACITACION>();
-            this.DETALLE_FACTURA = new HashSet<DETALLE_FACTURA>();
         }
     
         public decimal ID_ACTIVIDAD { get; set; }
@@ -33,6 +32,5 @@ namespace NoMasAccidentes.Models
         public virtual PERSONAL PERSONAL { get; set; }
         public virtual TIPO_ACTIVIDAD TIPO_ACTIVIDAD { get; set; }
         public virtual ICollection<CAPACITACION> CAPACITACION { get; set; }
-        public virtual ICollection<DETALLE_FACTURA> DETALLE_FACTURA { get; set; }
     }
 }

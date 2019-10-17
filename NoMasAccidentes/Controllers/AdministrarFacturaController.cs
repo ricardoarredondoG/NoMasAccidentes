@@ -32,9 +32,17 @@ namespace NoMasAccidentes.Controllers
 
         public ActionResult Factura(int idFactura = 0)
         {
+            //Consultar Factura
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var modelo = new IndexViewModel();
             var factura = bd.FACTURA.Find(idFactura);
-            return View(factura);
+            modelo.facturaPDF = factura;
+
+            //Consultar Detalle Factura
+
+            var detalleFactura = bd.DETALLE_FACTURA.ToList().FindAll(x => x.FACTURA_ID_FACTURA == idFactura);
+            modelo.detalleFactura = detalleFactura;
+            return View(modelo);
         }
 
         

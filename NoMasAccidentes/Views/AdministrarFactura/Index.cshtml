@@ -96,10 +96,10 @@
                 {
                 <tr>
                     <td>
-                        @factura.CONTRATO.CLIENTE.RUT_CLIENTE
+                        @factura.RUT_CLIENTE
                     </td>
                     <td>
-                        @factura.CONTRATO.CLIENTE.NOMBRE_CLIENTE @factura.CONTRATO.CLIENTE.APELLIDO_CLIENTE
+                        @factura.NOMBRE_CLIENTE
                     </td>
                     <td>
                         @System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(factura.FECHA.ToString("MMMM", System.Globalization.CultureInfo.CreateSpecificCulture("es")))
