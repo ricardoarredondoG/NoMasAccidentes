@@ -90,7 +90,7 @@ namespace NoMasAccidentes.Controllers
             plan.ACTIVO = "N";
             bd.Entry(plan).State = System.Data.EntityState.Modified;
             bd.SaveChanges();
-            resultado.mensaje = "Plan Eliminado Correctamente";
+            resultado.mensaje = "<b>Plan Eliminado Correctamente</b><br>Nota: Los planes Eliminados Seguiran estando disponibles para los contratos Asignados";
             return Json(resultado);
         }
 

@@ -25,6 +25,14 @@ namespace NoMasAccidentes.Models
         public string PAGADO { get; set; }
         public decimal TOTAL { get; set; }
         public System.DateTime FECHA_VENCIMIENTO { get; set; }
+        public decimal SUBTOTAL { get; set; }
+        public decimal IVA { get; set; }
+        public string NOMBRE_PLAN { get; set; }
+        public decimal VALOR_PLAN { get; set; }
+        public string NOMBRE_CLIENTE { get; set; }
+        public string DIRECCION_CLIENTE { get; set; }
+        public string RUT_CLIENTE { get; set; }
+        public string CORREO_ELECTRONICO_CLIENTE { get; set; }
     
         public virtual CONTRATO CONTRATO { get; set; }
         public virtual ICollection<DETALLE_FACTURA> DETALLE_FACTURA { get; set; }

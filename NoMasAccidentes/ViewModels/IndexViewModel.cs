@@ -20,6 +20,12 @@ namespace NoMasAccidentes.ViewModels
         public List<Models.ACTIVIDAD> actividad { get; set; }
 
         public List <Models.FACTURA> factura { get; set; }
+        public Models.FACTURA facturaPDF { get; set; }
+        public List<Models.DETALLE_FACTURA> detalleFactura { get; set; }
+
+        public List<Models.CONTRATO> contrato { get; set; }
+
+        public List<Models.TIPO_ACTIVIDAD> tipo_actividad { get; set; }
     }
 
    
