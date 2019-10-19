@@ -86,12 +86,12 @@ namespace NoMasAccidentes.Controllers
 
 
                 //Eliminar espacios en Blanco
-                /* var nombre = asistente.nombre_asistente.Replace(" ", "");
+                var nombre = asistente.nombre_asistente.Replace(" ", "");
                  var apellido = asistente.apellidop_asistente.Replace(" ", "");
                  var username = "";
                  var username_encontrado = false;
                  var cantidad_caracter = 3;
-
+                 
                  //Buscar usuario
                  while (!username_encontrado)
                  {
@@ -109,7 +109,7 @@ namespace NoMasAccidentes.Controllers
                      }
 
                  }
-                 */
+                 
                 bd.ASISTENTE.Add(asis);
                 try
                 {
@@ -143,12 +143,27 @@ namespace NoMasAccidentes.Controllers
             return Json(resul);
 
         }
+        [HttpPost]
+        [Authorize]
+        public JsonResult EliminarA(int id)
+        {
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var resul = new baseRespuesta();
+            var asistente = bd.ASISTENTE.Find(id);
+            asistente.ACTIVO_ASISTENTE = "N";
+            bd.Entry(asistente).State = System.Data.EntityState.Modified;
+            bd.SaveChanges();
+            resul.mensaje = "Asistente eliminado correctamente";
+            return Json(resul);
+        }
 
 
         public class baseRespuesta
         {
             public bool ok { get; set; }
             public string mensaje { get; set; }
+
+
         }
     }
 }
