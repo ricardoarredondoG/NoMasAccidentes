@@ -13,68 +13,52 @@ namespace NoMasAccidentes.Controllers
         // GET: AdministrarAsistente
         public ActionResult Index(int pagina = 1, string nombre = "", string apellidoP = "", string apellidoM = "")
         {
-                var cantidadRegistroPorPagina = 4;
-                EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
-                var asistente = bd.ASISTENTE.ToList();
+            var cantidadRegistroPorPagina = 4;
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var asistente = bd.ASISTENTE.ToList();
 
-                var cliente = bd.CLIENTE.ToList();
+            var cliente = bd.CLIENTE.ToList();
 
-                if (nombre != "")
-                {
+            if (nombre != "")
+            {
                 asistente = asistente.FindAll(x => x.NOMBRE_ASISTENTE.ToLower().Contains(nombre.ToLower()));
-                }
+            }
 
-                if (apellidoP != "")
-                {
+            if (apellidoP != "")
+            {
                 asistente = asistente.FindAll(x => x.APELLIDOP_ASISTENTE.ToLower().Contains(apellidoP.ToLower()));
-                }
+            }
 
-                if (apellidoM != "")
-                {
-                    asistente = asistente.FindAll(x => x.APELLIDOM_ASISTENTE.ToLower().Contains(apellidoM.ToLower()));
-                }
-                
+            if (apellidoM != "")
+            {
+                asistente = asistente.FindAll(x => x.APELLIDOM_ASISTENTE.ToLower().Contains(apellidoM.ToLower()));
+            }
 
-                var totalRegistros = asistente.Count();
-                asistente = asistente.OrderBy(x => x.ID_ASISTENTE).Skip((pagina - 1) * cantidadRegistroPorPagina).Take(cantidadRegistroPorPagina).ToList();
 
-                var modelo = new IndexViewModel();
-                modelo.asistente = asistente;
-                modelo.PaginaActual = pagina;
-                modelo.RegistrosPorPagina = cantidadRegistroPorPagina;
-                modelo.TotalDeRegistros = totalRegistros;
+            var totalRegistros = asistente.Count();
+            asistente = asistente.OrderBy(x => x.ID_ASISTENTE).Skip((pagina - 1) * cantidadRegistroPorPagina).Take(cantidadRegistroPorPagina).ToList();
+
+            var modelo = new IndexViewModel();
+            modelo.asistente = asistente;
+            modelo.PaginaActual = pagina;
+            modelo.RegistrosPorPagina = cantidadRegistroPorPagina;
+            modelo.TotalDeRegistros = totalRegistros;
             modelo.cliente = cliente;
 
-                return View(modelo);
+            return View(modelo);
 
-            }
+        }
         [HttpPost]
         [Authorize]
 
         public JsonResult CrearA(AsistenteViewModel asistente)
         {
-            var resul = new baseRespuesta();
-            resul.ok = true;
-            //Validaciones.
-            if(asistente.nombre_asistente == null)
+            var resultado = new baseRespuesta();
+            resultado = validaciones(asistente);
+            if (resultado.ok == true)
             {
-                resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese nombre del asistente</br>";
-            }
-            if (asistente.apellidop_asistente == null)
-            {
-                resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese apellido paterno</br>";
-            }
-            if (asistente.apellidom_asistente == null)
-            {
-                resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese apellido materno.</br>";
-            }
-            if (asistente.cliente_id_cliente == 0) 
-            {
-                resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese id del cliente.</br>";
-                resul.ok = false;
-            }
-            if (resul.ok == true)
-            {
+
+
                 EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
                 NoMasAccidentes.Models.ASISTENTE asis = new ASISTENTE();
 
@@ -87,62 +71,64 @@ namespace NoMasAccidentes.Controllers
 
                 //Eliminar espacios en Blanco
                 var nombre = asistente.nombre_asistente.Replace(" ", "");
-                 var apellido = asistente.apellidop_asistente.Replace(" ", "");
-                 var username = "";
-                 var username_encontrado = false;
-                 var cantidad_caracter = 3;
-                 
-                 //Buscar usuario
-                 while (!username_encontrado)
-                 {
-                     username = (nombre.Substring(0, cantidad_caracter) + "." + apellido).ToLower();
+                var apellido = asistente.apellidop_asistente.Replace(" ", "");
+                var username = "";
+                var username_encontrado = false;
+                var cantidad_caracter = 3;
 
-                     //Consulta
-
-                     if (bd.ASISTENTE.ToList().FindAll(x => x.NOMBRE_ASISTENTE.Contains(username)).Count() == 0)
-                     {
-                         username_encontrado = true;
-                     }
-                     else
-                     {
-                         cantidad_caracter++;
-                     }
-
-                 }
-                 
-                bd.ASISTENTE.Add(asis);
-                try
+                //Buscar usuario
+                while (!username_encontrado)
                 {
-                    bd.SaveChanges();
-                }
-                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
-                {
-                    Exception raise = dbEx;
-                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    username = (nombre.Substring(0, cantidad_caracter) + "." + apellido).ToLower();
+
+                    //Consulta
+
+                    if (bd.ASISTENTE.ToList().FindAll(x => x.NOMBRE_ASISTENTE.Contains(username)).Count() == 0)
                     {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            string message = string.Format("{0}:{1}",
-                                validationErrors.Entry.Entity.ToString(),
-                                validationError.ErrorMessage);
-                            // raise a new exception nesting
-                            // the current instance as InnerException
-                            raise = new InvalidOperationException(message, raise);
-                        }
+                        username_encontrado = true;
                     }
-                    resul.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>El asistente no se ha registrado.</br>";
-                    throw raise;
+                    else
+                    {
+                        cantidad_caracter++;
+                    }
+
+
+
+                    bd.ASISTENTE.Add(asis);
+                    try
+                    {
+                        bd.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Exception raise = dbEx;
+                        foreach (var validationErrors in dbEx.EntityValidationErrors)
+                        {
+                            foreach (var validationError in validationErrors.ValidationErrors)
+                            {
+                                string message = string.Format("{0}:{1}",
+                                    validationErrors.Entry.Entity.ToString(),
+                                    validationError.ErrorMessage);
+                                // raise a new exception nesting
+                                // the current instance as InnerException
+                                raise = new InvalidOperationException(message, raise);
+                            }
+                        }
+                        resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>El asistente no se ha registrado.</br>";
+                        throw raise;
+                    }
+
+                    resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Asistente registrado correctamente.</br>";
                 }
-                
-                resul.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Asistente registrado correctamente.</br>";
             }
             else
             {
-                resul.mensaje = "<b>Error</b></br>" + resul.mensaje;
+                resultado.mensaje = "<b>Error</b></br>" + resultado.mensaje;
             }
-            return Json(resul);
+            return Json(resultado);
 
         }
+
         [HttpPost]
         [Authorize]
         public JsonResult EliminarA(int id)
@@ -157,6 +143,28 @@ namespace NoMasAccidentes.Controllers
             return Json(resul);
         }
 
+        [HttpPost]
+        [Authorize]
+
+        public JsonResult EditarA(AsistenteViewModel asistente)
+        {
+            var resultado = new baseRespuesta();
+            resultado = validaciones(asistente);
+            if (resultado.ok == true)
+            {
+                EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+                NoMasAccidentes.Models.ASISTENTE asistentes = new ASISTENTE();
+                var asistenteId = bd.ASISTENTE.Find(asistente.cliente_id_cliente);
+                asistenteId.NOMBRE_ASISTENTE = asistente.nombre_asistente;
+                asistenteId.APELLIDOP_ASISTENTE = asistente.apellidop_asistente;
+                asistenteId.APELLIDOM_ASISTENTE = asistente.apellidom_asistente;
+                bd.Entry(asistenteId).State = System.Data.EntityState.Modified;
+                bd.SaveChanges();
+                resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Asistente Modificado Correctamente";
+            }
+            return Json(resultado);
+        }
+
 
         public class baseRespuesta
         {
@@ -165,5 +173,33 @@ namespace NoMasAccidentes.Controllers
 
 
         }
+
+        public baseRespuesta validaciones(AsistenteViewModel asistente)
+        {
+            var resultado = new baseRespuesta();
+            resultado.ok = true;
+            if (asistente.nombre_asistente == null)
+            {
+                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese Nombre</br>";
+                resultado.ok = false;
+            }
+            if (asistente.apellidop_asistente==null)
+            {
+                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese apellido paterno</br>";
+                resultado.ok = false;
+            }
+            if (asistente.apellidom_asistente==null)
+            {
+                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese apellido materno</br>";
+                resultado.ok = false;
+            }
+            if (asistente.cliente_id_cliente == 0)
+            {
+                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese id del cliente</br>";
+                resultado.ok = false;
+            }
+            return resultado;
+        }
     }
 }
+

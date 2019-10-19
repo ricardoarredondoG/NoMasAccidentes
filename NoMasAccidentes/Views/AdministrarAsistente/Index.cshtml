@@ -60,7 +60,7 @@
                         <td>@asistente.APELLIDOP_ASISTENTE</td>
                         <td>@asistente.APELLIDOM_ASISTENTE  </td>
                         <td>@asistente.ID_ASISTENTE</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditarA" onclick="editarA('@datos')" @(asistente.ACTIVO_ASISTENTE.ToString() =="N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="EditarA('@datos')" @(asistente.ACTIVO_ASISTENTE.ToString() =="N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                         <td><button class="btn modal-trigger blue" data-target="modalEliminarA" id="eliminarA" onclick="eliminarA(@asistente.ID_ASISTENTE)" @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
                     </tr>
 
@@ -105,10 +105,6 @@
                             {
                                 <option value="@cliente.ID_CLIENTE">@cliente.NOMBRE_CLIENTE</option>
                             }
-                        }
-                        
-
-
                     </select>
                     <label for="tipoId">id</label>
                 </div>
@@ -143,11 +139,52 @@
             </div>
         </div>
 
+        <div id="modalEditar" class="modal">
+            <div class="modal-content">
+                <div id="div-alerta-editar" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p id="mensajeEditar">  </p>
+                    </div>
+                </div>
+                <h5>Agregar asistente</h5>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el nombre" id="editNombreA" type="text" name="nombreA" class="validate" />
+                    <label for="nombreA">Nombre asistente</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese apellido paterno asistente" id="editarApellidoP" type="text" name="apellidoAP" class="validate" />
+                    <label for="apellidoAP">Apellido parteno</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese apellido materno asistente" id="editarApellidoM" type="text" name="apellidoAM" class="validate" />
+                    <label for="apellidoAM">Apellido Materno</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <select id="editSelectIdCliente" name="tipoId">
+                        <option value="" disabled selected>Seleccione id del cliente</option>
+                        @foreach (var cliente in Model.cliente)
+                        {
+                            <option value="@cliente.ID_CLIENTE">@cliente.NOMBRE_CLIENTE</option>
+                        }
+                    </select>
+                    <label for="tipoId">id</label>
+                </div>
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn green"id="btnEditar">Actualizar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </div>
 <script>
-    $('select').formSelect();
 
+    $('select').formSelect();
 
     $("#btnGuardarA").click(function () {
 
@@ -184,7 +221,39 @@
         });
 
     });
+    function EditarA(datos) {
+        d = datos.split('||');
+        $('#editNombreA').val(d[0]);
+        $('#editarApellidoP').val(d[1]);
+        $('#editarApellidoM').val(d[2]);
+        $('#selectIdCliente').val(d[3]);
+        $('select').formSelect();
+    }
 
+    $("#btnEditar").click(function () {
+        var id = d[3];
+        var url = "@Url.Action("EditarA", "AdministrarAsistente")";
+        var txtNombre = $("#editNombreA").val();
+        var txtApellidoP = $("#editarApellidoP").val();
+        var txtApellidoM = $("#editarApellidoM").val();
+        var selectIdCliente = $("#selectIdCliente").val();
+        var data = {id_asistente : id, nombre_asistente: txtNombre, apellidop_asistente: txtApellidoP, apellidoM_asistente: txtApellidoM, cliente_id_cliente: selectIdCliente };
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                $("#txtNombre").val('');
+                $("#txtApellidoP").val('');
+                $("#txtApellidoM").val('');
+            } else {
+                $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+            }
+            $("#mensajeEditar").html(data.mensaje);
+            $("#div-alerta-editar").show();
+
+        });
+
+
+    });
 
 
 </script>

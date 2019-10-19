@@ -186,6 +186,7 @@ namespace NoMasAccidentes.Controllers
             return Json(resul);
         }
 
+
         public class baseRespuesta
         {
             public bool ok { get; set; }
