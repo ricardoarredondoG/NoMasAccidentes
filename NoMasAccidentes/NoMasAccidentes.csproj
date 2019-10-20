@@ -371,6 +371,7 @@
     <Content Include="Views\AdministrarFactura\Factura.cshtml" />
     <Content Include="Views\Contrato\Index.cshtml" />
     <Content Include="Views\AdministrarTipoActividad\Index.cshtml" />
+    <Content Include="Views\checklist\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

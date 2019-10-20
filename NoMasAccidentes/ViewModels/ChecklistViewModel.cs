@@ -8,7 +8,7 @@ namespace NoMasAccidentes.ViewModels
     public class ChecklistViewModel
     {
         public int id { get; set; }
-        public String descripcion { get; set; }
+        public String desc { get; set; }
         public String nombre { get; set; }
         
     }

@@ -11,7 +11,7 @@ namespace NoMasAccidentes.Controllers
     public class checklistController : Controller
     {
         // GET: checklist
-        public ActionResult Index(int pagina = 1)
+        public ActionResult Index(int pagina = 1, String desc="",String nombre="")
         {
             var cantidadRegistroPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
@@ -32,76 +32,43 @@ namespace NoMasAccidentes.Controllers
             return View(modelo);
         }
 
-        // GET: checklist/Details/5
-        public ActionResult Details(int id)
+        public JsonResult Crear(ChecklistViewModel check)
         {
-            return View();
-        }
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            NoMasAccidentes.Models.CHECKLIST checklist = new CHECKLIST();
+            checklist.NOMBRE_CHECKLIST = check.nombre;
+            checklist.DESCRIPCION_CHECKLIST = check.desc;
 
-        // GET: checklist/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: checklist/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
+            bd.CHECKLIST.Add(checklist);
+            
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                bd.SaveChanges();
             }
-            catch
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
             {
-                return View();
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        string message = string.Format("{0}:{1}",
+                            validationErrors.Entry.Entity.ToString(),
+                            validationError.ErrorMessage);
+                        // raise a new exception nesting
+                        // the current instance as InnerException
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+
             }
+
+
+            return Json("d");
+
+
         }
 
-        // GET: checklist/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: checklist/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: checklist/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: checklist/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
