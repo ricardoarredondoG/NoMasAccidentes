@@ -91,14 +91,11 @@
                     <input placeholder="Fecha" id="txtFecha" name="txtFecha" type="date" class="validate" required>
                     <label for="nombre">Fecha</label>
                 </div>
-                <div class="input-field col s6">
-                    <input placeholder="Tipo Actividad" id="txtTipo" name="actividad" type="text" class="validate" required>
-                    <label for="nombre">Tipo Actvidad</label>
-                </div>
+
 
                 <div class="input-field col s6">
                     <select id="select" name="tipoId">
-                        <option value="" disabled selected>Seleccione id del cliente</option>
+                        <option value="" disabled selected>Seleccione Actividad</option>
 
                         @foreach (var tipo in Model.tipo_actividad)
                         {
@@ -108,6 +105,42 @@
                     <label for="tipoId">id</label>
                 </div>
 
+
+                <div class="input-field col s6">
+                    <select id="selectPersonal" name="personalId">
+                        <option value="" disabled selected>Seleccione Personal</option>
+
+                        @foreach (var personal in Model.personal)
+                        {
+                            <option value="@personal.ID_PERSONAL">@personal.NOMBRE_PERSO</option>
+                        }
+                    </select>
+                    <label for="personalId">personal</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <select id="selectCliente" name="clienteId">
+                        <option value="" disabled selected>Seleccione Cliente</option>
+
+                        @foreach (var cliente in Model.cliente)
+                        {
+                            <option value="@cliente.ID_CLIENTE">@cliente.NOMBRE_CLIENTE</option>
+                        }
+                    </select>
+                    <label for="clienteId">Cliente</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <select id="selectCheck" name="checkId">
+                        <option value="" disabled selected>Seleccione Checklist</option>
+
+                        @foreach (var check in Model.checklist)
+                        {
+                            <option value="@check.ID_CHECKLIST">@check.NOMBRE_CHECKLIST</option>
+                        }
+                    </select>
+                    <label for="checkId">Check</label>
+                </div>
                 <!-- <div class="input-field col s6">
         <select id="selectTipoPersonal">
             <option value="" disabled selected>Seleccione Tipo de  Personal</option>
@@ -139,8 +172,9 @@
                 var txtActividad = $("#txtActividad").val();
                 var txtFecha = $("#txtFecha").val();
                 var txtTipo = $("#txtTipo").val();
-                  
-                
+                var txtTpAct = $('#select').index();
+                var txtPersonal = $('#selectPersonal').index();                
+                var txtCliente = $('#selectCliente').index();                
                 
                  var data = { fecha: txtFecha, descripcion: txtActividad, tipo: txtTipo};
 
@@ -151,6 +185,10 @@
     });
 
     $('#select').formSelect();
+    $('#selectPersonal').formSelect();
+    $('#selectCliente').formSelect();
+    $('#selectCheck').formSelect();
+    
 </script>
 
 

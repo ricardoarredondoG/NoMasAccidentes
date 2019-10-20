@@ -10,6 +10,8 @@ namespace NoMasAccidentes.ViewModels
         public DateTime fecha { get; set; }
         public String descripcion { get; set; }
         public int tipo { get; set; }
-        
+        public int personal { get; set; }
+        public int cliente { get; set; }
+        public int check { get; set; }
     }
 }
