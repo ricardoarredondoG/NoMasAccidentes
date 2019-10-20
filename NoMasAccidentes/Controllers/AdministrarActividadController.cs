@@ -17,7 +17,7 @@ namespace NoMasAccidentes.Controllers
             var cantidadRegistrosPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var actividad = bd.ACTIVIDAD.ToList();
-
+            var tipoActividad = bd.TIPO_ACTIVIDAD.ToList();
             //Busqueda por Nombre
             //if (nombre != "")
             /*{
@@ -33,7 +33,7 @@ namespace NoMasAccidentes.Controllers
             modelo.PaginaActual = pagina;
             modelo.TotalDeRegistros = totalRegistros;
             modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
-            
+            modelo.tipo_actividad = tipoActividad;
 
             return View(modelo);
 
@@ -49,7 +49,7 @@ namespace NoMasAccidentes.Controllers
             NoMasAccidentes.Models.ACTIVIDAD actividades = new ACTIVIDAD();
             actividades.DESCRIPCION_ACTIVIDAD = actividad.descripcion;
             actividades.FECHA_ACTIVIDAD = actividad.fecha;
-            actividades.TIPO_ACTIVIDAD_ID_TIPOACTIVI = 1;
+            actividades.TIPO_ACTIVIDAD_ID_TIPOACTIVI = actividad.tipo;
             actividades.CHECKLIST_ID_CHECKLIST = 2;
             actividades.PERSONAL_ID_PERSONAL = 1;
             actividades.CLIENTE_ID_CLIENTE = 2;

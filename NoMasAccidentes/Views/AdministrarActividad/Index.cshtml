@@ -96,6 +96,18 @@
                     <label for="nombre">Tipo Actvidad</label>
                 </div>
 
+                <div class="input-field col s6">
+                    <select id="select" name="tipoId">
+                        <option value="" disabled selected>Seleccione id del cliente</option>
+
+                        @foreach (var tipo in Model.tipo_actividad)
+                        {
+                            <option value="@tipo.ID_TIPOACTIVI">@tipo.TIPO_ACTIVIDAD1</option>
+                        }
+                    </select>
+                    <label for="tipoId">id</label>
+                </div>
+
                 <!-- <div class="input-field col s6">
         <select id="selectTipoPersonal">
             <option value="" disabled selected>Seleccione Tipo de  Personal</option>
@@ -112,7 +124,7 @@
 
                     </div>
                 </div>
-             </div>
+            </div>
            </div>
          </div>
        </div>
@@ -136,7 +148,9 @@
 
                 $.post(url, data).done();
 
-            });
+    });
+
+    $('#select').formSelect();
 </script>
 
 
