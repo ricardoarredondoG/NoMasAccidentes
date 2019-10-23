@@ -10,7 +10,7 @@
     <title>Factura</title>
 </head>
 <body>
-    @model NoMasAccidentes.Models.FACTURA
+    @model NoMasAccidentes.ViewModels.IndexViewModel
     <header class="clearfix">
         <div id="logo">
             <img src="@Url.Content("~/Imagenes/logo.png")">
@@ -27,14 +27,14 @@
         <div id="details" class="clearfix">
             <div id="client">
                 <div class="to">FACTURA PARA:</div>
-                <h2 class="name">@Model.CONTRATO.CLIENTE.NOMBRE_CLIENTE @Model.CONTRATO.CLIENTE.APELLIDO_CLIENTE</h2>
-                <div class="address">@Model.CONTRATO.CLIENTE.DIREC_CLIENTE</div>
-                <div class="email"><a href="mailto:@Model.CONTRATO.CLIENTE.CORREO_CLIENTE">@Model.CONTRATO.CLIENTE.CORREO_CLIENTE</a></div>
+                <h2 class="name">@Model.facturaPDF.NOMBRE_CLIENTE</h2>
+                <div class="address">@Model.facturaPDF.DIRECCION_CLIENTE</div>
+                <div class="email"><a href="mailto:@Model.facturaPDF.CORREO_ELECTRONICO_CLIENTE">@Model.facturaPDF.CORREO_ELECTRONICO_CLIENTE</a></div>
             </div>
             <div id="invoice">
-                <h1>FACTURA #@Model.ID_FACTURA</h1>
-                <div class="date">Fecha Facturacion: @Model.FECHA.ToString("dd/MM/yyyy")</div>
-                <div class="date">Fecha Vencimiento: @Model.FECHA_VENCIMIENTO.ToString("dd/MM/yyyy")</div>
+                <h1>FACTURA #@Model.facturaPDF.ID_FACTURA</h1>
+                <div class="date">Fecha Facturacion: @Model.facturaPDF.FECHA.ToString("dd/MM/yyyy")</div>
+                <div class="date">Fecha Vencimiento: @Model.facturaPDF.FECHA_VENCIMIENTO.ToString("dd/MM/yyyy")</div>
             </div>
         </div>
         <table border="0" cellspacing="0" cellpadding="0">
@@ -42,36 +42,50 @@
                 <tr>
                     <th class="no">#</th>
                     <th class="desc">DESCRIPCION</th>
-                    <th class="unit">Valor</th>
-                    <th class="qty">CANTIDAD</th>
-                    <th class="total">TOTAL</th>
+                    <th class="qty"></th>
+                    <th class="qty"></th>
+                    <th class="total">VALOR</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td class="no">01</td>
-                    <td class="desc"><h3>@Model.CONTRATO.PLAN.NOMBRE</h3>@Model.CONTRATO.PLAN.DESCRIPCION</td>
-                    <td class="unit">@Model.CONTRATO.PLAN.VALOR.ToString("c")</td>
-                    <td class="qty">1</td>
-                    <td class="total">@Model.TOTAL.ToString("c")</td>
+                    <td class="desc"><h3>@Model.facturaPDF.NOMBRE_PLAN</h3>Plan @Model.facturaPDF.NOMBRE_PLAN</td>
+                    <td class="qty"></td>
+                    <td class="qty"></td>
+                    <td class="total">@Model.facturaPDF.VALOR_PLAN.ToString("c")</td>
                 </tr>
+
+                @{int i = 2;}
+                @foreach (var detalleFactura in Model.detalleFactura)
+                {
+                    <tr>
+                        <td class="no">@i.ToString("00.##")</td>
+                        <td class="desc"><h3>@detalleFactura.NOMBRE_ACTIVIDAD_EXTRA</h3>@detalleFactura.DETALLE_ACTIVIDAD</td>
+                        <td class="qty"></td>
+                        <td class="qty"></td>
+                        <td class="total">@detalleFactura.VALOR_ACTIVIDAD_EXTRA.ToString("c")</td>
+                    </tr>
+                    i++;
+                }
+
 
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="2"></td>
                     <td colspan="2">SUBTOTAL</td>
-                    <td>$5,200.00</td>
+                    <td>@Model.facturaPDF.SUBTOTAL.ToString("c")</td>
                 </tr>
                 <tr>
                     <td colspan="2"></td>
                     <td colspan="2">IVA 19%</td>
-                    <td>$1,300.00</td>
+                    <td>@Model.facturaPDF.IVA.ToString("c")</td>
                 </tr>
                 <tr>
                     <td colspan="2"></td>
                     <td colspan="2">TOTAL</td>
-                    <td>$6,500.00</td>
+                    <td>@Model.facturaPDF.TOTAL.ToString("c")</td>
                 </tr>
             </tfoot>
         </table>

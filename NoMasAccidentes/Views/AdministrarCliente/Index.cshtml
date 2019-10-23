@@ -10,7 +10,7 @@
         <form class="col s12" href="/AdministrarCliente/Buscar" method="post">
             <div class="row">
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese rut del cliente" id="rut" name="rut" required oninput="checkRut(this)"  type="text" class="validate">
+                    <input placeholder="Ingrese rut del cliente" id="rut" name="rut"  oninput="checkRut(this)"  type="text" class="validate" >
                     <label for="rut">Rut cliente</label>
                 </div>
 
@@ -29,7 +29,7 @@
                     <label for="mail">Mail del cliente</label>
                 </div>
 
-                <div class="input-field col s6">
+                <div class="input-field col s4">
                     <div class="center-align">
                         <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
                         <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
@@ -228,7 +228,8 @@
 
 
 <script>
- 
+    $('select').formSelect();
+   
  
         $("#btnGuardarC").click(function () {
 
@@ -293,7 +294,7 @@
         $('#editTxtDireccion').val(d[4]);
         $('#editTxtCorreo').val(d[5]);
         $("#editSelectTipoRubro").select.val(d[6]);
-        //    $("#editSelectTipoRubro").material_select();
+        $("#editSelectTipoRubro").formSelect();
 
         };
 
@@ -347,5 +348,4 @@
         rut.setCustomValidity('');
     }
 
-        $('select').formSelect();
 </script>

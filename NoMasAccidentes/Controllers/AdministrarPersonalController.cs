@@ -73,15 +73,15 @@ namespace NoMasAccidentes.Controllers
                 EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
                 NoMasAccidentes.Models.PERSONAL personal = new PERSONAL();
 
-                personal.DIRECCION_PERSO = persona.direccion_perso;
-                personal.APELLIDOM_PERSO = persona.apellidom_perso;
-                personal.APELLIDOP_PERSO = persona.apellidop_perso;
-                personal.CORREO_PERSO = persona.correo_pero;
-                personal.NOMBRE_PERSO = persona.nombre_perso;
-                personal.TELEFONO_PERSO = persona.telefono_perso;
-                personal.TIPO_PERSONAL_ID_TIPOPERSONAL = persona.tipo_personal;
+            personal.DIRECCION_PERSO = persona.direccion_perso;
+            personal.APELLIDOM_PERSO = persona.apellidom_perso;
+            personal.APELLIDOP_PERSO = persona.apellidop_perso;
+            personal.CORREO_PERSO = persona.correo_pero;
+            personal.NOMBRE_PERSO = persona.nombre_perso;
+            personal.TELEFONO_PERSO = persona.telefono_perso;
+            personal.TIPO_PERSONAL_ID_TIPOPERSONAL = persona.tipo_personal;
 
-                //Generar Usuario
+            //Generar Usuario
 
                 //Eliminar espacios en Blanco
                 var nombre = persona.nombre_perso.Replace(" ", "");
