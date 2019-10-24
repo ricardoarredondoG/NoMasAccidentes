@@ -43,49 +43,68 @@ namespace NoMasAccidentes.Controllers
             //return View();
         }
 
-        //[HttpPost]
-        //[Authorize]
-        //public JsonResult Eliminar(int id)
-        //{
-        //    EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
-        //    var resultado = new baseRespuesta();
-
-        //    var rubro = bd.RUBRO.Find(id);
-        //    rubro.activo_rubro = "N";
-        //    bd.Entry(rubro).State = System.Data.EntityState.Modified;
-        //    bd.SaveChanges();
-        //    resultado.mensaje = "Rubro Eliminado Correctamente";
 
 
-
-
-
-        //    return Json(resultado);
-        //}
 
         [HttpPost]
         [Authorize]
         public JsonResult Crear(RubroViewModel rub)
         {
-
-
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             NoMasAccidentes.Models.RUBRO rubro = new RUBRO();
 
-            rubro.NOMBRE_RUBRO = rub.nombre_rubro;
-            rubro.DESC_RUBRO = rub.desc_rubro;
-            
+            var resultado = new baseRespuesta();
+            resultado = validaciones(rub);
+            if (resultado.ok == true)
+            {
 
-            //Eliminar espacios en Blanco
-            var nombre = rub.nombre_rubro.Replace(" ", "");
-            var descripcion = rub.desc_rubro.Replace(" ", "");
 
-            
-            
+                rubro.NOMBRE_RUBRO = rub.nombre_rubro;
+                rubro.DESC_RUBRO = rub.desc_rubro;
+                rubro.ACTIVO_RUBRO = "S";
 
-            bd.RUBRO.Add(rubro);
-            bd.SaveChanges();
-            return Json("d");
+                //Eliminar espacios en Blanco
+                var nombre = rub.nombre_rubro.Replace(" ", "");
+                var descripcion = rub.desc_rubro.Replace(" ", "");
+
+
+                bd.RUBRO.Add(rubro);
+                bd.SaveChanges();
+
+                resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Rubro Registrado Correctamente</br>";
+            }
+            else
+            {
+                resultado.mensaje = "<b>Error</b></br>" + resultado.mensaje;
+            }
+            return Json(resultado);
+
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public JsonResult Editar(RubroViewModel rub)
+        {
+            var resultado = new baseRespuesta();
+            resultado = validaciones(rub);
+            //if (resultado.ok == true)
+            //{
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+                NoMasAccidentes.Models.RUBRO rubro = new RUBRO();
+
+
+                //var rubroid = bd.RUBRO.Find(rub.id_rubro);
+                rubro.NOMBRE_RUBRO = rub.nombre_rubro;
+                rubro.DESC_RUBRO = rub.desc_rubro;
+                rubro.ACTIVO_RUBRO = "S";
+                bd.Entry(rubro).State = System.Data.EntityState.Modified;
+                bd.SaveChanges();
+                resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Rubro Modificado Correctamente";
+
+            //}
+
+            return Json(resultado);
         }
 
         [HttpPost]
