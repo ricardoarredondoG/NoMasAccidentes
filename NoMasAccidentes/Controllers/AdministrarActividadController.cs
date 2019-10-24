@@ -55,7 +55,7 @@ namespace NoMasAccidentes.Controllers
             actividades.DESCRIPCION_ACTIVIDAD = actividad.descripcion;
             actividades.FECHA_ACTIVIDAD = actividad.fecha;
             actividades.TIPO_ACTIVIDAD_ID_TIPOACTIVI = actividad.tipo;
-            actividades.CHECKLIST_ID_CHECKLIST = actividad.check;
+            //actividades.CHECKLIST_ID_CHECKLIST = 3;
             actividades.PERSONAL_ID_PERSONAL = actividad.personal;
             actividades.CLIENTE_ID_CLIENTE = actividad.cliente;
 
@@ -88,6 +88,46 @@ namespace NoMasAccidentes.Controllers
             
         }
 
-     
-}
+        [HttpPost]
+        [Authorize]
+        public JsonResult Eliminar(int id)
+        {
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var resul = new baseRespuesta();
+            var actividad = bd.ACTIVIDAD.Find(id);
+            
+            //asistente.ACTIVO_ASISTENTE = "N";
+            bd.Entry(actividad).State = System.Data.EntityState.Modified;
+            bd.SaveChanges();
+            resul.mensaje = "Actividad eliminada correctamente";
+            return Json(resul);
+        }
+
+        public class baseRespuesta
+        {
+            public bool ok { get; set; }
+            public string mensaje { get; set; }
+
+
+        }
+
+        public baseRespuesta validaciones(ActividadViewModel actividad)
+        {
+            var resultado = new baseRespuesta();
+            resultado.ok = true;
+            if (actividad.fecha == null)
+            {
+                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese Fecha</br>";
+                resultado.ok = false;
+            }
+            if (actividad.descripcion == null)
+            {
+                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese descripción</br>";
+                resultado.ok = false;
+            }
+            
+            return resultado;
+        }
+
+    }
 }

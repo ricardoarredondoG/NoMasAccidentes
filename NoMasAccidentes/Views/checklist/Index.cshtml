@@ -5,8 +5,8 @@
 
 <div class="container">
     <div class="row">
-        <h3 class="center-align">Registrar cliente</h3>
-        <form class="col s12" href="/AdministrarCliente/Buscar" method="post">
+        <h3 class="center-align">Registrar checklist</h3>
+        <form class="col s12" href="/checlist/Buscar" method="post">
             <div class="row">
                 <div class="input-field col s6">
                     <input placeholder="Ingrese Nombre checklist" id="nombre" name="nombre" type="text" class="validate">
@@ -40,7 +40,20 @@
                 </tr>
             </thead>
             <tbody>
-               
+                @foreach (var check in Model.checklist)
+                {
+                    var datos = check.ACTIVIDAD + "||" + check.DESCRIPCION_CHECKLIST;
+                    <tr>
+
+
+
+                        <td>@check.NOMBRE_CHECKLIST</td>
+                        <td>@check.DESCRIPCION_CHECKLIST</td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar()"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+
+                    </tr>
+                }
 
             </tbody>
 
@@ -55,10 +68,10 @@
             <div class="modal-content">
                 <div id="mensaje" class="alert card green white-text" style="display:none">
                     <div class="card-content">
-                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Cliente registrado correctamente</span></p>
+                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Checklist registrado correctamente</span></p>
                     </div>
                 </div>
-                <h5>Agregar Cliente</h5>
+                <h5>Agregar checklist</h5>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese nombre checklist" id="txtNom" name="nombre" type="text">
                     <label for="nombre">nombre checklist</label>
