@@ -23,7 +23,7 @@ $(document).ready(function(){
     $('.btn-ExitSystem').on('click', function(e){
         e.preventDefault();
         swal({ 
-            title: "&iquest;Esta Seguro que Desea Cerrar Session?",   
+            title: "&iquest;Esta Seguro que Desea Cerrar Sesi&oacute;n?",   
             text: "La sesi&oacute;n actual se cerrar&aacute; y abandonar&aacute; el sistema.",   
             type: "warning",   
             showCancelButton: true,   
@@ -84,6 +84,8 @@ $(document).ready(function(){
         });
     });
 })(jQuery);
+
+
 
 
 
