@@ -106,7 +106,7 @@
                             @factura.FECHA.Year
                         </td>
                         <td>
-                            Por Pagar
+                            @(factura.PAGADO.ToString() == "S" ? "Pagado" : "Por Pagar")
                         </td>
                         <td>
                             @factura.FECHA_VENCIMIENTO.ToString("dd/MM/yyyy")
@@ -118,7 +118,7 @@
                             <a href="~/AdministrarFactura/FacturaPdf/@factura.ID_FACTURA" class="btn modal-trigger red" id="eliminar"><i class="zmdi zmdi-collection-pdf zmdi-hc-fw"></i></a>
                         </td>
                         <td>
-                            <button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-money zmdi-hc-fw"></i></button>
+                            <button class="btn modal-trigger blue" data-target="modalPagar" onclick="pagar(@factura.ID_FACTURA)" @(factura.PAGADO.ToString() == "S" ? "disabled" : "")><i class="zmdi zmdi-money zmdi-hc-fw"></i></button>
                         </td>
 
                     </tr>
@@ -128,6 +128,25 @@
         <div class="center-align">
 
             @{Html.RenderPartial("_paginador", Model);}
+        </div>
+    </div>
+</div>
+<div id="modalPagar" class="modal">
+    <div class="modal-content">
+        <div class="center-align">
+            <div id="contenidoPagar">
+                <h5>¿Esta seguro que desea realizar el pago ?</h5>
+                <button class="btn  green" id="confirmarPagar"> Confirmar </button>
+                <button class="btn modal-close red">Cerrar</button>
+            </div>
+            <div id="div-alerta-pagar" style="display:none">
+                <div class="alert card green white-text">
+                    <div class="card-content">
+                        <p id="mensajePagar"></p>
+                    </div>
+                </div>
+                <button class="btn modal-close red">Cerrar</button>
+            </div>
         </div>
     </div>
 </div>
@@ -164,4 +183,25 @@
         // Si todo sale bien, eliminar errores (decretar que es válido)
         rut.setCustomValidity('');
     }
+
+
+
+        //Realizar Pago
+        var idFactura = null;
+        function pagar(id) {
+            idFactura = id;
+        };
+
+            $("#confirmarPagar").click(function () {
+            var url = "@Url.Action("Pagar", "AdministrarFactura")";
+            var data = { id: idFactura };
+            $.post(url, data).done(function (data) {
+                $("#mensajePagar").html(data.mensaje);
+                $("#div-alerta-pagar").show();
+                $("#contenidoPagar").hide();
+            });
+
+
+
+        });
 </script>

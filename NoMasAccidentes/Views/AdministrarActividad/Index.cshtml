@@ -47,31 +47,28 @@
                     <th data-field="id">Fecha Actividad</th>
                     <th data-field="price">Descripción</th>
                     <th data-field="price">Editar</th>
-                    <th data-field="price">Eliminar</th> 
+                    <th data-field="price">Eliminar</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var actividad in Model.actividad)
                 {
-                    var datos = @actividad.ID_ACTIVIDAD + "||" + actividad.FECHA_ACTIVIDAD + "||" + actividad.DESCRIPCION_ACTIVIDAD + "||" + actividad.PERSONAL_ID_PERSONAL + "||" + actividad.TIPO_ACTIVIDAD_ID_TIPOACTIVI + "||" + actividad.CHECKLIST_ID_CHECKLIST;
-                <tr>
+                    var datos = @actividad.ID_ACTIVIDAD + "||" + actividad.FECHA_ACTIVIDAD + "||" + actividad.DESCRIPCION_ACTIVIDAD + "||" + actividad.PERSONAL_ID_PERSONAL + "||" + actividad.TIPO_ACTIVIDAD_ID_TIPOACTIVI;
+                    <tr>
+                        <td>@actividad.ID_ACTIVIDAD</td>
+                        <td>@actividad.FECHA_ACTIVIDAD</td>
+                        <td>@actividad.DESCRIPCION_ACTIVIDAD</td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="EliminarA" onclick="EliminarA(@actividad.ID_ACTIVIDAD)"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
 
-
-
-                    <td>@actividad.ID_ACTIVIDAD</td>
-                    <td>@actividad.FECHA_ACTIVIDAD</td>
-                    <td>@actividad.DESCRIPCION_ACTIVIDAD</td>
-                    <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar()"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
-
-                </tr>
+                    </tr>
                 }
 
 
             </tbody>
 
         </table>
-        
+
         <!-- Modal Nuevo -->
 
 
@@ -142,13 +139,13 @@
                     <label for="checkId">Check</label>
                 </div>
                 <!-- <div class="input-field col s6">
-        <select id="selectTipoPersonal">
-            <option value="" disabled selected>Seleccione Tipo de  Personal</option>
-            <option value="1">Administrador</option>
-            <option value="2">Profesional</option>
-        </select>
-        <label for="correo">Tipo Personal</label>
-    </div>-->
+                    <select id="selectTipoPersonal">
+                        <option value="" disabled selected>Seleccione Tipo de  Personal</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Profesional</option>
+                    </select>
+                    <label for="correo">Tipo Personal</label>
+                </div>-->
                 <div class="row">
                     <div class="center-align">
                         <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Guardar</button>
@@ -158,9 +155,32 @@
                     </div>
                 </div>
             </div>
-           </div>
-         </div>
-       </div>
+        </div>
+    </div>
+</div>
+
+//modal eliminar
+<div id="modalEliminar" class="modal">
+    <div class="modal-content">
+        <div class="center-align">
+            <div id="contenidoEliminar">
+                <h5>¿Está seguro que desea eliminar la actividad?</h5>
+                <button class="btn green" id="confirmarEliminarA">Confirmar</button>
+                <button class="btn modal-close red">Cerrar</button>
+            </div>
+            <div id="div-alerta-eliminar" style="display:none">
+                <div class="alert card green white-text">
+
+                    <div class="card-content">
+                        <p id="mensajeEliminar"></p>
+                    </div>
+                </div>
+                <button class="btn modal-close red">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
 
@@ -173,9 +193,21 @@
                 var txtFecha = $("#txtFecha").val();
                 var txtTipo = $("#txtTipo").val();
                 var txtTpAct = $('#select').index();
-                var txtPersonal = $('#selectPersonal').index();                
-                var txtCliente = $('#selectCliente').index();                
-                
+                var txtPersonal = $('#selectPersonal').index();
+        var txtCliente = $('#selectCliente').index();
+
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+
+            } else {
+                $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+            }
+            $("#mensaje").html(data.mensaje);
+            $("#div-alerta").show();
+        });
+
+
                  var data = { fecha: txtFecha, descripcion: txtActividad, tipo: txtTipo};
 
                 $("#txtActividad").attr('required', 'required');
@@ -188,7 +220,22 @@
     $('#selectPersonal').formSelect();
     $('#selectCliente').formSelect();
     $('#selectCheck').formSelect();
-    
+
+
+    var idActividad = null;
+    function eliminarA(id) {
+        idActividad = id;
+    };
+    $("#confirmarEliminarA").click(function () {
+        var url = "@Url.Action("EliminarA", "AdministrarActividad")";
+        var data = { id: idActividad }
+        $.post(url, data).done(function (data) {
+            $("#mensajeEliminar").html(data.mensaje);
+            $("#div-alerta-eliminar").show();
+            $("#contenidoEliminar").hide();
+        });
+
+    });
 </script>
 
 

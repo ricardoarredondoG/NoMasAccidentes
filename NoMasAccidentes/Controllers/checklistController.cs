@@ -16,7 +16,7 @@ namespace NoMasAccidentes.Controllers
             var cantidadRegistroPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var checklist = bd.CHECKLIST.ToList();
-
+            
 
             var totalRegistros = checklist.Count();
             checklist = checklist.OrderBy(x => x.ID_CHECKLIST).Skip((pagina - 1) * cantidadRegistroPorPagina).Take(cantidadRegistroPorPagina).ToList();
@@ -69,6 +69,20 @@ namespace NoMasAccidentes.Controllers
 
         }
 
+        [HttpPost]
+        [Authorize]
+        public JsonResult EliminarA(int id)
+        {
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            //var resul = new baseRespuesta();
+            String resul = "";
+            var asistente = bd.ASISTENTE.Find(id);
+            asistente.ACTIVO_ASISTENTE = "N";
+            bd.Entry(asistente).State = System.Data.EntityState.Modified;
+            bd.SaveChanges();
+            resul = "";
+            return Json(resul);
+        }
 
     }
 }
