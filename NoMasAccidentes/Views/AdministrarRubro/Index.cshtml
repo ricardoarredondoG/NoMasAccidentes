@@ -52,7 +52,7 @@
                         <td>@rub.ID_RUBRO</td>
                         <td>@rub.NOMBRE_RUBRO</td>
                         <td>@rub.DESC_RUBRO</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="Editar('@datos')" @(rub.ACTIVO_RUBRO.ToString() == "S" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                         <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@rub.ID_RUBRO)" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
                     </tr>
 
@@ -181,7 +181,7 @@
     });
 
 
-    //Eliminar Personal
+    //Eliminar Rubro
         var idRubro = null;
         function eliminar(id) {
             idRubro = id;
@@ -201,7 +201,7 @@
     });
 
 
-    //Editar Personal
+    //Editar Rubro
         function editar(datos) {
 
             //Llenar campos
@@ -213,12 +213,12 @@
 
     $("#btnEditar").click(function () {
 
-        var id = d[7];
+        var id = d[2];
         //Definir URL
         var url = "@Url.Action("Editar", "AdministrarRubro")";
         var txtNomRub = $("#editTxtNomRub").val();
         var txtDescRub = $("#editTxtDescRub").val();
-        var data = { id_rubro: id, nombre_rubro: txtNomRub, txtDescRu: txtDescRub };
+        var data = { id_rubro: id, nombre_rubro: txtNomRub, desc_rubro: txtDescRub };
 
         $.post(url, data).done(function (data) {
             if (data.ok) {
