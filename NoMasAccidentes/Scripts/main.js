@@ -23,34 +23,37 @@ $(document).ready(function(){
     $('.btn-ExitSystem').on('click', function(e){
         e.preventDefault();
         swal({ 
-            title: "You want out of the system?",   
-            text: "The current session will be closed and will leave the system",   
+            title: "&iquest;Esta Seguro que Desea Cerrar Session?",   
+            text: "La sesi&oacute;n actual se cerrar&aacute; y abandonar&aacute; el sistema.",   
             type: "warning",   
             showCancelButton: true,   
             confirmButtonColor: "#DD6B55",   
-            confirmButtonText: "Yes",
+            confirmButtonText: "Si",
             animation: "slide-from-top",   
             closeOnConfirm: false,
-            cancelButtonText: "Cancel"
+            cancelButtonText: "Cancelar",
+            html:true
         }, function(){   
-            window.location='index.html'; 
+            window.location ='/Login/Logout'; 
         });
     }); 
     $('.btn-Search').on('click', function(e){
         e.preventDefault();
         swal({   
-            title: "What are you looking for?",   
-            text: "Write what you want",   
+            title: "&iquest;Qu&eacute; est&aacute;s buscando?",   
+            text: "Escribe lo que quieres",   
             type: "input",   
             showCancelButton: true,   
             closeOnConfirm: false,   
             animation: "slide-from-top",   
-            inputPlaceholder: "Write here",
-            confirmButtonText: "Search",
-            cancelButtonText: "Cancel" 
+            inputPlaceholder: "Escriba Aqui",
+            confirmButtonText: "Buscar",
+            cancelButtonText: "Cancelar",
+            html: true
         }, function(inputValue){   
             if (inputValue === false) return false;      
-            if (inputValue === "") {     swal.showInputError("You must write something");     
+            if (inputValue === "") {
+                swal.showInputError("Debes escribir algo");     
             return false   
             }      
             swal("Nice!", "You wrote: " + inputValue, "success"); 
@@ -81,3 +84,10 @@ $(document).ready(function(){
         });
     });
 })(jQuery);
+
+
+
+
+
+
+
