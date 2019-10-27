@@ -1,15 +1,16 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title> @ViewBag.Title - No Más Accidentes</title>
 
     @Styles.Render("~/home/Content/css")
-    @Scripts.Render("~/home/bundles/js")
+    @Scripts.RenderFormat(
+    "<script type=\"text/javascript\" charset=\"utf-8\" src=\"{0}\"></script>",
+    "~/home/bundles/js")
     @RenderSection("scripts", false)
 </head>
-s
 <body>
     <!-- Nav Lateral -->
     <section class="NavLateral full-width">
@@ -79,10 +80,10 @@ s
                 <li class="btn-MobileMenu ShowHideMenu"><a href="#" class="tooltipped waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Menu"><i class="zmdi zmdi-more-vert"></i></a></li>
                 <li><figure><img src="@Url.Content("~/Imagenes/user.png")" alt="UserImage"></figure></li>
                 <li style="padding:0 5px;">@Session["nombreApellido"]</li>
-                <li><a href="/Login/Logout" class="tooltipped waves-effect waves-light btn-ExitSystem" data-position="bottom" data-delay="50" data-tooltip="Logout"><i class="zmdi zmdi-power"></i></a></li>
-                <li><a href="#" class="tooltipped waves-effect waves-light btn-Search" data-position="bottom" data-delay="50" data-tooltip="Search"><i class="zmdi zmdi-search"></i></a></li>
+                <li><a href="#" class="tooltipped waves-effect waves-light btn-ExitSystem" data-position="bottom" data-delay="50" data-tooltip="Cerrar Sessión"><i class="zmdi zmdi-power"></i></a></li>
+                <li><a href="#" class="tooltipped waves-effect waves-light btn-Search" data-position="bottom" data-delay="50" data-tooltip="Buscar"><i class="zmdi zmdi-search"></i></a></li>
                 <li>
-                    <a href="#" class="tooltipped waves-effect waves-light btn-Notification" data-position="bottom" data-delay="50" data-tooltip="Notifications">
+                    <a href="#" class="tooltipped waves-effect waves-light btn-Notification" data-position="bottom" data-delay="50" data-tooltip="Notificaciones">
                         <i class="zmdi zmdi-notifications"></i>
                         <span class="ContentPage-Nav-indicator bg-danger">2</span>
                     </a>
@@ -155,9 +156,7 @@ s
 
     </section>
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery-2.2.0.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-2.2.0.js"><\/script>')</script>
 
     <!-- Modal JS -->
     <script>
@@ -165,6 +164,7 @@ s
             var elems = document.querySelectorAll('.modal');
             var instances = M.Modal.init(elems);
         });
+
     </script>
 
 
