@@ -154,6 +154,8 @@
     <Compile Include="App_Start\Program.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="App_Data\AccessDeniedAuthorizeAttribute.cs" />
+    <Compile Include="Controllers\AccesoDenegadoController.cs" />
     <Compile Include="Controllers\AdministrarActividadController.cs" />
     <Compile Include="Controllers\AdministrarAsistenteController.cs" />
     <Compile Include="Controllers\AdministrarClienteController.cs" />
@@ -253,6 +255,7 @@
     <Compile Include="ViewModels\PlanViewModel.cs" />
     <Compile Include="ViewModels\RubroViewModel.cs" />
     <Compile Include="ViewModels\TipoActividadViewModel.cs" />
+    <Compile Include="WebRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\jquery.mCustomScrollbar.css" />
@@ -269,6 +272,7 @@
     <Content Include="fonts\Material-Design-Iconic-Font.svg" />
     <Content Include="Global.asax" />
     <Content Include="Imagenes\logo.png" />
+    <Content Include="Imagenes\unlocked-padlock-black-security-symbol_icon-icons.com_54444.png" />
     <Content Include="Imagenes\user.png" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -310,7 +314,6 @@
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Personal\" />
     <Folder Include="Views\RubroViewModel\" />
     <Folder Include="Views\TipoActividadViewModel\" />
@@ -373,6 +376,7 @@
     <Content Include="Views\Contrato\Index.cshtml" />
     <Content Include="Views\AdministrarTipoActividad\Index.cshtml" />
     <Content Include="Views\checklist\Index.cshtml" />
+    <Content Include="Views\AccesoDenegado\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

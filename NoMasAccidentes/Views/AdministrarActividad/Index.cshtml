@@ -58,8 +58,9 @@
                         <td>@actividad.ID_ACTIVIDAD</td>
                         <td>@actividad.FECHA_ACTIVIDAD</td>
                         <td>@actividad.DESCRIPCION_ACTIVIDAD</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="EliminarA" onclick="EliminarA(@actividad.ID_ACTIVIDAD)"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarA" onclick="eliminarA(@actividad.ID_ACTIVIDAD)"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
 
                     </tr>
                 }
@@ -148,7 +149,7 @@
                 </div>-->
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Guardar</button>
+                        <button class="btn modal-trigger green" data-target="modalNuevo" id="btnGuardar">Guardar</button>
                         <button class="btn modal-close red">Cerrar</button>
 
 
@@ -159,13 +160,99 @@
     </div>
 </div>
 
-//modal eliminar
+<!--Editar-->
+<!-- Modal Editar -->
+<div id="modalEditar" class="modal">
+    <div class="modal-content">
+        <div id="div-alerta" class="alert card green white-text" style="display:none">
+            <div class="card-content">
+                <p id="mensaje"></p>
+            </div>
+        </div>
+        <h5>Editar Actividad</h5>
+        <div class="input-field col s6">
+
+            <div class="input-field col s6">
+                <input placeholder="Nombre Actividad" id="txtActividad" name="nombre" type="text" class="validate">
+                <label for="nombre">Nombre</label>
+            </div>
+            <div class="input-field col s6">
+                <input placeholder="Fecha" id="txtFecha" name="txtFecha" type="date" class="validate" required>
+                <label for="nombre">Fecha</label>
+            </div>
+
+
+            <div class="input-field col s6">
+                <select id="select" name="tipoId">
+                    <option value="" disabled selected>Seleccione Actividad</option>
+
+                    @foreach (var tipo in Model.tipo_actividad)
+                    {
+                        <option value="@tipo.ID_TIPOACTIVI">@tipo.TIPO_ACTIVIDAD1</option>
+                    }
+                </select>
+                <label for="tipoId">id</label>
+            </div>
+
+
+            <div class="input-field col s6">
+                <select id="selectPersonal" name="personalId">
+                    <option value="" disabled selected>Seleccione Personal</option>
+
+                    @foreach (var personal in Model.personal)
+                    {
+                        <option value="@personal.ID_PERSONAL">@personal.NOMBRE_PERSO</option>
+                    }
+                </select>
+                <label for="personalId">personal</label>
+            </div>
+
+            <div class="input-field col s6">
+                <select id="selectCliente" name="clienteId">
+                    <option value="" disabled selected>Seleccione Cliente</option>
+
+                    @foreach (var cliente in Model.cliente)
+                    {
+                        <option value="@cliente.ID_CLIENTE">@cliente.NOMBRE_CLIENTE</option>
+                    }
+                </select>
+                <label for="clienteId">Cliente</label>
+            </div>
+
+            <div class="input-field col s6">
+                <select id="selectCheck" name="checkId">
+                    <option value="" disabled selected>Seleccione Checklist</option>
+
+                    @foreach (var check in Model.checklist)
+                    {
+                        <option value="@check.ID_CHECKLIST">@check.NOMBRE_CHECKLIST</option>
+                    }
+                </select>
+                <label for="checkId">Check</label>
+            </div>
+
+
+
+            <div class="row">
+                <div class="center-align">
+                    <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardarC">Actualizar</button>
+                    <button class="btn modal-close red">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--modal eliminar-->
 <div id="modalEliminar" class="modal">
     <div class="modal-content">
         <div class="center-align">
             <div id="contenidoEliminar">
                 <h5>¿Está seguro que desea eliminar la actividad?</h5>
-                <button class="btn green" id="confirmarEliminarA">Confirmar</button>
+                <button class="btn green" id="btnConfirmarEliminar">Confirmar</button>
                 <button class="btn modal-close red">Cerrar</button>
             </div>
             <div id="div-alerta-eliminar" style="display:none">
@@ -194,7 +281,8 @@
                 var txtTipo = $("#txtTipo").val();
                 var txtTpAct = $('#select').index();
                 var txtPersonal = $('#selectPersonal').index();
-        var txtCliente = $('#selectCliente').index();
+                var txtCliente = $('#selectCliente').index();
+        var data = { fecha: txtFecha, descripcion: txtActividad, tipo: txtTipo };
 
         $.post(url, data).done(function (data) {
             if (data.ok) {
@@ -208,7 +296,7 @@
         });
 
 
-                 var data = { fecha: txtFecha, descripcion: txtActividad, tipo: txtTipo};
+                
 
                 $("#txtActividad").attr('required', 'required');
 
@@ -226,9 +314,9 @@
     function eliminarA(id) {
         idActividad = id;
     };
-    $("#confirmarEliminarA").click(function () {
+    $("#btnConfirmarEliminar").click(function () {
         var url = "@Url.Action("EliminarA", "AdministrarActividad")";
-        var data = { id: idActividad }
+        var data = { id: idActividad };
         $.post(url, data).done(function (data) {
             $("#mensajeEliminar").html(data.mensaje);
             $("#div-alerta-eliminar").show();
@@ -236,6 +324,20 @@
         });
 
     });
+
+    function editar(datos) {
+
+        d = datos.split('||');
+        $('#editTxtRut').val(d[0]);
+        $('#editTxtNombre').val(d[1]);
+        $('#editTxtApellido').val(d[2]);
+        $('#editTxtTelefono').val(d[3]);
+        $('#editTxtDireccion').val(d[4]);
+        $('#editTxtCorreo').val(d[5]);
+        $("#editSelectTipoRubro").select.val(d[6]);
+        $("#editSelectTipoRubro").formSelect();
+
+    };
 </script>
 
 

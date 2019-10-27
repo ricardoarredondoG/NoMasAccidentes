@@ -10,7 +10,7 @@ namespace NoMasAccidentes.ViewModels
     public class ClienteViewModel
     {
 
-    
+        public int id_cliente { get; set; }
         public string rut_cliente { get; set; }
         public string nombre_cliente { get; set; }
         public string apellido_cliente { get; set; }

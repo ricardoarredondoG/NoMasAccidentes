@@ -6,13 +6,15 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace NoMasAccidentes.Controllers
 {
     public class AdministrarPersonalController : Controller
     {
         // GET: AdministrarPersonal
-        [Authorize]
+        
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public ActionResult Index(int pagina = 1, string nombre = "", string apellidoP = "", string usuario = "", string correo = "")
         {
             var cantidadRegistrosPorPagina = 4;

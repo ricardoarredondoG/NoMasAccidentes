@@ -52,6 +52,7 @@ namespace NoMasAccidentes.Controllers
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             NoMasAccidentes.Models.ACTIVIDAD actividades = new ACTIVIDAD();
+
             actividades.DESCRIPCION_ACTIVIDAD = actividad.descripcion;
             actividades.FECHA_ACTIVIDAD = actividad.fecha;
             actividades.TIPO_ACTIVIDAD_ID_TIPOACTIVI = actividad.tipo;
@@ -90,7 +91,7 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
-        public JsonResult Eliminar(int id)
+        public JsonResult EliminarA(int id)
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var resul = new baseRespuesta();
@@ -111,23 +112,7 @@ namespace NoMasAccidentes.Controllers
 
         }
 
-        public baseRespuesta validaciones(ActividadViewModel actividad)
-        {
-            var resultado = new baseRespuesta();
-            resultado.ok = true;
-            if (actividad.fecha == null)
-            {
-                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese Fecha</br>";
-                resultado.ok = false;
-            }
-            if (actividad.descripcion == null)
-            {
-                resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese descripción</br>";
-                resultado.ok = false;
-            }
-            
-            return resultado;
-        }
+      
 
     }
 }
