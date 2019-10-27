@@ -10,7 +10,7 @@
         <form class="col s12" href="/AdministrarCliente/Buscar" method="post">
             <div class="row">
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese rut del cliente" id="rut" name="rut"  oninput="checkRut(this)"  type="text" class="validate" >
+                    <input placeholder="Ingrese rut del cliente" id="rut" name="rut" oninput="checkRut(this)" type="text" class="validate">
                     <label for="rut">Rut cliente</label>
                 </div>
 
@@ -23,17 +23,27 @@
                     <input placeholder="Ingrese apellido del cliente" id="apellido" name="apellido" type="text" class="validate">
                     <label for="apellido">Apellido del cliente</label>
                 </div>
-
                 <div class="input-field col s12">
-                    <input placeholder="Ingrese correo electronico" id="mail" name="mail" type="email" class="validate">
+                    <input placeholder="Ingrese telefono" id="telefono" name="telefono" type="number" class="validate">
+                    <label for="mail">Telefono</label>
+                </div>
+                <div class="input-field col s12">
+                    <input placeholder="Ingrese direccion" id="direccion" name="direccion" type="text" class="validate">
+                    <label for="mail">Direccion</label>
+                </div>
+                <div class="input-field col s12">
+                    <input placeholder="Ingrese mail" id="correo" name="correo" type="text" class="validate">
                     <label for="mail">Mail del cliente</label>
                 </div>
 
-                <div class="input-field col s4">
+                <div class="input-field col s6">
                     <div class="center-align">
                         <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
                         <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+
                     </div>
+
+
 
                 </div>
             </div>

@@ -12,29 +12,37 @@ namespace NoMasAccidentes.Controllers
     public class AdministrarClienteController : Controller
     {
         // GET: AdministrarCliente
-        public ActionResult Index(int pagina = 1, string nombre = "", string apellidoC = "", string usuario = "", string correoC = "")
+        [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
+        public ActionResult Index(int pagina = 1,string rut ="", string nombre = "", string apellido = "",string telefono ="", string direccion ="", string correo = "")
         {
             var cantidadRegistroPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var cliente = bd.CLIENTE.ToList();
-
+            if (rut != "")
+            {
+                cliente = cliente.FindAll(x => x.RUT_CLIENTE.ToLower().Contains(rut.ToLower()));
+            }
             if (nombre != "")
             {
                 cliente = cliente.FindAll(x => x.NOMBRE_CLIENTE.ToLower().Contains(nombre.ToLower()));
             }
 
-            if (apellidoC != "")
+            if (apellido != "")
             {
-                cliente = cliente.FindAll(x => x.APELLIDO_CLIENTE.ToLower().Contains(apellidoC.ToLower()));
+                cliente = cliente.FindAll(x => x.APELLIDO_CLIENTE.ToLower().Contains(apellido.ToLower()));
             }
-
-            if (usuario != "")
+            if (telefono != "")
             {
-                cliente = cliente.FindAll(x => x.USERNAME_CLIENTE.ToLower().Contains(usuario.ToLower()));
+                cliente = cliente.FindAll(x => x.TELEFONO_CLIENTE.ToLower().Contains(telefono.ToLower()));
             }
-            if (correoC != "")
+            if (direccion != "")
             {
-                cliente = cliente.FindAll(x => x.CORREO_CLIENTE.ToLower().Contains(correoC.ToLower()));
+                cliente = cliente.FindAll(x => x.DIREC_CLIENTE.ToLower().Contains(direccion.ToLower()));
+            }
+            if (correo != "")
+            {
+                cliente = cliente.FindAll(x => x.CORREO_CLIENTE.ToLower().Contains(correo.ToLower()));
             }
 
             var totalRegistros = cliente.Count();
