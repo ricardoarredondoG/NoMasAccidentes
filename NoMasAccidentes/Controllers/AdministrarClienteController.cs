@@ -163,7 +163,7 @@ namespace NoMasAccidentes.Controllers
                 clienteId.RUBRO_ID_RUBRO = cliente.rubro_id_rubro;
                 bd.Entry(clienteId).State = System.Data.EntityState.Modified;
                 bd.SaveChanges();
-                resul.mensaje = " < i class='zmdi zmdi-check zmdi-hc-fw'></i>Cliente Modificado Correctamente";
+                resul.mensaje = " Cliente Modificado Correctamente";
             }
             return Json(resul);
         }
