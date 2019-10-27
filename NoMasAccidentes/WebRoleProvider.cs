@@ -40,9 +40,7 @@ namespace NoMasAccidentes
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
 
-            var user = bd.PERSONAL.FirstOrDefault(x=> x.USERNAME_PERSO == username);
-
-            var tipoPersonal = bd.TIPO_PERSONAL.Join(bd.PERSONAL, x=> x.ID_TIPOPERSONAL, cm=> cm.ID_PERSONAL, (x, cm) => new { unidad = x, rango = cm }).Where(x=> x.rango.USERNAME_PERSO.Equals(username)).Select(x=> x.unidad.TIPO_PERSONAL1).ToArray();
+            var tipoPersonal = bd.TIPO_PERSONAL.Join(bd.PERSONAL, x=> x.ID_TIPOPERSONAL, cm=> cm.TIPO_PERSONAL_ID_TIPOPERSONAL, (x, cm) => new { unidad = x, rango = cm }).Where(x=> x.rango.USERNAME_PERSO.Equals(username)).Select(x=> x.unidad.TIPO_PERSONAL1).ToArray();
 
             return tipoPersonal;
 

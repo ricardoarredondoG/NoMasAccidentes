@@ -14,6 +14,7 @@ namespace NoMasAccidentes.Controllers
     {
         // GET: AdministrarPersonal
         
+        [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
         public ActionResult Index(int pagina = 1, string nombre = "", string apellidoP = "", string usuario = "", string correo = "")
         {
