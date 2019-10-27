@@ -27,12 +27,21 @@ namespace NoMasAccidentes.Controllers
             if (user != null)
             {
 
-                FormsAuthentication.SetAuthCookie(user.USUARIO1, true);
 
                 if(user.TIPO_USUARIO == 1 || user.TIPO_USUARIO == 2)
                 {
-                    var nombreApellido = bd.PERSONAL.FirstOrDefault(e => e.USUARIO == user.ID_USUARIO);
-                    Session["nombreApellido"] = nombreApellido.NOMBRE_PERSO + " " + nombreApellido.APELLIDOP_PERSO;
+                    var user1 = bd.PERSONAL.FirstOrDefault(e => e.USUARIO == user.ID_USUARIO);
+                    
+
+                    if (user1.ACTIVO.Equals("S"))
+                    {
+                        FormsAuthentication.SetAuthCookie(user.USUARIO1, true);
+                        Session["nombreApellido"] = user1.NOMBRE_PERSO + " " + user1.APELLIDOP_PERSO;
+                    }else
+                    {
+                        return RedirectToAction("Index", new { message = "*Usuario Inactivo" });
+                    }
+
                 }
 
                 return RedirectToAction("Index", "Home");
