@@ -14,6 +14,7 @@ namespace NoMasAccidentes.Controllers
     {
         // GET: AdministrarFactura
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador, Cliente")]
         public ActionResult Index(int pagina = 1, String rut="",  String nombre="", int selectEstado = 0, int selectMes = 0, int selectAno = 0, DateTime? fechaVencimientoDesde = null, DateTime? fechaVencimientoHasta = null)
         {
             var cantidadRegistrosPorPagina = 4;
