@@ -23,48 +23,33 @@ namespace NoMasAccidentes.Controllers
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
 
-            //Si es Personal
-            if (tipo_usuario == 2)
+            var user = bd.USUARIO.FirstOrDefault(e => e.USUARIO1 == username && e.PASSWORD == password);
+            if (user != null)
             {
-                var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password && e.TIPO_PERSONAL.ID_TIPOPERSONAL == 2 && e.ACTIVO=="S");
 
-                if (user != null)
-                {
-                    FormsAuthentication.SetAuthCookie(user.USERNAME_PERSO, true);
-                    Session["nombreApellido"] = user.NOMBRE_PERSO + " " + user.APELLIDOP_PERSO;
+                FormsAuthentication.SetAuthCookie(user.USUARIO1, true);
 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
+                if(user.TIPO_USUARIO == 1 || user.TIPO_USUARIO == 2)
                 {
-                    return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
+                    var nombreApellido = bd.PERSONAL.FirstOrDefault(e => e.USUARIO == user.ID_USUARIO);
+                    Session["nombreApellido"] = nombreApellido.NOMBRE_PERSO + " " + nombreApellido.APELLIDOP_PERSO;
                 }
+
+                return RedirectToAction("Index", "Home");
             }
-            //Si Es Administrador
-            else if(tipo_usuario == 1)
+            else
             {
-                var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password && e.TIPO_PERSONAL.ID_TIPOPERSONAL == 1 && e.ACTIVO == "S");
-
-                if (user != null)
-                {
-                    FormsAuthentication.SetAuthCookie(user.USERNAME_PERSO, true);
-                    Session["nombreApellido"] = user.NOMBRE_PERSO + " " + user.APELLIDOP_PERSO;
-
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
-                }
+                return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
             }
-            //Si Es Cliente
-            else 
+
+
+            if (tipo_usuario == 3)
             {
-                var user = bd.CLIENTE.FirstOrDefault(e => e.USERNAME_CLIENTE == username && e.PASSWORD_CLIENTE == password );
-                if (user != null)
+                var user1 = bd.CLIENTE.FirstOrDefault(e => e.USERNAME_CLIENTE == username && e.PASSWORD_CLIENTE == password);
+                if (user1 != null)
                 {
-                    FormsAuthentication.SetAuthCookie(user.USERNAME_CLIENTE, true);
-                    Session["nombreApellido"] = user.NOMBRE_CLIENTE + " " + user.APELLIDO_CLIENTE;
+                    FormsAuthentication.SetAuthCookie(user1.USERNAME_CLIENTE, true);
+                    Session["nombreApellido"] = user1.NOMBRE_CLIENTE + " " + user1.APELLIDO_CLIENTE;
 
                     return RedirectToAction("Index", "Home");
                 }

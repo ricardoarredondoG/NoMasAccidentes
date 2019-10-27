@@ -23,15 +23,13 @@ namespace NoMasAccidentes.Models
         public string NOMBRE_PERSO { get; set; }
         public string APELLIDOP_PERSO { get; set; }
         public string APELLIDOM_PERSO { get; set; }
-        public string USERNAME_PERSO { get; set; }
-        public string PASSWORD_PERSO { get; set; }
         public string DIRECCION_PERSO { get; set; }
         public string TELEFONO_PERSO { get; set; }
         public string CORREO_PERSO { get; set; }
-        public decimal TIPO_PERSONAL_ID_TIPOPERSONAL { get; set; }
         public string ACTIVO { get; set; }
+        public decimal USUARIO { get; set; }
     
         public virtual ICollection<ACTIVIDAD> ACTIVIDAD { get; set; }
-        public virtual TIPO_PERSONAL TIPO_PERSONAL { get; set; }
+        public virtual USUARIO USUARIO1 { get; set; }
     }
 }

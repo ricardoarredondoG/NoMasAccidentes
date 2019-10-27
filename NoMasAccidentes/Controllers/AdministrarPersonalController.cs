@@ -38,7 +38,7 @@ namespace NoMasAccidentes.Controllers
 
             if (usuario != "")
             {
-                personal = personal.FindAll(x => x.USERNAME_PERSO.ToLower().Contains(usuario.ToLower()));
+                personal = personal.FindAll(x => x.USUARIO1.USUARIO1.ToLower().Contains(usuario.ToLower()));
             }
 
             //Busqueda por Correo Electronico
@@ -82,7 +82,7 @@ namespace NoMasAccidentes.Controllers
             personal.CORREO_PERSO = persona.correo_pero;
             personal.NOMBRE_PERSO = persona.nombre_perso;
             personal.TELEFONO_PERSO = persona.telefono_perso;
-            personal.TIPO_PERSONAL_ID_TIPOPERSONAL = persona.tipo_personal;
+            personal.USUARIO1.TIPO_PERSONAL.ID_TIPOPERSONAL = persona.tipo_personal;
 
             //Generar Usuario
 
@@ -100,7 +100,7 @@ namespace NoMasAccidentes.Controllers
 
                     //Consulta
 
-                    if (bd.PERSONAL.ToList().FindAll(x => x.USERNAME_PERSO.Contains(username)).Count() == 0)
+                    if (bd.PERSONAL.ToList().FindAll(x => x.USUARIO1.USUARIO1.Contains(username)).Count() == 0)
                     {
                         username_encontrado = true;
                     }
@@ -110,13 +110,13 @@ namespace NoMasAccidentes.Controllers
                     }
 
                 }
-                personal.USERNAME_PERSO = username;
+                personal.USUARIO1.USUARIO1 = username;
                 personal.ACTIVO = "S";
                 //GenerarPassword
                 var guid = Guid.NewGuid();
                 var justNumbers = new String(guid.ToString().Where(Char.IsDigit).ToArray());
                 var password = int.Parse(justNumbers.Substring(4, 4));
-                personal.PASSWORD_PERSO = password.ToString();
+                personal.USUARIO1.PASSWORD = password.ToString();
 
                 bd.PERSONAL.Add(personal);
                 bd.SaveChanges();
@@ -164,7 +164,7 @@ namespace NoMasAccidentes.Controllers
                 personaId.APELLIDOP_PERSO = persona.apellidop_perso;
                 personaId.CORREO_PERSO = persona.correo_pero;
                 personaId.DIRECCION_PERSO = persona.direccion_perso;
-                personaId.TIPO_PERSONAL_ID_TIPOPERSONAL = persona.tipo_personal;
+                personaId.USUARIO1.TIPO_PERSONAL.ID_TIPOPERSONAL = persona.tipo_personal;
                 personaId.TELEFONO_PERSO = persona.telefono_perso;
                 personaId.NOMBRE_PERSO = persona.nombre_perso;
                 bd.Entry(personaId).State = System.Data.EntityState.Modified;
