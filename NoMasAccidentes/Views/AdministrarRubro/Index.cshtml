@@ -46,7 +46,7 @@
             <tbody>
                 @foreach (var rub in Model.rubro)
                 {
-                    var datos = @rub.NOMBRE_RUBRO + "||" + @rub.DESC_RUBRO;
+                    var datos = @rub.NOMBRE_RUBRO + "||" + @rub.DESC_RUBRO + "||" + rub.ID_RUBRO ;
 
                     <tr>
                         <td>@rub.ID_RUBRO</td>
