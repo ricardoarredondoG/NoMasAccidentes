@@ -31,9 +31,8 @@ namespace NoMasAccidentes.Models
         public string DIREC_CLIENTE { get; set; }
         public string CORREO_CLIENTE { get; set; }
         public decimal RUBRO_ID_RUBRO { get; set; }
-        public string USERNAME_CLIENTE { get; set; }
-        public string PASSWORD_CLIENTE { get; set; }
         public string ACTIVO_CLIENTE { get; set; }
+        public decimal USUARIO_ID_USUARIO { get; set; }
     
         public virtual ICollection<ACTIVIDAD> ACTIVIDAD { get; set; }
         public virtual ICollection<ASISTENTE> ASISTENTE { get; set; }
@@ -41,5 +40,6 @@ namespace NoMasAccidentes.Models
         public virtual ICollection<CONTRATO> CONTRATO { get; set; }
         public virtual ICollection<REPORTAR> REPORTAR { get; set; }
         public virtual ICollection<SOLICITUD> SOLICITUD { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }

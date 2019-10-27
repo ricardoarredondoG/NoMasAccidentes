@@ -26,8 +26,8 @@ namespace NoMasAccidentes.Models
         public string ACTIVO { get; set; }
         public decimal PLAN_ID_PLAN { get; set; }
     
-        public virtual CLIENTE CLIENTE { get; set; }
         public virtual PLAN PLAN { get; set; }
         public virtual ICollection<FACTURA> FACTURA { get; set; }
+        public virtual CLIENTE CLIENTE { get; set; }
     }
 }

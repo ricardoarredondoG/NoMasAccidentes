@@ -58,9 +58,8 @@
           <Property Name="DIREC_CLIENTE" Type="varchar2" MaxLength="100" Nullable="false" />
           <Property Name="CORREO_CLIENTE" Type="varchar2" MaxLength="30" Nullable="false" />
           <Property Name="RUBRO_ID_RUBRO" Type="number" Precision="38" Scale="0" Nullable="false" />
-          <Property Name="USERNAME_CLIENTE" Type="varchar2" MaxLength="50" Nullable="false" />
-          <Property Name="PASSWORD_CLIENTE" Type="varchar2" MaxLength="100" Nullable="false" />
           <Property Name="ACTIVO_CLIENTE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="USUARIO_ID_USUARIO" Type="number" Precision="38" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="CONTRATO">
           <Key>
@@ -204,7 +203,7 @@
           <Property Name="ID_USUARIO" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="USUARIO" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="PASSWORD" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="TIPO_USUARIO" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="TIPO_USUARIO_ID_TIPO_USUARIO" Type="number" Precision="38" Scale="0" Nullable="false" />
         </EntityType>
         <Association Name="ACTIVIDAD_CHECKLIST_FK">
           <End Role="CHECKLIST" Type="Self.CHECKLIST" Multiplicity="1" />
@@ -299,6 +298,18 @@
             </Principal>
             <Dependent Role="CLIENTE">
               <PropertyRef Name="RUBRO_ID_RUBRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CLIENTE_USUARIO_FK">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="USUARIO_ID_USUARIO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -430,7 +441,7 @@
               <PropertyRef Name="ID_TIPOPERSONAL" />
             </Principal>
             <Dependent Role="USUARIO">
-              <PropertyRef Name="TIPO_USUARIO" />
+              <PropertyRef Name="TIPO_USUARIO_ID_TIPO_USUARIO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -484,6 +495,10 @@
           </AssociationSet>
           <AssociationSet Name="CLIENTE_RUBRO_FK" Association="Self.CLIENTE_RUBRO_FK">
             <End Role="RUBRO" EntitySet="RUBRO" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="CLIENTE_USUARIO_FK" Association="Self.CLIENTE_USUARIO_FK">
+            <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CLIENTE" EntitySet="CLIENTE" />
           </AssociationSet>
           <AssociationSet Name="CONTRATO_CLIENTE_FK" Association="Self.CONTRATO_CLIENTE_FK">
@@ -547,11 +562,11 @@
           <Property Name="TIPO_ACTIVIDAD_ID_TIPOACTIVI" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
           <Property Name="CHECKLIST_ID_CHECKLIST" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
           <NavigationProperty Name="CHECKLIST" Relationship="Self.ACTIVIDAD_CHECKLIST_FK" FromRole="ACTIVIDAD" ToRole="CHECKLIST" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.ACTIVIDAD_CLIENTE_FK" FromRole="ACTIVIDAD" ToRole="CLIENTE" />
           <NavigationProperty Name="TIPO_ACTIVIDAD" Relationship="Self.ACTIVIDAD_TIPO_ACTIVIDAD_FK" FromRole="ACTIVIDAD" ToRole="TIPO_ACTIVIDAD" />
           <NavigationProperty Name="CAPACITACION" Relationship="Self.CAPACITACION_ACTIVIDAD_FK" FromRole="ACTIVIDAD" ToRole="CAPACITACION" />
           <Property Name="ACTIVO_ACTIVIDAD" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="PERSONAL" Relationship="ModeloDato.ACTIVIDAD_PERSONAL_FK" FromRole="ACTIVIDAD" ToRole="PERSONAL" />
+          <NavigationProperty Name="CLIENTE" Relationship="ModeloDato.ACTIVIDAD_CLIENTE_FK" FromRole="ACTIVIDAD" ToRole="CLIENTE" />
         </EntityType>
         <EntityType Name="ASISTENTE">
           <Key>
@@ -562,9 +577,9 @@
           <Property Name="APELLIDOM_ASISTENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="APELLIDOP_ASISTENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CLIENTE_ID_CLIENTE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.ASISTENTE_CLIENTE_FK" FromRole="ASISTENTE" ToRole="CLIENTE" />
           <NavigationProperty Name="CAPACITACION" Relationship="Self.CAPACITACION_ASISTENTE_FK" FromRole="ASISTENTE" ToRole="CAPACITACION" />
           <Property Name="ACTIVO_ASISTENTE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="ModeloDato.ASISTENTE_CLIENTE_FK" FromRole="ASISTENTE" ToRole="CLIENTE" />
         </EntityType>
         <EntityType Name="CAPACITACION">
           <Key>
@@ -587,28 +602,6 @@
           <NavigationProperty Name="ACTIVIDAD" Relationship="Self.ACTIVIDAD_CHECKLIST_FK" FromRole="CHECKLIST" ToRole="ACTIVIDAD" />
           <NavigationProperty Name="OPCION_CHECKLIST" Relationship="Self.OPCION_CHECKLIST_CHECKLIST_FK" FromRole="CHECKLIST" ToRole="OPCION_CHECKLIST" />
         </EntityType>
-        <EntityType Name="CLIENTE">
-          <Key>
-            <PropertyRef Name="ID_CLIENTE" />
-          </Key>
-          <Property Name="ID_CLIENTE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
-          <Property Name="RUT_CLIENTE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NOMBRE_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="APELLIDO_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TELEFONO_CLIENTE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DIREC_CLIENTE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CORREO_CLIENTE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RUBRO_ID_RUBRO" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
-          <Property Name="USERNAME_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PASSWORD_CLIENTE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="ACTIVIDAD" Relationship="Self.ACTIVIDAD_CLIENTE_FK" FromRole="CLIENTE" ToRole="ACTIVIDAD" />
-          <NavigationProperty Name="ASISTENTE" Relationship="Self.ASISTENTE_CLIENTE_FK" FromRole="CLIENTE" ToRole="ASISTENTE" />
-          <NavigationProperty Name="RUBRO" Relationship="Self.CLIENTE_RUBRO_FK" FromRole="CLIENTE" ToRole="RUBRO" />
-          <NavigationProperty Name="CONTRATO" Relationship="Self.CONTRATO_CLIENTE_FK" FromRole="CLIENTE" ToRole="CONTRATO" />
-          <NavigationProperty Name="REPORTAR" Relationship="Self.REPORTAR_CLIENTE_FK" FromRole="CLIENTE" ToRole="REPORTAR" />
-          <NavigationProperty Name="SOLICITUD" Relationship="Self.SOLICITUD_CLIENTE_FK" FromRole="CLIENTE" ToRole="SOLICITUD" />
-          <Property Name="ACTIVO_CLIENTE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
         <EntityType Name="CONTRATO">
           <Key>
             <PropertyRef Name="ID_CONTRATO" />
@@ -617,11 +610,11 @@
           <Property Name="FECHA_INICIO_CONTRATO" Type="DateTime" Nullable="false" />
           <Property Name="FECHA_FIN_CONTRATO" Type="DateTime" Nullable="false" />
           <Property Name="CLIENTE_ID_CLIENTE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.CONTRATO_CLIENTE_FK" FromRole="CONTRATO" ToRole="CLIENTE" />
           <Property Name="ACTIVO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="PLAN_ID_PLAN" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
           <NavigationProperty Name="PLAN" Relationship="ModeloDato.CONTRATO_PLAN_FK" FromRole="CONTRATO" ToRole="PLAN" />
           <NavigationProperty Name="FACTURA" Relationship="ModeloDato.FACTURA_CONTRATO_PK" FromRole="CONTRATO" ToRole="FACTURA" />
+          <NavigationProperty Name="CLIENTE" Relationship="ModeloDato.CONTRATO_CLIENTE_FK" FromRole="CONTRATO" ToRole="CLIENTE" />
         </EntityType>
         <EntityType Name="OPCION_CHECKLIST">
           <Key>
@@ -644,8 +637,8 @@
           <Property Name="ESTADO_REPORTAR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="TIPO_REPORTAR_ID_TIPO_REPORTAR" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
           <Property Name="CLIENTE_ID_CLIENTE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.REPORTAR_CLIENTE_FK" FromRole="REPORTAR" ToRole="CLIENTE" />
           <NavigationProperty Name="TIPO_REPORTAR" Relationship="Self.REPORTAR_TIPO_REPORTAR_FK" FromRole="REPORTAR" ToRole="TIPO_REPORTAR" />
+          <NavigationProperty Name="CLIENTE" Relationship="ModeloDato.REPORTAR_CLIENTE_FK" FromRole="REPORTAR" ToRole="CLIENTE" />
         </EntityType>
         <EntityType Name="RUBRO">
           <Key>
@@ -654,8 +647,8 @@
           <Property Name="ID_RUBRO" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
           <Property Name="NOMBRE_RUBRO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DESC_RUBRO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.CLIENTE_RUBRO_FK" FromRole="RUBRO" ToRole="CLIENTE" />
           <Property Name="ACTIVO_RUBRO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="ModeloDato.CLIENTE_RUBRO_FK" FromRole="RUBRO" ToRole="CLIENTE" />
         </EntityType>
         <EntityType Name="SOLICITUD">
           <Key>
@@ -666,8 +659,8 @@
           <Property Name="DESCRIPCION_SOLICITUD" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TIPO_SOLICITUD_ID_TIPOSOLICI" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
           <Property Name="CLIENTE_ID_CLIENTE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.SOLICITUD_CLIENTE_FK" FromRole="SOLICITUD" ToRole="CLIENTE" />
           <NavigationProperty Name="TIPO_SOLICITUD" Relationship="Self.SOLICITUD_TIPO_SOLICITUD_FK" FromRole="SOLICITUD" ToRole="TIPO_SOLICITUD" />
+          <NavigationProperty Name="CLIENTE" Relationship="ModeloDato.SOLICITUD_CLIENTE_FK" FromRole="SOLICITUD" ToRole="CLIENTE" />
         </EntityType>
         <EntityType Name="TIPO_ACTIVIDAD">
           <Key>
@@ -707,18 +700,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ACTIVIDAD_CLIENTE_FK">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
-          <End Role="ACTIVIDAD" Type="Self.ACTIVIDAD" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Principal>
-            <Dependent Role="ACTIVIDAD">
-              <PropertyRef Name="CLIENTE_ID_CLIENTE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="ACTIVIDAD_TIPO_ACTIVIDAD_FK">
           <End Role="TIPO_ACTIVIDAD" Type="Self.TIPO_ACTIVIDAD" Multiplicity="1" />
           <End Role="ACTIVIDAD" Type="Self.ACTIVIDAD" Multiplicity="*" />
@@ -743,18 +724,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ASISTENTE_CLIENTE_FK">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
-          <End Role="ASISTENTE" Type="Self.ASISTENTE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Principal>
-            <Dependent Role="ASISTENTE">
-              <PropertyRef Name="CLIENTE_ID_CLIENTE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="CAPACITACION_ASISTENTE_FK">
           <End Role="ASISTENTE" Type="Self.ASISTENTE" Multiplicity="1" />
           <End Role="CAPACITACION" Type="Self.CAPACITACION" Multiplicity="*" />
@@ -776,54 +745,6 @@
             </Principal>
             <Dependent Role="OPCION_CHECKLIST">
               <PropertyRef Name="CHECKLIST_ID_CHECKLIST" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CLIENTE_RUBRO_FK">
-          <End Role="RUBRO" Type="Self.RUBRO" Multiplicity="1" />
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RUBRO">
-              <PropertyRef Name="ID_RUBRO" />
-            </Principal>
-            <Dependent Role="CLIENTE">
-              <PropertyRef Name="RUBRO_ID_RUBRO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CONTRATO_CLIENTE_FK">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
-          <End Role="CONTRATO" Type="Self.CONTRATO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Principal>
-            <Dependent Role="CONTRATO">
-              <PropertyRef Name="CLIENTE_ID_CLIENTE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="REPORTAR_CLIENTE_FK">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
-          <End Role="REPORTAR" Type="Self.REPORTAR" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Principal>
-            <Dependent Role="REPORTAR">
-              <PropertyRef Name="CLIENTE_ID_CLIENTE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="SOLICITUD_CLIENTE_FK">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
-          <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Principal>
-            <Dependent Role="SOLICITUD">
-              <PropertyRef Name="CLIENTE_ID_CLIENTE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -856,7 +777,6 @@
           <EntitySet Name="ASISTENTE" EntityType="Self.ASISTENTE" />
           <EntitySet Name="CAPACITACION" EntityType="Self.CAPACITACION" />
           <EntitySet Name="CHECKLIST" EntityType="Self.CHECKLIST" />
-          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" />
           <EntitySet Name="CONTRATO" EntityType="Self.CONTRATO" />
           <EntitySet Name="OPCION_CHECKLIST" EntityType="Self.OPCION_CHECKLIST" />
           <EntitySet Name="REPORTAR" EntityType="Self.REPORTAR" />
@@ -869,10 +789,6 @@
             <End Role="CHECKLIST" EntitySet="CHECKLIST" />
             <End Role="ACTIVIDAD" EntitySet="ACTIVIDAD" />
           </AssociationSet>
-          <AssociationSet Name="ACTIVIDAD_CLIENTE_FK" Association="Self.ACTIVIDAD_CLIENTE_FK">
-            <End Role="CLIENTE" EntitySet="CLIENTE" />
-            <End Role="ACTIVIDAD" EntitySet="ACTIVIDAD" />
-          </AssociationSet>
           <AssociationSet Name="ACTIVIDAD_TIPO_ACTIVIDAD_FK" Association="Self.ACTIVIDAD_TIPO_ACTIVIDAD_FK">
             <End Role="TIPO_ACTIVIDAD" EntitySet="TIPO_ACTIVIDAD" />
             <End Role="ACTIVIDAD" EntitySet="ACTIVIDAD" />
@@ -881,10 +797,6 @@
             <End Role="ACTIVIDAD" EntitySet="ACTIVIDAD" />
             <End Role="CAPACITACION" EntitySet="CAPACITACION" />
           </AssociationSet>
-          <AssociationSet Name="ASISTENTE_CLIENTE_FK" Association="Self.ASISTENTE_CLIENTE_FK">
-            <End Role="CLIENTE" EntitySet="CLIENTE" />
-            <End Role="ASISTENTE" EntitySet="ASISTENTE" />
-          </AssociationSet>
           <AssociationSet Name="CAPACITACION_ASISTENTE_FK" Association="Self.CAPACITACION_ASISTENTE_FK">
             <End Role="ASISTENTE" EntitySet="ASISTENTE" />
             <End Role="CAPACITACION" EntitySet="CAPACITACION" />
@@ -892,22 +804,6 @@
           <AssociationSet Name="OPCION_CHECKLIST_CHECKLIST_FK" Association="Self.OPCION_CHECKLIST_CHECKLIST_FK">
             <End Role="CHECKLIST" EntitySet="CHECKLIST" />
             <End Role="OPCION_CHECKLIST" EntitySet="OPCION_CHECKLIST" />
-          </AssociationSet>
-          <AssociationSet Name="CLIENTE_RUBRO_FK" Association="Self.CLIENTE_RUBRO_FK">
-            <End Role="RUBRO" EntitySet="RUBRO" />
-            <End Role="CLIENTE" EntitySet="CLIENTE" />
-          </AssociationSet>
-          <AssociationSet Name="CONTRATO_CLIENTE_FK" Association="Self.CONTRATO_CLIENTE_FK">
-            <End Role="CLIENTE" EntitySet="CLIENTE" />
-            <End Role="CONTRATO" EntitySet="CONTRATO" />
-          </AssociationSet>
-          <AssociationSet Name="REPORTAR_CLIENTE_FK" Association="Self.REPORTAR_CLIENTE_FK">
-            <End Role="CLIENTE" EntitySet="CLIENTE" />
-            <End Role="REPORTAR" EntitySet="REPORTAR" />
-          </AssociationSet>
-          <AssociationSet Name="SOLICITUD_CLIENTE_FK" Association="Self.SOLICITUD_CLIENTE_FK">
-            <End Role="CLIENTE" EntitySet="CLIENTE" />
-            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
           </AssociationSet>
           <AssociationSet Name="REPORTAR_TIPO_REPORTAR_FK" Association="Self.REPORTAR_TIPO_REPORTAR_FK">
             <End Role="TIPO_REPORTAR" EntitySet="TIPO_REPORTAR" />
@@ -933,11 +829,40 @@
             <End Role="DETALLE_FACTURA" EntitySet="DETALLE_FACTURA" />
           </AssociationSet>
           <EntitySet Name="PERSONAL" EntityType="ModeloDato.PERSONAL" />
-          <EntitySet Name="TIPO_PERSONAL" EntityType="ModeloDato.TIPO_PERSONAL" />
-          <EntitySet Name="USUARIO" EntityType="ModeloDato.USUARIO" />
           <AssociationSet Name="ACTIVIDAD_PERSONAL_FK" Association="ModeloDato.ACTIVIDAD_PERSONAL_FK">
             <End Role="PERSONAL" EntitySet="PERSONAL" />
             <End Role="ACTIVIDAD" EntitySet="ACTIVIDAD" />
+          </AssociationSet>
+          <EntitySet Name="CLIENTE" EntityType="ModeloDato.CLIENTE" />
+          <AssociationSet Name="ACTIVIDAD_CLIENTE_FK" Association="ModeloDato.ACTIVIDAD_CLIENTE_FK">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="ACTIVIDAD" EntitySet="ACTIVIDAD" />
+          </AssociationSet>
+          <AssociationSet Name="ASISTENTE_CLIENTE_FK" Association="ModeloDato.ASISTENTE_CLIENTE_FK">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="ASISTENTE" EntitySet="ASISTENTE" />
+          </AssociationSet>
+          <AssociationSet Name="CLIENTE_RUBRO_FK" Association="ModeloDato.CLIENTE_RUBRO_FK">
+            <End Role="RUBRO" EntitySet="RUBRO" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="CONTRATO_CLIENTE_FK" Association="ModeloDato.CONTRATO_CLIENTE_FK">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="CONTRATO" EntitySet="CONTRATO" />
+          </AssociationSet>
+          <AssociationSet Name="REPORTAR_CLIENTE_FK" Association="ModeloDato.REPORTAR_CLIENTE_FK">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="REPORTAR" EntitySet="REPORTAR" />
+          </AssociationSet>
+          <AssociationSet Name="SOLICITUD_CLIENTE_FK" Association="ModeloDato.SOLICITUD_CLIENTE_FK">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+          </AssociationSet>
+          <EntitySet Name="TIPO_PERSONAL" EntityType="ModeloDato.TIPO_PERSONAL" />
+          <EntitySet Name="USUARIO" EntityType="ModeloDato.USUARIO" />
+          <AssociationSet Name="CLIENTE_USUARIO_FK" Association="ModeloDato.CLIENTE_USUARIO_FK">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
           </AssociationSet>
           <AssociationSet Name="PERSONAL_FK1" Association="ModeloDato.PERSONAL_FK1">
             <End Role="USUARIO" EntitySet="USUARIO" />
@@ -1043,6 +968,112 @@
           <NavigationProperty Name="ACTIVIDAD" Relationship="ModeloDato.ACTIVIDAD_PERSONAL_FK" FromRole="PERSONAL" ToRole="ACTIVIDAD" />
           <NavigationProperty Name="USUARIO1" Relationship="ModeloDato.PERSONAL_FK1" FromRole="PERSONAL" ToRole="USUARIO" />
         </EntityType>
+        <Association Name="ACTIVIDAD_PERSONAL_FK">
+          <End Type="ModeloDato.PERSONAL" Role="PERSONAL" Multiplicity="1" />
+          <End Type="ModeloDato.ACTIVIDAD" Role="ACTIVIDAD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONAL">
+              <PropertyRef Name="ID_PERSONAL" />
+            </Principal>
+            <Dependent Role="ACTIVIDAD">
+              <PropertyRef Name="PERSONAL_ID_PERSONAL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="ID_CLIENTE" />
+          </Key>
+          <Property Name="ID_CLIENTE" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="RUT_CLIENTE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBRE_CLIENTE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="APELLIDO_CLIENTE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO_CLIENTE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="DIREC_CLIENTE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CORREO_CLIENTE" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RUBRO_ID_RUBRO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ACTIVO_CLIENTE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="USUARIO_ID_USUARIO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <NavigationProperty Name="ACTIVIDAD" Relationship="ModeloDato.ACTIVIDAD_CLIENTE_FK" FromRole="CLIENTE" ToRole="ACTIVIDAD" />
+          <NavigationProperty Name="ASISTENTE" Relationship="ModeloDato.ASISTENTE_CLIENTE_FK" FromRole="CLIENTE" ToRole="ASISTENTE" />
+          <NavigationProperty Name="RUBRO" Relationship="ModeloDato.CLIENTE_RUBRO_FK" FromRole="CLIENTE" ToRole="RUBRO" />
+          <NavigationProperty Name="CONTRATO" Relationship="ModeloDato.CONTRATO_CLIENTE_FK" FromRole="CLIENTE" ToRole="CONTRATO" />
+          <NavigationProperty Name="REPORTAR" Relationship="ModeloDato.REPORTAR_CLIENTE_FK" FromRole="CLIENTE" ToRole="REPORTAR" />
+          <NavigationProperty Name="SOLICITUD" Relationship="ModeloDato.SOLICITUD_CLIENTE_FK" FromRole="CLIENTE" ToRole="SOLICITUD" />
+          <NavigationProperty Name="USUARIO" Relationship="ModeloDato.CLIENTE_USUARIO_FK" FromRole="CLIENTE" ToRole="USUARIO" />
+        </EntityType>
+        <Association Name="ACTIVIDAD_CLIENTE_FK">
+          <End Type="ModeloDato.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="ModeloDato.ACTIVIDAD" Role="ACTIVIDAD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="ACTIVIDAD">
+              <PropertyRef Name="CLIENTE_ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ASISTENTE_CLIENTE_FK">
+          <End Type="ModeloDato.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="ModeloDato.ASISTENTE" Role="ASISTENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="ASISTENTE">
+              <PropertyRef Name="CLIENTE_ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CLIENTE_RUBRO_FK">
+          <End Type="ModeloDato.RUBRO" Role="RUBRO" Multiplicity="1" />
+          <End Type="ModeloDato.CLIENTE" Role="CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RUBRO">
+              <PropertyRef Name="ID_RUBRO" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="RUBRO_ID_RUBRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CONTRATO_CLIENTE_FK">
+          <End Type="ModeloDato.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="ModeloDato.CONTRATO" Role="CONTRATO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="CONTRATO">
+              <PropertyRef Name="CLIENTE_ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REPORTAR_CLIENTE_FK">
+          <End Type="ModeloDato.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="ModeloDato.REPORTAR" Role="REPORTAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="REPORTAR">
+              <PropertyRef Name="CLIENTE_ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SOLICITUD_CLIENTE_FK">
+          <End Type="ModeloDato.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="ModeloDato.SOLICITUD" Role="SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="SOLICITUD">
+              <PropertyRef Name="CLIENTE_ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="TIPO_PERSONAL">
           <Key>
             <PropertyRef Name="ID_TIPOPERSONAL" />
@@ -1059,19 +1090,20 @@
           <Property Name="ID_USUARIO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
           <Property Name="USUARIO1" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="PASSWORD" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="TIPO_USUARIO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="TIPO_USUARIO_ID_TIPO_USUARIO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <NavigationProperty Name="CLIENTE" Relationship="ModeloDato.CLIENTE_USUARIO_FK" FromRole="USUARIO" ToRole="CLIENTE" />
           <NavigationProperty Name="PERSONAL" Relationship="ModeloDato.PERSONAL_FK1" FromRole="USUARIO" ToRole="PERSONAL" />
           <NavigationProperty Name="TIPO_PERSONAL" Relationship="ModeloDato.USUARIO_FK1" FromRole="USUARIO" ToRole="TIPO_PERSONAL" />
         </EntityType>
-        <Association Name="ACTIVIDAD_PERSONAL_FK">
-          <End Type="ModeloDato.PERSONAL" Role="PERSONAL" Multiplicity="1" />
-          <End Type="ModeloDato.ACTIVIDAD" Role="ACTIVIDAD" Multiplicity="*" />
+        <Association Name="CLIENTE_USUARIO_FK">
+          <End Type="ModeloDato.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ModeloDato.CLIENTE" Role="CLIENTE" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PERSONAL">
-              <PropertyRef Name="ID_PERSONAL" />
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
             </Principal>
-            <Dependent Role="ACTIVIDAD">
-              <PropertyRef Name="PERSONAL_ID_PERSONAL" />
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="USUARIO_ID_USUARIO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1095,7 +1127,7 @@
               <PropertyRef Name="ID_TIPOPERSONAL" />
             </Principal>
             <Dependent Role="USUARIO">
-              <PropertyRef Name="TIPO_USUARIO" />
+              <PropertyRef Name="TIPO_USUARIO_ID_TIPO_USUARIO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1147,23 +1179,6 @@
                 <ScalarProperty Name="ID_CHECKLIST" ColumnName="ID_CHECKLIST" />
                 <ScalarProperty Name="NOMBRE_CHECKLIST" ColumnName="NOMBRE_CHECKLIST" />
                 <ScalarProperty Name="DESCRIPCION_CHECKLIST" ColumnName="DESCRIPCION_CHECKLIST" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CLIENTE">
-            <EntityTypeMapping TypeName="ModeloDato.CLIENTE">
-              <MappingFragment StoreEntitySet="CLIENTE">
-                <ScalarProperty Name="ACTIVO_CLIENTE" ColumnName="ACTIVO_CLIENTE" />
-                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
-                <ScalarProperty Name="RUT_CLIENTE" ColumnName="RUT_CLIENTE" />
-                <ScalarProperty Name="NOMBRE_CLIENTE" ColumnName="NOMBRE_CLIENTE" />
-                <ScalarProperty Name="APELLIDO_CLIENTE" ColumnName="APELLIDO_CLIENTE" />
-                <ScalarProperty Name="TELEFONO_CLIENTE" ColumnName="TELEFONO_CLIENTE" />
-                <ScalarProperty Name="DIREC_CLIENTE" ColumnName="DIREC_CLIENTE" />
-                <ScalarProperty Name="CORREO_CLIENTE" ColumnName="CORREO_CLIENTE" />
-                <ScalarProperty Name="RUBRO_ID_RUBRO" ColumnName="RUBRO_ID_RUBRO" />
-                <ScalarProperty Name="USERNAME_CLIENTE" ColumnName="USERNAME_CLIENTE" />
-                <ScalarProperty Name="PASSWORD_CLIENTE" ColumnName="PASSWORD_CLIENTE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1306,6 +1321,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTE">
+            <EntityTypeMapping TypeName="ModeloDato.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="USUARIO_ID_USUARIO" ColumnName="USUARIO_ID_USUARIO" />
+                <ScalarProperty Name="ACTIVO_CLIENTE" ColumnName="ACTIVO_CLIENTE" />
+                <ScalarProperty Name="RUBRO_ID_RUBRO" ColumnName="RUBRO_ID_RUBRO" />
+                <ScalarProperty Name="CORREO_CLIENTE" ColumnName="CORREO_CLIENTE" />
+                <ScalarProperty Name="DIREC_CLIENTE" ColumnName="DIREC_CLIENTE" />
+                <ScalarProperty Name="TELEFONO_CLIENTE" ColumnName="TELEFONO_CLIENTE" />
+                <ScalarProperty Name="APELLIDO_CLIENTE" ColumnName="APELLIDO_CLIENTE" />
+                <ScalarProperty Name="NOMBRE_CLIENTE" ColumnName="NOMBRE_CLIENTE" />
+                <ScalarProperty Name="RUT_CLIENTE" ColumnName="RUT_CLIENTE" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TIPO_PERSONAL">
             <EntityTypeMapping TypeName="ModeloDato.TIPO_PERSONAL">
               <MappingFragment StoreEntitySet="TIPO_PERSONAL">
@@ -1318,7 +1349,7 @@
           <EntitySetMapping Name="USUARIO">
             <EntityTypeMapping TypeName="ModeloDato.USUARIO">
               <MappingFragment StoreEntitySet="USUARIO">
-                <ScalarProperty Name="TIPO_USUARIO" ColumnName="TIPO_USUARIO" />
+                <ScalarProperty Name="TIPO_USUARIO_ID_TIPO_USUARIO" ColumnName="TIPO_USUARIO_ID_TIPO_USUARIO" />
                 <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
                 <ScalarProperty Name="USUARIO1" ColumnName="USUARIO" />
                 <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />

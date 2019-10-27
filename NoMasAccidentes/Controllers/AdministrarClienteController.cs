@@ -84,6 +84,7 @@ namespace NoMasAccidentes.Controllers
                 clienteR.DIREC_CLIENTE = cliente.direc_cliente;
                 clienteR.CORREO_CLIENTE = cliente.correo_cliente;
                 clienteR.RUBRO_ID_RUBRO = cliente.rubro_id_rubro;
+                clienteR.ACTIVO_CLIENTE = "S";
                 //Espacios en blanco
 
                 var nombre = cliente.nombre_cliente.Replace(" ", "");
@@ -99,7 +100,7 @@ namespace NoMasAccidentes.Controllers
                 {
                     username = (nombre.Substring(0, cantidad_caracter) + "." + apellido).ToLower();
 
-                    if (bd.CLIENTE.ToList().FindAll(x => x.USERNAME_CLIENTE.Contains(username)).Count() == 0)
+                    if (bd.CLIENTE.ToList().FindAll(x => x.USUARIO.USUARIO1.Contains(username)).Count() == 0)
                     {
                         user_encontrado = true;
 
@@ -111,15 +112,20 @@ namespace NoMasAccidentes.Controllers
 
                 }
 
-                clienteR.USERNAME_CLIENTE = username;
-                clienteR.ACTIVO_CLIENTE = "S";
-
 
                 var guid = Guid.NewGuid();
                 var justNumbers = new String(guid.ToString().Where(Char.IsDigit).ToArray());
                 var password = int.Parse(justNumbers.Substring(4, 4));
-                clienteR.PASSWORD_CLIENTE = password.ToString();
 
+                NoMasAccidentes.Models.USUARIO usuario = new USUARIO();
+                usuario.USUARIO1 = username;
+                usuario.PASSWORD = password.ToString();
+                usuario.TIPO_USUARIO_ID_TIPO_USUARIO = 3;
+                bd.USUARIO.Add(usuario);
+                bd.SaveChanges();
+
+                var user = bd.USUARIO.FirstOrDefault(e => e.USUARIO1 == username);
+                clienteR.USUARIO = user;
 
                 bd.CLIENTE.Add(clienteR);
                 bd.SaveChanges();

@@ -16,14 +16,16 @@ namespace NoMasAccidentes.Models
     {
         public USUARIO()
         {
+            this.CLIENTE = new HashSet<CLIENTE>();
             this.PERSONAL = new HashSet<PERSONAL>();
         }
     
         public decimal ID_USUARIO { get; set; }
         public string USUARIO1 { get; set; }
         public string PASSWORD { get; set; }
-        public decimal TIPO_USUARIO { get; set; }
+        public decimal TIPO_USUARIO_ID_TIPO_USUARIO { get; set; }
     
+        public virtual ICollection<CLIENTE> CLIENTE { get; set; }
         public virtual ICollection<PERSONAL> PERSONAL { get; set; }
         public virtual TIPO_PERSONAL TIPO_PERSONAL { get; set; }
     }

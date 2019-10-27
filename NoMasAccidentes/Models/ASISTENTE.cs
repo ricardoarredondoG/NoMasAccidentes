@@ -26,7 +26,7 @@ namespace NoMasAccidentes.Models
         public decimal CLIENTE_ID_CLIENTE { get; set; }
         public string ACTIVO_ASISTENTE { get; set; }
     
-        public virtual CLIENTE CLIENTE { get; set; }
         public virtual ICollection<CAPACITACION> CAPACITACION { get; set; }
+        public virtual CLIENTE CLIENTE { get; set; }
     }
 }

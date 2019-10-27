@@ -28,7 +28,7 @@ namespace NoMasAccidentes.Controllers
             {
 
 
-                if(user.TIPO_USUARIO == 1 || user.TIPO_USUARIO == 2)
+                if(user.TIPO_USUARIO_ID_TIPO_USUARIO == 1 || user.TIPO_USUARIO_ID_TIPO_USUARIO == 2)
                 {
                     var user1 = bd.PERSONAL.FirstOrDefault(e => e.USUARIO == user.ID_USUARIO);
                     
@@ -41,6 +41,22 @@ namespace NoMasAccidentes.Controllers
                     {
                         return RedirectToAction("Index", new { message = "*Usuario Inactivo" });
                     }
+
+                }
+                else
+                {
+                    var user1 = bd.CLIENTE.FirstOrDefault(e => e.USUARIO_ID_USUARIO == user.ID_USUARIO);
+
+                    if (user1.ACTIVO_CLIENTE.Equals("S"))
+                    {
+                        FormsAuthentication.SetAuthCookie(user.USUARIO1, true);
+                        Session["nombreApellido"] = user1.NOMBRE_CLIENTE + " " + user1.APELLIDO_CLIENTE;
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", new { message = "*Usuario Inactivo" });
+                    }
+
 
                 }
 

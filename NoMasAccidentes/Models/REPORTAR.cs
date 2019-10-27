@@ -21,7 +21,7 @@ namespace NoMasAccidentes.Models
         public decimal TIPO_REPORTAR_ID_TIPO_REPORTAR { get; set; }
         public decimal CLIENTE_ID_CLIENTE { get; set; }
     
-        public virtual CLIENTE CLIENTE { get; set; }
         public virtual TIPO_REPORTAR TIPO_REPORTAR { get; set; }
+        public virtual CLIENTE CLIENTE { get; set; }
     }
 }
