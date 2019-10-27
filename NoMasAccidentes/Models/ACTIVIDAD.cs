@@ -26,6 +26,7 @@ namespace NoMasAccidentes.Models
         public decimal CLIENTE_ID_CLIENTE { get; set; }
         public decimal TIPO_ACTIVIDAD_ID_TIPOACTIVI { get; set; }
         public decimal CHECKLIST_ID_CHECKLIST { get; set; }
+        public string ACTIVO_ACTIVIDAD { get; set; }
     
         public virtual CHECKLIST CHECKLIST { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }

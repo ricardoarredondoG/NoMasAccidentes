@@ -96,9 +96,12 @@ namespace NoMasAccidentes.Controllers
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var resul = new baseRespuesta();
             var actividad = bd.ACTIVIDAD.Find(id);
-            
-            //asistente.ACTIVO_ASISTENTE = "N";
+            actividad.ACTIVO_ACTIVIDAD = "N";
             bd.Entry(actividad).State = System.Data.EntityState.Modified;
+            //bd.ACTIVIDAD.Attach(actividad);
+            //bd.ACTIVIDAD.Remove(actividad);
+            //asistente.ACTIVO_ASISTENTE = "N";
+            
             bd.SaveChanges();
             resul.mensaje = "Actividad eliminada correctamente";
             return Json(resul);

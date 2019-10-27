@@ -59,8 +59,9 @@
                         <td>@actividad.FECHA_ACTIVIDAD</td>
                         <td>@actividad.DESCRIPCION_ACTIVIDAD</td>
 
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarA" onclick="eliminarA(@actividad.ID_ACTIVIDAD)"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')">@(actividad.ACTIVO_ACTIVIDAD.ToString() == "N" ? "disabled" : "")<i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarA" onclick="eliminarA(@actividad.ID_ACTIVIDAD)" @(actividad.ACTIVO_ACTIVIDAD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
 
                     </tr>
                 }
@@ -159,7 +160,6 @@
         </div>
     </div>
 </div>
-
 <!--Editar-->
 <!-- Modal Editar -->
 <div id="modalEditar" class="modal">
@@ -245,7 +245,6 @@
 
 
 
-
 <!--modal eliminar-->
 <div id="modalEliminar" class="modal">
     <div class="modal-content">
@@ -296,7 +295,7 @@
         });
 
 
-                
+
 
                 $("#txtActividad").attr('required', 'required');
 
@@ -328,14 +327,12 @@
     function editar(datos) {
 
         d = datos.split('||');
-        $('#editTxtRut').val(d[0]);
-        $('#editTxtNombre').val(d[1]);
-        $('#editTxtApellido').val(d[2]);
-        $('#editTxtTelefono').val(d[3]);
-        $('#editTxtDireccion').val(d[4]);
-        $('#editTxtCorreo').val(d[5]);
-        $("#editSelectTipoRubro").select.val(d[6]);
-        $("#editSelectTipoRubro").formSelect();
+        $('#edittxtActividad').val[0];
+        $('#edittxtFecha').val[1];
+        $('select').val[2];
+        $('selectPersonal').val[3];
+        $('selectCliente').val[4];
+        $('selectCheck').val[5];
 
     };
 </script>

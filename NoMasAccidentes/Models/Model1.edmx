@@ -16,6 +16,7 @@
           <Property Name="CLIENTE_ID_CLIENTE" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="TIPO_ACTIVIDAD_ID_TIPOACTIVI" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="CHECKLIST_ID_CHECKLIST" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACTIVO_ACTIVIDAD" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="ASISTENTE">
           <Key>
@@ -526,6 +527,7 @@
           <NavigationProperty Name="PERSONAL" Relationship="Self.ACTIVIDAD_PERSONAL_FK" FromRole="ACTIVIDAD" ToRole="PERSONAL" />
           <NavigationProperty Name="TIPO_ACTIVIDAD" Relationship="Self.ACTIVIDAD_TIPO_ACTIVIDAD_FK" FromRole="ACTIVIDAD" ToRole="TIPO_ACTIVIDAD" />
           <NavigationProperty Name="CAPACITACION" Relationship="Self.CAPACITACION_ACTIVIDAD_FK" FromRole="ACTIVIDAD" ToRole="CAPACITACION" />
+          <Property Name="ACTIVO_ACTIVIDAD" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="ASISTENTE">
           <Key>
@@ -1056,6 +1058,7 @@
           <EntitySetMapping Name="ACTIVIDAD">
             <EntityTypeMapping TypeName="ModeloDato.ACTIVIDAD">
               <MappingFragment StoreEntitySet="ACTIVIDAD">
+                <ScalarProperty Name="ACTIVO_ACTIVIDAD" ColumnName="ACTIVO_ACTIVIDAD" />
                 <ScalarProperty Name="ID_ACTIVIDAD" ColumnName="ID_ACTIVIDAD" />
                 <ScalarProperty Name="FECHA_ACTIVIDAD" ColumnName="FECHA_ACTIVIDAD" />
                 <ScalarProperty Name="DESCRIPCION_ACTIVIDAD" ColumnName="DESCRIPCION_ACTIVIDAD" />
