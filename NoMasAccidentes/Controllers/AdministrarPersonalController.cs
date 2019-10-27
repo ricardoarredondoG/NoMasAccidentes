@@ -82,9 +82,9 @@ namespace NoMasAccidentes.Controllers
             personal.CORREO_PERSO = persona.correo_pero;
             personal.NOMBRE_PERSO = persona.nombre_perso;
             personal.TELEFONO_PERSO = persona.telefono_perso;
-            personal.USUARIO1.TIPO_PERSONAL.ID_TIPOPERSONAL = persona.tipo_personal;
+            personal.ACTIVO = "S";
 
-            //Generar Usuario
+                //Generar Usuario
 
                 //Eliminar espacios en Blanco
                 var nombre = persona.nombre_perso.Replace(" ", "");
@@ -110,13 +110,22 @@ namespace NoMasAccidentes.Controllers
                     }
 
                 }
-                personal.USUARIO1.USUARIO1 = username;
-                personal.ACTIVO = "S";
+                
                 //GenerarPassword
                 var guid = Guid.NewGuid();
                 var justNumbers = new String(guid.ToString().Where(Char.IsDigit).ToArray());
                 var password = int.Parse(justNumbers.Substring(4, 4));
-                personal.USUARIO1.PASSWORD = password.ToString();
+
+
+                NoMasAccidentes.Models.USUARIO usuario = new USUARIO();
+                usuario.USUARIO1 = username;
+                usuario.PASSWORD = password.ToString();
+                var tipoPersoal = bd.TIPO_PERSONAL.FirstOrDefault(e => e.ID_TIPOPERSONAL == persona.tipo_personal);
+                usuario.TIPO_PERSONAL = tipoPersoal;
+                bd.USUARIO.Add(usuario);
+                bd.SaveChanges();
+                var user = bd.USUARIO.FirstOrDefault(e => e.USUARIO1 == username);
+                personal.USUARIO1 = user;
 
                 bd.PERSONAL.Add(personal);
                 bd.SaveChanges();
