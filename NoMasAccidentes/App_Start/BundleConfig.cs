@@ -11,15 +11,19 @@ namespace NoMasAccidentes
             //Login
 
             bundles.Add(new ScriptBundle("~/login/bundles/js").Include(
-                        "~/Scripts/jquery-3.2.1.min.js",
+                        "~/Scripts/sweetalert.min.js",
                         "~/Scripts/materialize.min.js",
-                        "~/Scripts/rut.js"));
+                        "~/Scripts/jquery.mCustomScrollbar.concat.min.js",
+                        "~/Scripts/main.js"));
 
 
             bundles.Add(new StyleBundle("~/login/Content/css").Include(
+                      "~/Content/normalize.css",
                       "~/Content/materialize.min.css",
-                      "~/Content/paginaInicioAdmin.css",
-                      "~/Content/paginaInicioCliente.css"));
+                      "~/Content/material-design-iconic-font.min.css",
+                      "~/Content/jquery.mCustomScrollbar.css",
+                      "~/Content/sweetalert.css",
+                      "~/Content/style.css"));
 
             //Home
 

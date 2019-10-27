@@ -11,6 +11,7 @@ namespace NoMasAccidentes.Controllers
     public class AdministrarRubroController : Controller
     {
         // GET: AdministrarRubro
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public ActionResult Index(int pagina = 1, string nomRub = "", string descRub = "")
         {
             var cantidadRegistrosPorPagina = 4;
@@ -90,15 +91,13 @@ namespace NoMasAccidentes.Controllers
             resultado = validaciones(rub);
             //if (resultado.ok == true)
             //{
-            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+                EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
                 NoMasAccidentes.Models.RUBRO rubro = new RUBRO();
-
-
-                //var rubroid = bd.RUBRO.Find(rub.id_rubro);
-                rubro.NOMBRE_RUBRO = rub.nombre_rubro;
-                rubro.DESC_RUBRO = rub.desc_rubro;
-                rubro.ACTIVO_RUBRO = "S";
-                bd.Entry(rubro).State = System.Data.EntityState.Modified;
+                var rubroid = bd.RUBRO.Find(rub.id_rubro);
+                rubroid.NOMBRE_RUBRO = rub.nombre_rubro;
+                rubroid.DESC_RUBRO = rub.desc_rubro;
+                rubroid.ACTIVO_RUBRO = "S";
+                bd.Entry(rubroid).State = System.Data.EntityState.Modified;
                 bd.SaveChanges();
                 resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Rubro Modificado Correctamente";
 

@@ -32,16 +32,17 @@ namespace NoMasAccidentes.Models
         public DbSet<CLIENTE> CLIENTE { get; set; }
         public DbSet<CONTRATO> CONTRATO { get; set; }
         public DbSet<OPCION_CHECKLIST> OPCION_CHECKLIST { get; set; }
-        public DbSet<PERSONAL> PERSONAL { get; set; }
         public DbSet<REPORTAR> REPORTAR { get; set; }
         public DbSet<RUBRO> RUBRO { get; set; }
         public DbSet<SOLICITUD> SOLICITUD { get; set; }
         public DbSet<TIPO_ACTIVIDAD> TIPO_ACTIVIDAD { get; set; }
-        public DbSet<TIPO_PERSONAL> TIPO_PERSONAL { get; set; }
         public DbSet<TIPO_REPORTAR> TIPO_REPORTAR { get; set; }
         public DbSet<TIPO_SOLICITUD> TIPO_SOLICITUD { get; set; }
         public DbSet<PLAN> PLAN { get; set; }
         public DbSet<DETALLE_FACTURA> DETALLE_FACTURA { get; set; }
         public DbSet<FACTURA> FACTURA { get; set; }
+        public DbSet<PERSONAL> PERSONAL { get; set; }
+        public DbSet<TIPO_PERSONAL> TIPO_PERSONAL { get; set; }
+        public DbSet<USUARIO> USUARIO { get; set; }
     }
 }

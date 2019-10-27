@@ -285,8 +285,8 @@ body, html{
     
 }
 /*///////////////////////// Estilos login.html /////////////////////////*/
-#login{
-    background-image: url(../assets/img/MaterialFontLogin.jpg);
+#login {
+    background-image: url("../Imagenes/MaterialFontLogin.jpg");
 }
 .container-login{
     margin: 0;
