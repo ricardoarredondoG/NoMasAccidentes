@@ -48,15 +48,15 @@
                 {
                     var datos = @rub.NOMBRE_RUBRO + "||" + rub.DESC_RUBRO;
 
-                <tr>
-                    <td>@rub.ID_RUBRO</td>
-                    <td>@rub.NOMBRE_RUBRO</td>
-                    <td>@rub.DESC_RUBRO</td>
-                    <td><button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@rub.ID_RUBRO)" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")></i></button></td>
-                </tr>
-                        
-                    
+                    <tr>
+                        <td>@rub.ID_RUBRO</td>
+                        <td>@rub.NOMBRE_RUBRO</td>
+                        <td>@rub.DESC_RUBRO</td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@rub.ID_RUBRO)" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                    </tr>
+
+
                 }
 
             </tbody>
@@ -72,9 +72,9 @@
 
         <div id="modalNuevo" class="modal">
             <div class="modal-content">
-                <div id="mensaje" class="alert card green white-text" style="display:none">
+                <div id="div-alerta" class="alert card green white-text" style="display:none">
                     <div class="card-content">
-                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Rubro Registrado Correctamente</span></p>
+                        <p id="mensaje"></p>
                     </div>
                 </div>
                 <h5>Agregar Rubro</h5>
@@ -84,12 +84,12 @@
                 </div>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese una Descripción al Rubro" id="txtDescripRubro" name="desc" type="text" class="validate" required>
-                    <label for="nombre">Apellido Paterno</label>
+                    <label for="nombre">Descripción Rubro</label>
                 </div>
 
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardar">Guardar</button>
+                        <button class="btn modal-trigger green"  id="btnGuardar">Guardar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
                 </div>
@@ -119,7 +119,39 @@
     </div>
 </div>
 
+<!-- Modal Editar -->
+<div id="modalEditar" class="modal">
+    <div class="modal-content">
+        <div id="div-alerta-editar" class="alert card green white-text" style="display:none">
+            <div class="card-content">
+                <p id="mensajeEditar"></p>
+            </div>
+        </div>
+        <h5>Editar Rubro</h5>
+        <div class="input-field col s6">
+            <input placeholder="Ingrese el Nombre del Rubro" id="editTxtNomRub" name="nomRub" type="text" class="validate">
+            <label for="nombre">Nombre Rubro</label>
+        </div>
+        <div class="input-field col s6">
+            <input placeholder="Ingrese la Descripción del Rubro" id="editTxtDescRub" name="descRub" type="text" class="validate" required>
+            <label for="nombre">Descripción Rubro</label>
+        </div>
+
+        <div class="row">
+            <div class="center-align">
+                <button class="btn green" id="btnEditar">Actualizar</button>
+                <button class="btn modal-close red">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    
+
 <script>
+
 
     $("#btnGuardar").click(function ()
     {
@@ -128,11 +160,79 @@
                 var url = "@Url.Action("Crear", "AdministrarRubro")";
                 var txtNombre = $("#txtNombre").val();
                 var txtDescripRubro = $("#txtDescripRubro").val();
-                var data = { nombre_rubro: txtNombre, desc_rubro: txtDescripRubro };
+                var data = {nombre_rubro: txtNombre, desc_rubro: txtDescripRubro };
 
-                 $("#txtNombre").attr('required', 'required');
+        //         $("#txtNombre").attr('required', 'required');
 
-                $.post(url, data).done();
+        //$.post(url, data).done();
 
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                $("#txtNombre").val('');
+                $("#txtDescripRubro").val('');
+            } else {
+                $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+            }
+            $("#mensaje").html(data.mensaje);
+            $("#div-alerta").show();
+        });
+
+    });
+
+
+    //Eliminar Personal
+        var idRubro = null;
+        function eliminar(id) {
+            idRubro = id;
+        };
+
+        $("#confirmarEliminar").click(function () {
+            var url = "@Url.Action("Eliminar", "AdministrarRubro")";
+            var data = { id: idRubro };
+            $.post(url, data).done(function (data) {
+                $("#mensajeEliminar").html(data.mensaje);
+                $("#div-alerta-eliminar").show();
+                $("#contenidoEliminar").hide();
             });
+
+
+
+    });
+
+
+    //Editar Personal
+        function editar(datos) {
+
+            //Llenar campos
+            d = datos.split('||');
+            $('#editTxtNomRub').val(d[0]);
+            $('#editTxtDescRub').val(d[1]);
+        };
+
+
+    $("#btnEditar").click(function () {
+
+        var id = d[7];
+        //Definir URL
+        var url = "@Url.Action("Editar", "AdministrarRubro")";
+        var txtNomRub = $("#editTxtNomRub").val();
+        var txtDescRub = $("#editTxtDescRub").val();
+        var data = { id_rubro: id, nombre_rubro: txtNomRub, txtDescRu: txtDescRub };
+
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                $("#txtNombre").val('');
+                $("#txtDescRub").val('');
+
+            } else {
+                $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+            }
+            $("#mensajeEditar").html(data.mensaje);
+            $("#div-alerta-editar").show();
+        });
+
+    });
+
 </script>

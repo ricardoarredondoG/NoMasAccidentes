@@ -17,7 +17,10 @@ namespace NoMasAccidentes.Controllers
             var cantidadRegistrosPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var actividad = bd.ACTIVIDAD.ToList();
-
+            var tipoActividad = bd.TIPO_ACTIVIDAD.ToList();
+            var personal = bd.PERSONAL.ToList();
+            var cliente = bd.CLIENTE.ToList();
+            var check = bd.CHECKLIST.ToList();
             //Busqueda por Nombre
             //if (nombre != "")
             /*{
@@ -33,8 +36,10 @@ namespace NoMasAccidentes.Controllers
             modelo.PaginaActual = pagina;
             modelo.TotalDeRegistros = totalRegistros;
             modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
-            
-
+            modelo.tipo_actividad = tipoActividad;
+            modelo.personal = personal;
+            modelo.cliente = cliente;
+            modelo.checklist = check;
             return View(modelo);
 
         }
@@ -47,12 +52,13 @@ namespace NoMasAccidentes.Controllers
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             NoMasAccidentes.Models.ACTIVIDAD actividades = new ACTIVIDAD();
+
             actividades.DESCRIPCION_ACTIVIDAD = actividad.descripcion;
             actividades.FECHA_ACTIVIDAD = actividad.fecha;
-            actividades.TIPO_ACTIVIDAD_ID_TIPOACTIVI = 1;
-            actividades.CHECKLIST_ID_CHECKLIST = 2;
-            actividades.PERSONAL_ID_PERSONAL = 1;
-            actividades.CLIENTE_ID_CLIENTE = 2;
+            actividades.TIPO_ACTIVIDAD_ID_TIPOACTIVI = actividad.tipo;
+            //actividades.CHECKLIST_ID_CHECKLIST = 3;
+            actividades.PERSONAL_ID_PERSONAL = actividad.personal;
+            actividades.CLIENTE_ID_CLIENTE = actividad.cliente;
 
             bd.ACTIVIDAD.Add(actividades);
             try
@@ -83,6 +89,30 @@ namespace NoMasAccidentes.Controllers
             
         }
 
-     
-}
+        [HttpPost]
+        [Authorize]
+        public JsonResult EliminarA(int id)
+        {
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var resul = new baseRespuesta();
+            var actividad = bd.ACTIVIDAD.Find(id);
+            
+            //asistente.ACTIVO_ASISTENTE = "N";
+            bd.Entry(actividad).State = System.Data.EntityState.Modified;
+            bd.SaveChanges();
+            resul.mensaje = "Actividad eliminada correctamente";
+            return Json(resul);
+        }
+
+        public class baseRespuesta
+        {
+            public bool ok { get; set; }
+            public string mensaje { get; set; }
+
+
+        }
+
+      
+
+    }
 }

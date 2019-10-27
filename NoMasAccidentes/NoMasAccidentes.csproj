@@ -162,9 +162,12 @@
     <Compile Include="Controllers\AdministrarPlanesController.cs" />
     <Compile Include="Controllers\AdministrarRubroController.cs" />
     <Compile Include="Controllers\AdministrarTipoActividadController.cs" />
+    <Compile Include="Controllers\checklistController.cs" />
     <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PersonalController.cs" />
+    <Compile Include="Controllers\TipoActividadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,6 +243,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scheduled\Factura.cs" />
+    <Compile Include="ViewModels\ChecklistViewModel.cs" />
     <Compile Include="ViewModels\AsistenteViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\ContratoViewModel.cs" />
@@ -249,6 +253,7 @@
     <Compile Include="ViewModels\PlanViewModel.cs" />
     <Compile Include="ViewModels\RubroViewModel.cs" />
     <Compile Include="ViewModels\TipoActividadViewModel.cs" />
+    <Compile Include="WebRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\jquery.mCustomScrollbar.css" />
@@ -283,6 +288,7 @@
     <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\materialize.min.js" />
     <Content Include="Scripts\rut.js" />
@@ -306,8 +312,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Personal\" />
     <Folder Include="Views\RubroViewModel\" />
     <Folder Include="Views\TipoActividadViewModel\" />
+    <Folder Include="Views\TipoActividad\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -365,6 +373,7 @@
     <Content Include="Views\AdministrarFactura\Factura.cshtml" />
     <Content Include="Views\Contrato\Index.cshtml" />
     <Content Include="Views\AdministrarTipoActividad\Index.cshtml" />
+    <Content Include="Views\checklist\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

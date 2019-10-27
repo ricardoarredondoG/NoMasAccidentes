@@ -101,7 +101,22 @@ namespace NoMasAccidentes.Controllers
             return View(modelo);
         }
 
-        
+        [HttpPost]
+        [Authorize]
+        public JsonResult Pagar(int id)
+        {
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var resultado = new baseRespuesta();
+
+            var factura = bd.FACTURA.Find(id);
+            factura.PAGADO = "S";
+            bd.Entry(factura).State = System.Data.EntityState.Modified;
+            bd.SaveChanges();
+            resultado.mensaje = "Pago Realizado Correctamente";
+            return Json(resultado);
+        }
+
+
         public ActionResult FacturaPDF(int id = 0)
         {
             if(id != 0)
@@ -115,6 +130,12 @@ namespace NoMasAccidentes.Controllers
                 return Index();
             }
             
+        }
+
+        public class baseRespuesta
+        {
+            public bool ok { get; set; }
+            public string mensaje { get; set; }
         }
     }
 }
