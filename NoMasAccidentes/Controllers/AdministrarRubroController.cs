@@ -11,6 +11,7 @@ namespace NoMasAccidentes.Controllers
     public class AdministrarRubroController : Controller
     {
         // GET: AdministrarRubro
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public ActionResult Index(int pagina = 1, string nomRub = "", string descRub = "")
         {
             var cantidadRegistrosPorPagina = 4;
