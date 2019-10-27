@@ -275,6 +275,7 @@
     <Content Include="fonts\Material-Design-Iconic-Font.svg" />
     <Content Include="Global.asax" />
     <Content Include="Imagenes\logo.png" />
+    <Content Include="Imagenes\MaterialFontLogin.jpg" />
     <Content Include="Imagenes\unlocked-padlock-black-security-symbol_icon-icons.com_54444.png" />
     <Content Include="Imagenes\user.png" />
     <Content Include="Models\Model1.Context.tt">

@@ -19,7 +19,7 @@ namespace NoMasAccidentes.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ingresar(String username, String password, int tipo_usuario)
+        public ActionResult Ingresar(String username, String password)
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
 
@@ -52,21 +52,7 @@ namespace NoMasAccidentes.Controllers
             }
 
 
-            if (tipo_usuario == 3)
-            {
-                var user1 = bd.CLIENTE.FirstOrDefault(e => e.USERNAME_CLIENTE == username && e.PASSWORD_CLIENTE == password);
-                if (user1 != null)
-                {
-                    FormsAuthentication.SetAuthCookie(user1.USERNAME_CLIENTE, true);
-                    Session["nombreApellido"] = user1.NOMBRE_CLIENTE + " " + user1.APELLIDO_CLIENTE;
-
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
-                }
-            }
+           
 
 
         }
