@@ -61,53 +61,7 @@ namespace NoMasAccidentes.Controllers
             //Validaciones.
             var resul = new baseRespuesta();
             resul.ok = true;
-            if (cliente.rut_cliente == null)
-            {
-                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese rut</br>";
-                resul.ok = false;
-            }
-            if (cliente.nombre_cliente == null)
-            {
-                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese nombre</br>";
-                resul.ok = false;
-            }
-            if (cliente.apellido_cliente == null)
-            {
-                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese apellido</br>";
-                resul.ok = false;
-            }
-            if (cliente.telefono_cliente == null)
-            {
-                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese telefono</br>";
-                resul.ok = false;
-            }
-            else if (Int64.Parse(cliente.telefono_cliente) < 0 || Int64.Parse(cliente.telefono_cliente) > 999999999 || cliente.telefono_cliente.Length != 9)
-            {
-                resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> El Telefono Ingresado no es Valido</br>";
-                resul.ok = false;
-            }
-            if (cliente.direc_cliente == null)
-            {
-                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese direccion</br>";
-                resul.ok = false;
-            }
-            Regex oRegExp = new Regex(@"^[A-Za-z0-9_.\-]+@[A-Za-z0-9_\-]+\.([A-Za-z0-9_\-]+\.)*[A-Za-z][A-Za-z]+$", RegexOptions.IgnoreCase);
-
-            if (cliente.correo_cliente == null)
-            {
-                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese correo</br>";
-                resul.ok = false;
-            }
-            else if (!oRegExp.Match(cliente.correo_cliente).Success)
-            {
-                resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Correo Electronico no Valido</br>";
-                resul.ok = false;
-            }
-            if (cliente.rubro_id_rubro == 0)
-            {
-                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Seleccione rubro</br>";
-                resul.ok = false;
-            }
+            
 
             if (resul.ok == true)
             {
@@ -187,10 +141,90 @@ namespace NoMasAccidentes.Controllers
         }
 
 
+        [HttpPost]
+        [Authorize]
+        public JsonResult EditarC(ClienteViewModel cliente)
+        {
+            var resul = new baseRespuesta();
+            resul = validaciones(cliente);
+            if (resul.ok == true)
+            {
+                EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+                NoMasAccidentes.Models.CLIENTE clientes = new CLIENTE();
+
+                var clienteId = bd.CLIENTE.Find(cliente.id_cliente);
+                clienteId.RUT_CLIENTE = cliente.rut_cliente;
+                clienteId.NOMBRE_CLIENTE = cliente.nombre_cliente;
+                clienteId.APELLIDO_CLIENTE = cliente.apellido_cliente;
+                clienteId.TELEFONO_CLIENTE = cliente.telefono_cliente;
+                clienteId.DIREC_CLIENTE = cliente.direc_cliente;
+                clienteId.CORREO_CLIENTE = cliente.correo_cliente;
+                clienteId.RUBRO_ID_RUBRO = cliente.rubro_id_rubro;
+                bd.Entry(clienteId).State = System.Data.EntityState.Modified;
+                bd.SaveChanges();
+                resul.mensaje = " < i class='zmdi zmdi-check zmdi-hc-fw'></i>Cliente Modificado Correctamente";
+            }
+            return Json(resul);
+        }
+
         public class baseRespuesta
         {
             public bool ok { get; set; }
             public string mensaje { get; set; }
+        }
+        public baseRespuesta validaciones(ClienteViewModel cliente)
+        {
+            var resul = new baseRespuesta();
+            resul.ok = true;
+
+            if (cliente.rut_cliente == null)
+            {
+                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese rut</br>";
+                resul.ok = false;
+            }
+            if (cliente.nombre_cliente == null)
+            {
+                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese nombre</br>";
+                resul.ok = false;
+            }
+            if (cliente.apellido_cliente == null)
+            {
+                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese apellido</br>";
+                resul.ok = false;
+            }
+            if (cliente.telefono_cliente == null)
+            {
+                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese telefono</br>";
+                resul.ok = false;
+            }
+            else if (Int64.Parse(cliente.telefono_cliente) < 0 || Int64.Parse(cliente.telefono_cliente) > 999999999 || cliente.telefono_cliente.Length != 9)
+            {
+                resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> El Telefono Ingresado no es Valido</br>";
+                resul.ok = false;
+            }
+            if (cliente.direc_cliente == null)
+            {
+                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese direccion</br>";
+                resul.ok = false;
+            }
+            Regex oRegExp = new Regex(@"^[A-Za-z0-9_.\-]+@[A-Za-z0-9_\-]+\.([A-Za-z0-9_\-]+\.)*[A-Za-z][A-Za-z]+$", RegexOptions.IgnoreCase);
+
+            if (cliente.correo_cliente == null)
+            {
+                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese correo</br>";
+                resul.ok = false;
+            }
+            else if (!oRegExp.Match(cliente.correo_cliente).Success)
+            {
+                resul.mensaje = resul.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Correo Electronico no Valido</br>";
+                resul.ok = false;
+            }
+            if (cliente.rubro_id_rubro == 0)
+            {
+                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Seleccione rubro</br>";
+                resul.ok = false;
+            }
+            return resul;
         }
     }
 }

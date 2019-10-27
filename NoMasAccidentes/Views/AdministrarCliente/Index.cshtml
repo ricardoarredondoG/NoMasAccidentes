@@ -88,9 +88,9 @@
 
         <div id="modalNuevo" class="modal">
             <div class="modal-content">
-                <div id="mensaje" class="alert card green white-text" style="display:none">
+                <div id="div-alerta" class="alert card green white-text" style="display:none">
                     <div class="card-content">
-                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Cliente registrado correctamente</span></p>
+                        <p id="mensaje"></p>
                     </div>
                 </div>
                 <h5>Agregar Cliente</h5>
@@ -175,12 +175,12 @@
             <div class="modal-content">
                 <div id="div-alerta" class="alert card green white-text" style="display:none">
                     <div class="card-content">
-                        <p id="mensaje"></p>
+                        <p id="mensajeEditar"></p>
                     </div>
                 </div>
                 <h5>Agregar Cliente</h5>
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese el rut" id="editTxtRut" name="rut" type="text" class="validate">
+                    <input placeholder="Ingrese el rut" id="editTxtRut" name="rut" type="text"  oninput="checkRut(this)" class="validate">
                     <label for="rut">rut</label>
                 </div>
                 <div class="input-field col s6">            
@@ -215,7 +215,7 @@
                 </div>
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardarC">Actualizar</button>
+                        <button class="btn green" id="btnEditarC">Actualizar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
                 </div>
@@ -293,10 +293,51 @@
         $('#editTxtTelefono').val(d[3]);
         $('#editTxtDireccion').val(d[4]);
         $('#editTxtCorreo').val(d[5]);
-        $("#editSelectTipoRubro").select.val(d[6]);
-        $("#editSelectTipoRubro").formSelect();
+        $("#editSelectTipoRubro").val(d[6]);
+    
 
+    };
+
+    $("#btnEditarC").click(function () {
+        var id = d[7];
+        var url = "@Url.Action("EditarC", "AdministrarCliente")";
+        var txtRut = $("#editTxtRut").val();
+        var txtNombre = $("#editTxtNombre").val();
+        var txtApellido = $("#editTxtApellido").val();
+        var txtTelefono = $("#editTxtTelefono").val();
+        var txtDireccion = $("#editTxtDireccion").val();
+        var txtCorreo = $("#editTxtCorreo").val();
+        var selectTipoRubro = $("#editSelectTipoRubro").val();
+
+        var data = { id_cliente : id,
+            rut_cliente: txtRut,
+            nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
+            direc_cliente: txtDireccion, correo_cliente: txtCorreo, rubro_id_rubro: selectTipoRubro
         };
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+
+                $("#txtRut").val('');
+                $("#txtNombre").val('');
+                $("#txtApellido").val('');
+                $("#txtTelefono").val('');
+                $("#txtDireccion").val('');
+                $("#txtCorreo").val('');
+
+
+            } else {
+                $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+            }
+
+            $("#mensajeEditar").html(data.mensaje);
+            $("#div-alerta-editar").show();
+
+        });
+
+
+    });
+
 
    
 
