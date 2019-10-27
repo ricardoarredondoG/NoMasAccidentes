@@ -156,7 +156,7 @@ namespace NoMasAccidentes.Controllers
             {
                 EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
                 NoMasAccidentes.Models.PERSONAL personal = new PERSONAL();
-
+                            
 
                 var personaId = bd.PERSONAL.Find(persona.id_personal);
                 personaId.APELLIDOM_PERSO = persona.apellidom_perso;

@@ -53,6 +53,7 @@
                     <th data-field="price">Direccion</th>
                     <th data-field="price">Mail</th>
                     <th data-field="price">Rubro</th>
+                   
                     <th data-field="price">Editar</th>
                     <th data-field="price">Eliminar</th>
                 </tr>
@@ -60,7 +61,7 @@
             <tbody>
                 @foreach (var cliente in Model.cliente)
                 {
-                    var datos = @cliente.RUT_CLIENTE + "||" + @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE +"||"+ @cliente.TELEFONO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
+                    var datos = @cliente.RUT_CLIENTE + "||" + @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE +"||"+ @cliente.TELEFONO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + @cliente.RUBRO_ID_RUBRO + "||" + @cliente.ID_CLIENTE;
                 <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
                     <td>@cliente.RUT_CLIENTE</td>
                     <td>@cliente.NOMBRE_CLIENTE</td>
@@ -69,7 +70,7 @@
                     <td>@cliente.DIREC_CLIENTE</td>
                     <td>@cliente.CORREO_CLIENTE</td>
                     <td>@cliente.RUBRO.NOMBRE_RUBRO</td>
-                    <td>@cliente.USERNAME_CLIENTE</td>
+                   
                     
                     <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                     <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC" onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
@@ -294,6 +295,7 @@
         $('#editTxtDireccion').val(d[4]);
         $('#editTxtCorreo').val(d[5]);
         $("#editSelectTipoRubro").val(d[6]);
+        $("#editSelectTipoRubro").formSelect();
     
 
     };
@@ -309,10 +311,10 @@
         var txtCorreo = $("#editTxtCorreo").val();
         var selectTipoRubro = $("#editSelectTipoRubro").val();
 
-        var data = { id_cliente : id,
+        var data = { 
             rut_cliente: txtRut,
             nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
-            direc_cliente: txtDireccion, correo_cliente: txtCorreo, rubro_id_rubro: selectTipoRubro
+            direc_cliente: txtDireccion, correo_cliente: txtCorreo, rubro_id_rubro: selectTipoRubro, id_cliente: id
         };
         $.post(url, data).done(function (data) {
             if (data.ok) {
