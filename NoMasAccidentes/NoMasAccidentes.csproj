@@ -253,6 +253,7 @@
     <Compile Include="ViewModels\PlanViewModel.cs" />
     <Compile Include="ViewModels\RubroViewModel.cs" />
     <Compile Include="ViewModels\TipoActividadViewModel.cs" />
+    <Compile Include="WebRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\jquery.mCustomScrollbar.css" />

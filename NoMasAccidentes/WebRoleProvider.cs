@@ -1,0 +1,72 @@
+﻿using NoMasAccidentes.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+
+namespace NoMasAccidentes
+{
+    public class WebRoleProvider : RoleProvider
+    {
+        public override string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public override void AddUsersToRoles(string[] usernames, string[] roleNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void CreateRole(string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteRole(string roleName, bool throwOnPopulatedRole)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string[] FindUsersInRole(string roleName, string usernameToMatch)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string[] GetAllRoles()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string[] GetRolesForUser(string username)
+        {
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+
+            var user = bd.PERSONAL.FirstOrDefault(x=> x.USERNAME_PERSO == username);
+
+            var tipoPersonal = bd.TIPO_PERSONAL.Join(bd.PERSONAL, x=> x.ID_TIPOPERSONAL, cm=> cm.ID_PERSONAL, (x, cm) => new { unidad = x, rango = cm }).Where(x=> x.rango.USERNAME_PERSO.Equals(username)).Select(x=> x.unidad.TIPO_PERSONAL1).ToArray();
+
+            return tipoPersonal;
+
+            throw new NotImplementedException();
+        }
+
+        public override string[] GetUsersInRole(string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsUserInRole(string username, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool RoleExists(string roleName)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

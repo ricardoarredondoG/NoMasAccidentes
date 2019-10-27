@@ -12,7 +12,8 @@ namespace NoMasAccidentes.Controllers
     public class AdministrarPersonalController : Controller
     {
         // GET: AdministrarPersonal
-        [Authorize]
+        
+        [Authorize(Roles = "Administrador")]
         public ActionResult Index(int pagina = 1, string nombre = "", string apellidoP = "", string usuario = "", string correo = "")
         {
             var cantidadRegistrosPorPagina = 4;
