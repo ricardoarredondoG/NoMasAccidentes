@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace NoMasAccidentes.Controllers
 {
@@ -19,10 +20,16 @@ namespace NoMasAccidentes.Controllers
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var factura = bd.FACTURA.ToList();
 
+            //Busqueda por rol
+            if (Roles.IsUserInRole("Cliente"))
+            {
+                factura = factura.FindAll(x => x.CONTRATO.CLIENTE.USUARIO.USUARIO1.Equals(User.Identity.Name));
+            }
+
             //Busqueda por Rut
             if (rut != "")
             {
-                factura = factura.FindAll(x => x.RUT_CLIENTE.Contains(rut));
+               factura = factura.FindAll(x => x.RUT_CLIENTE.Contains(rut));
             }
 
             //Busqueda por Nombre
