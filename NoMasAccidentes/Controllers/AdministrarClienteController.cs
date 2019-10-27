@@ -153,6 +153,7 @@ namespace NoMasAccidentes.Controllers
                 NoMasAccidentes.Models.CLIENTE clientes = new CLIENTE();
 
                 var clienteId = bd.CLIENTE.Find(cliente.id_cliente);
+                //Me sale que referencia un objeto nulo aquì.
                 clienteId.RUT_CLIENTE = cliente.rut_cliente;
                 clienteId.NOMBRE_CLIENTE = cliente.nombre_cliente;
                 clienteId.APELLIDO_CLIENTE = cliente.apellido_cliente;
