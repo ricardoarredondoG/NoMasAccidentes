@@ -52,7 +52,7 @@
                         <td>@rub.ID_RUBRO</td>
                         <td>@rub.NOMBRE_RUBRO</td>
                         <td>@rub.DESC_RUBRO</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="Editar('@datos')" @(rub.ACTIVO_RUBRO.ToString() == "S" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="Editar('@datos')" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                         <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@rub.ID_RUBRO)" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
                     </tr>
 
