@@ -7,67 +7,70 @@
         <h3 class="center-align">Administrar Facturas</h3>
         <form class="col s12" href="/AdministrarPersonal/Buscar" method="post">
             <div class="row">
-                <div class="input-field col s4">
-                    <input placeholder="Ingrese el Rut del Cliente" id="rut" oninput="checkRut(this)" name="rut" type="text" class="validate" >
-                    <label for="rut">Rut Cliente</label>
-                </div>
-                <div class="input-field col s4">
-                    <input placeholder="Ingrese el Nombre del Cliente" id="nombre" name="nombre" type="text" class="validate">
-                    <label for="nombre">Nombre Cliente</label>
-                </div>
-                <div class="input-field col s4">
-                    <select id="selectEstado" name="selectEstado">
-                        <option value="0" disabled selected>Seleccione Estado</option>
-                        <option value="1">Pagada</option>
-                        <option value="2">Por Pagar</option>
-                        <option value="3">Vencida</option>
-                    </select>
-                    <label for="correo">Estado</label>
-                </div>
-                <div class="input-field col s3">
-                    <input placeholder="Ingrese Fecha Vencimiento" id="fechaVencimientoDesde" name="fechaVencimientoDesde" type="date" class="validate">
-                    <label for="correo">Fecha Vencimiento Desde</label>
-                </div>
-                <div class="input-field col s3">
-                    <input placeholder="Ingrese Fecha Vencimiento" id="fechaVencimientoHasta" name="fechaVencimientoHasta" type="date" class="validate">
-                    <label for="correo">Fecha Vencimiento Hasta</label>
-                </div>
-                <div class="input-field col s3">
-                    <select id="selectMes" name="selectMes">
-                        <option value="0" disabled selected>Seleccione Mes</option>
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Junio</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
-                    </select>
-                    <label for="correo">Mes</label>
-                </div>
-                <div class="input-field col s3">
-                    <select id="selectAno" name="selectAno">
-                        <option value="0" disabled selected>Seleccione Año</option>
-                        @for (int i = System.DateTime.Now.Year; i >= System.DateTime.Now.Year - 10; i--)
-                        {
-                            <option value="@i">@i</option>
-                        }
-                    </select>
-                    <label for="correo">Año</label>
-                </div>
-                <div class="input-field col s12">
-                    <div class="center-align">
-                        <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                @if (Roles.IsUserInRole("Administrador"))
+                {
+                    <div class="input-field col s4">
+                        <input placeholder="Ingrese el Rut del Cliente" id="rut" oninput="checkRut(this)" name="rut" type="text" class="validate">
+                        <label for="rut">Rut Cliente</label>
                     </div>
+                    <div class="input-field col s4">
+                        <input placeholder="Ingrese el Nombre del Cliente" id="nombre" name="nombre" type="text" class="validate">
+                        <label for="nombre">Nombre Cliente</label>
+                    </div>
+                }
+                    <div class="input-field col s4">
+                        <select id="selectEstado" name="selectEstado">
+                            <option value="0" disabled selected>Seleccione Estado</option>
+                            <option value="1">Pagada</option>
+                            <option value="2">Por Pagar</option>
+                            <option value="3">Vencida</option>
+                        </select>
+                        <label for="correo">Estado</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input placeholder="Ingrese Fecha Vencimiento" id="fechaVencimientoDesde" name="fechaVencimientoDesde" type="date" class="validate">
+                        <label for="correo">Fecha Vencimiento Desde</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input placeholder="Ingrese Fecha Vencimiento" id="fechaVencimientoHasta" name="fechaVencimientoHasta" type="date" class="validate">
+                        <label for="correo">Fecha Vencimiento Hasta</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <select id="selectMes" name="selectMes">
+                            <option value="0" disabled selected>Seleccione Mes</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                        <label for="correo">Mes</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <select id="selectAno" name="selectAno">
+                            <option value="0" disabled selected>Seleccione Año</option>
+                            @for (int i = System.DateTime.Now.Year; i >= System.DateTime.Now.Year - 10; i--)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                        <label for="correo">Año</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <div class="center-align">
+                            <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                        </div>
 
 
+                    </div>
                 </div>
-            </div>
         </form>
     </div>
 </div>
