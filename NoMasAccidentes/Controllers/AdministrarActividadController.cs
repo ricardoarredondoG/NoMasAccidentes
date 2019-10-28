@@ -98,10 +98,6 @@ namespace NoMasAccidentes.Controllers
             var actividad = bd.ACTIVIDAD.Find(id);
             actividad.ACTIVO_ACTIVIDAD = "N";
             bd.Entry(actividad).State = System.Data.EntityState.Modified;
-            //bd.ACTIVIDAD.Attach(actividad);
-            //bd.ACTIVIDAD.Remove(actividad);
-            //asistente.ACTIVO_ASISTENTE = "N";
-            
             bd.SaveChanges();
             resul.mensaje = "Actividad eliminada correctamente";
             return Json(resul);
@@ -111,11 +107,32 @@ namespace NoMasAccidentes.Controllers
         {
             public bool ok { get; set; }
             public string mensaje { get; set; }
+        }
+        
+        [HttpPost]
+        [Authorize]
+        public JsonResult Editar(ActividadViewModel actividad)
+        {
+            var resultado = new baseRespuesta();
+            //resultado = validaciones(rub);
+            //if (resultado.ok == true)
+            //{
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            NoMasAccidentes.Models.ACTIVIDAD actividades = new ACTIVIDAD();
+            var actividadid = bd.ACTIVIDAD.Find(actividades.ID_ACTIVIDAD);
+            actividadid.DESCRIPCION_ACTIVIDAD =actividad.descripcion;
+            actividadid.FECHA_ACTIVIDAD = actividad.fecha;
+            actividadid.ACTIVO_ACTIVIDAD = "S";
+            
+            bd.Entry(actividadid).State = System.Data.EntityState.Modified;
+            bd.SaveChanges();
+            resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Actividad Modificada Correctamente";
 
+            //}
 
+            return Json(resultado);
         }
 
-      
 
     }
 }
