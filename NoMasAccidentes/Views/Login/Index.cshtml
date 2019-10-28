@@ -4,90 +4,54 @@
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - No Mas Accidentes</title>
     @Styles.Render("~/login/Content/css")
     @Scripts.Render("~/login/bundles/js")
 
-    <title>Inicio de sesion.</title>
-    <link rel="stylesheet" type="text/css" href="Escritorio/front-end">
 </head>
 
-<body>
-    <div class="row">
-        <div class="col s12 m4 offset-m4">
-            <div class="card">
-                <div class="card-action teal lighten-1 white-text">
-                    <h3>Ingreso de sesión.</h3>
-                </div>
-                <form method="POST" action="/login/ingresar">
-                    <div class="card-content">
-                        @{
-                          
-                            if (!string.IsNullOrEmpty(ViewBag.Message))
-                            {
-
-                                <b style="color:red;">
-
-                                    @ViewBag.Message
-
-                                </b>
-
-                            }
-                        }
-                        <div class="form-field">
-                            <label for="username">Usuario</label>
-                            <input type="text" id="username" name="username" required>
-                        </div>
-                        <br>
-
-                        <div class="form-field">
-                            <label for="password">Clave</label>
-                            <input type="password" id="password" name="password" required>
-
-                        </div>
-                        <br>
-
-                        <div id="tipo_usuario">
-                            <select name="tipo_usuario" required>
-                                <option value="" disabled selected>Elige tu opción.</option>
-                                <option value="1">Administrador.</option>
-                                <option value="2">Personal.</option>
-                                <option value="3">Cliente.</option>
-                            </select>
-                        </div>
-
-                        <br>
-                        <br>
-
-                        <div class="form-field">
-                            <button class="btn-large waves-effect waves-dark" style="width:100%">Ingresar</button>
-                            <br>
-                            <br>
-
-
-                        </div>
-
-                    </div>
-                </form>
-
-            </div>
-
-
+<body class="font-cover" id="login">
+    <div class="container-login center-align">
+        <div style="margin:15px 0;">
+            <i class="zmdi zmdi-account-circle zmdi-hc-5x"></i>
+            <p>Inicia sesión con tu cuenta</p>
         </div>
+        @{
+
+            if (!string.IsNullOrEmpty(ViewBag.Message))
+            {
+
+                <b style="color:red;">
+
+                    @ViewBag.Message
+
+                </b>
+
+            }
+        }
+        <form method="post" action="/login/ingresar">
+            <div class="input-field">
+                <input id="username" name="username" type="text" class="validate">
+                <label for="UserName"><i class="zmdi zmdi-account"></i>&nbsp; Usuario</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="password" name="password" type="password" class="validate">
+                <label for="Password"><i class="zmdi zmdi-lock"></i>&nbsp; Contraseña</label>
+            </div>
+            <button class="waves-effect waves-teal btn-flat">Ingresar &nbsp; <i class="zmdi zmdi-mail-send"></i></button>
+        </form>
+        <div class="divider" style="margin: 20px 0;"></div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-2.2.0.js"><\/script>')</script>
+
+
 </body>
-
-<script type="text/javascript">
-    'use strict'
-
-    $(document).ready(function () {
-        $('select').not('.disabled').formSelect();
-    });
-    document.getElementById("btnCancelar").onclick = function () {
-        location.href = "index.html";
-    };
-</script>
 
 </html>

@@ -19,62 +19,56 @@ namespace NoMasAccidentes.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ingresar(String username, String password, int tipo_usuario)
+        public ActionResult Ingresar(String username, String password)
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
 
-            //Si es Personal
-            if (tipo_usuario == 2)
+            var user = bd.USUARIO.FirstOrDefault(e => e.USUARIO1 == username && e.PASSWORD == password);
+            if (user != null)
             {
-                var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password && e.TIPO_PERSONAL.ID_TIPOPERSONAL == 2 && e.ACTIVO=="S");
 
-                if (user != null)
+
+                if(user.TIPO_USUARIO_ID_TIPO_USUARIO == 1 || user.TIPO_USUARIO_ID_TIPO_USUARIO == 2)
                 {
-                    FormsAuthentication.SetAuthCookie(user.USERNAME_PERSO, true);
-                    Session["nombreApellido"] = user.NOMBRE_PERSO + " " + user.APELLIDOP_PERSO;
-                    Session["tipoUsuario"] = 2;
+                    var user1 = bd.PERSONAL.FirstOrDefault(e => e.USUARIO == user.ID_USUARIO);
+                    
 
-                    return RedirectToAction("Index", "Home");
+                    if (user1.ACTIVO.Equals("S"))
+                    {
+                        FormsAuthentication.SetAuthCookie(user.USUARIO1, true);
+                        Session["nombreApellido"] = user1.NOMBRE_PERSO + " " + user1.APELLIDOP_PERSO;
+                    }else
+                    {
+                        return RedirectToAction("Index", new { message = "*Usuario Inactivo" });
+                    }
+
                 }
                 else
                 {
-                    return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
-                }
-            }
-            //Si Es Administrador
-            else if(tipo_usuario == 1)
-            {
-                var user = bd.PERSONAL.FirstOrDefault(e => e.USERNAME_PERSO == username && e.PASSWORD_PERSO == password && e.TIPO_PERSONAL.ID_TIPOPERSONAL == 1 && e.ACTIVO == "S");
+                    var user1 = bd.CLIENTE.FirstOrDefault(e => e.USUARIO_ID_USUARIO == user.ID_USUARIO);
 
-                if (user != null)
-                {
-                    FormsAuthentication.SetAuthCookie(user.USERNAME_PERSO, true);
-                    Session["nombreApellido"] = user.NOMBRE_PERSO + " " + user.APELLIDOP_PERSO;
-                    Session["tipoUsuario"] = 1;
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
-                }
-            }
-            //Si Es Cliente
-            else 
-            {
-                var user = bd.CLIENTE.FirstOrDefault(e => e.USERNAME_CLIENTE == username && e.PASSWORD_CLIENTE == password );
-                if (user != null)
-                {
-                    FormsAuthentication.SetAuthCookie(user.USERNAME_CLIENTE, true);
-                    Session["nombreApellido"] = user.NOMBRE_CLIENTE + " " + user.APELLIDO_CLIENTE;
-                    Session["tipoUsuario"] = 3;
+                    if (user1.ACTIVO_CLIENTE.Equals("S"))
+                    {
+                        FormsAuthentication.SetAuthCookie(user.USUARIO1, true);
+                        Session["nombreApellido"] = user1.NOMBRE_CLIENTE + " " + user1.APELLIDO_CLIENTE;
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", new { message = "*Usuario Inactivo" });
+                    }
 
-                    return RedirectToAction("Index", "Home");
+
                 }
-                else
-                {
-                    return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
-                }
+
+                return RedirectToAction("Index", "Home");
             }
+            else
+            {
+                return RedirectToAction("Index", new { message = "*Los Datos Ingresados no son Validos " });
+            }
+
+
+           
 
 
         }

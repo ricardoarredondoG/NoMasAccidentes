@@ -16,13 +16,13 @@ namespace NoMasAccidentes.Models
     {
         public TIPO_PERSONAL()
         {
-            this.PERSONAL = new HashSet<PERSONAL>();
+            this.USUARIO = new HashSet<USUARIO>();
         }
     
         public decimal ID_TIPOPERSONAL { get; set; }
         public string TIPO_PERSONAL1 { get; set; }
         public string DESC_TIPOPERSONAL { get; set; }
     
-        public virtual ICollection<PERSONAL> PERSONAL { get; set; }
+        public virtual ICollection<USUARIO> USUARIO { get; set; }
     }
 }

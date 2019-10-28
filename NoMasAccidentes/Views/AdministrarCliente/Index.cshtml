@@ -10,7 +10,7 @@
         <form class="col s12" href="/AdministrarCliente/Buscar" method="post">
             <div class="row">
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese rut del cliente" id="rut" name="rut"  oninput="checkRut(this)"  type="text" class="validate" >
+                    <input placeholder="Ingrese rut del cliente" id="rut" name="rut" oninput="checkRut(this)" type="text" class="validate">
                     <label for="rut">Rut cliente</label>
                 </div>
 
@@ -23,18 +23,17 @@
                     <input placeholder="Ingrese apellido del cliente" id="apellido" name="apellido" type="text" class="validate">
                     <label for="apellido">Apellido del cliente</label>
                 </div>
-
-                <div class="input-field col s12">
-                    <input placeholder="Ingrese correo electronico" id="mail" name="mail" type="email" class="validate">
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese mail" id="correo" name="correo" type="text" class="validate">
                     <label for="mail">Mail del cliente</label>
                 </div>
+                <div class="center-align">
+                    <div class="input-field col s12">
 
-                <div class="input-field col s4">
-                    <div class="center-align">
                         <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
                         <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </form>
@@ -50,9 +49,9 @@
                     <th data-field="id">Nombre</th>
                     <th data-field="price">Apellido</th>
                     <th data-field="price">Telefono</th>
-                    <th data-field="price">Direccion</th>
-                    <th data-field="price">Mail</th>
+                    <th data-field="price">Correo Electronico</th>
                     <th data-field="price">Rubro</th>
+                   
                     <th data-field="price">Editar</th>
                     <th data-field="price">Eliminar</th>
                 </tr>
@@ -60,16 +59,15 @@
             <tbody>
                 @foreach (var cliente in Model.cliente)
                 {
-                    var datos = @cliente.RUT_CLIENTE + "||" + @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE +"||"+ @cliente.TELEFONO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + cliente.RUBRO_ID_RUBRO;
+                    var datos = @cliente.RUT_CLIENTE + "||" + @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE +"||"+ @cliente.TELEFONO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + @cliente.RUBRO_ID_RUBRO + "||" + @cliente.ID_CLIENTE;
                 <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
                     <td>@cliente.RUT_CLIENTE</td>
                     <td>@cliente.NOMBRE_CLIENTE</td>
                     <td>@cliente.APELLIDO_CLIENTE</td>
                     <td>@cliente.TELEFONO_CLIENTE</td>
-                    <td>@cliente.DIREC_CLIENTE</td>
                     <td>@cliente.CORREO_CLIENTE</td>
                     <td>@cliente.RUBRO.NOMBRE_RUBRO</td>
-                    <td>@cliente.USERNAME_CLIENTE</td>
+                   
                     
                     <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                     <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC" onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
@@ -88,9 +86,9 @@
 
         <div id="modalNuevo" class="modal">
             <div class="modal-content">
-                <div id="mensaje" class="alert card green white-text" style="display:none">
+                <div id="div-alerta" class="alert card green white-text" style="display:none">
                     <div class="card-content">
-                        <p><i class="zmdi zmdi-check zmdi-hc-fw"></i><span>Cliente registrado correctamente</span></p>
+                        <p id="mensaje"></p>
                     </div>
                 </div>
                 <h5>Agregar Cliente</h5>
@@ -173,14 +171,14 @@
         <!-- Modal Editar -->
         <div id="modalEditar" class="modal">
             <div class="modal-content">
-                <div id="div-alerta" class="alert card green white-text" style="display:none">
+                <div id="div-alerta-editar" class="alert card green white-text" style="display:none">
                     <div class="card-content">
-                        <p id="mensaje"></p>
+                        <p id="mensajeEditar"></p>
                     </div>
                 </div>
                 <h5>Agregar Cliente</h5>
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese el rut" id="editTxtRut" name="rut" type="text" class="validate">
+                    <input placeholder="Ingrese el rut" id="editTxtRut" name="rut" type="text"  oninput="checkRut(this)" class="validate">
                     <label for="rut">rut</label>
                 </div>
                 <div class="input-field col s6">            
@@ -215,7 +213,7 @@
                 </div>
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardarC">Actualizar</button>
+                        <button class="btn green" id="btnEditarC">Actualizar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
                 </div>
@@ -293,10 +291,52 @@
         $('#editTxtTelefono').val(d[3]);
         $('#editTxtDireccion').val(d[4]);
         $('#editTxtCorreo').val(d[5]);
-        $("#editSelectTipoRubro").select.val(d[6]);
+        $("#editSelectTipoRubro").val(d[6]);
         $("#editSelectTipoRubro").formSelect();
+    
 
+    };
+
+    $("#btnEditarC").click(function () {
+        var id = d[7];
+        var url = "@Url.Action("EditarC", "AdministrarCliente")";
+        var txtRut = $("#editTxtRut").val();
+        var txtNombre = $("#editTxtNombre").val();
+        var txtApellido = $("#editTxtApellido").val();
+        var txtTelefono = $("#editTxtTelefono").val();
+        var txtDireccion = $("#editTxtDireccion").val();
+        var txtCorreo = $("#editTxtCorreo").val();
+        var selectTipoRubro = $("#editSelectTipoRubro").val();
+
+        var data = { 
+            rut_cliente: txtRut,
+            nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
+            direc_cliente: txtDireccion, correo_cliente: txtCorreo, rubro_id_rubro: selectTipoRubro, id_cliente: id
         };
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+
+                $("#txtRut").val('');
+                $("#txtNombre").val('');
+                $("#txtApellido").val('');
+                $("#txtTelefono").val('');
+                $("#txtDireccion").val('');
+                $("#txtCorreo").val('');
+
+
+            } else {
+                $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+            }
+
+            $("#mensajeEditar").html(data.mensaje);
+            $("#div-alerta-editar").show();
+
+        });
+
+
+    });
+
 
    
 

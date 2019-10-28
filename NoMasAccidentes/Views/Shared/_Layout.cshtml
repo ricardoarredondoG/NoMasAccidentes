@@ -28,10 +28,14 @@
                     <li>
                         <a href='@Url.Action("Index", "Home")' class="waves-effect waves-light"><i class="zmdi zmdi-desktop-mac zmdi-hc-fw"></i> Inicio</a>
                     </li>
-                    <li class="NavLateralDivider"></li>
-                    <li>
-                        <a href='@Url.Action("Index", "AdministrarPersonal")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-alt zmdi-hc-fw"></i> Administrar Personal</a>
-                    </li>
+                        @if (Roles.IsUserInRole("Administrador"))
+                        {
+                            <li class="NavLateralDivider"></li>
+                            <li>
+                                <a href='@Url.Action("Index", "AdministrarPersonal")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-alt zmdi-hc-fw"></i> Administrar Personal</a>
+                            </li>
+                        }
+
 
                     <li class="NavLateralDivider"></li>
                     <li>
@@ -67,7 +71,7 @@
                             <li> <a href='@Url.Action("Index", "AdministrarActividad")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i> Administrar Actividades</a></li>
                             <li><a href='@Url.Action("Index", "checklist")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i> Administrar Checklist</a></li>
                         </ul>
-                     </li>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -164,7 +168,7 @@
             var elems = document.querySelectorAll('.modal');
             var instances = M.Modal.init(elems);
         });
-
+        $('select').formSelect();
     </script>
 
 

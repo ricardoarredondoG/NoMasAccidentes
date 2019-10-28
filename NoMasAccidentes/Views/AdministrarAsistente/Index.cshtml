@@ -227,11 +227,11 @@
         $('#editarApellidoP').val(d[1]);
         $('#editarApellidoM').val(d[2]);
         $('#selectIdCliente').val(d[3]);
-        $('select').formSelect();
+        $('#selectIdCliente').formSelect();
     }
 
     $("#btnEditar").click(function () {
-        var id = d[3];
+        var id = d[4];
         var url = "@Url.Action("EditarA", "AdministrarAsistente")";
         var txtNombre = $("#editNombreA").val();
         var txtApellidoP = $("#editarApellidoP").val();

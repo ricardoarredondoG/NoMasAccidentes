@@ -12,21 +12,21 @@ namespace NoMasAccidentes.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ASISTENTE
+    public partial class USUARIO
     {
-        public ASISTENTE()
+        public USUARIO()
         {
-            this.CAPACITACION = new HashSet<CAPACITACION>();
+            this.CLIENTE = new HashSet<CLIENTE>();
+            this.PERSONAL = new HashSet<PERSONAL>();
         }
     
-        public decimal ID_ASISTENTE { get; set; }
-        public string NOMBRE_ASISTENTE { get; set; }
-        public string APELLIDOM_ASISTENTE { get; set; }
-        public string APELLIDOP_ASISTENTE { get; set; }
-        public decimal CLIENTE_ID_CLIENTE { get; set; }
-        public string ACTIVO_ASISTENTE { get; set; }
+        public decimal ID_USUARIO { get; set; }
+        public string USUARIO1 { get; set; }
+        public string PASSWORD { get; set; }
+        public decimal TIPO_USUARIO_ID_TIPO_USUARIO { get; set; }
     
-        public virtual ICollection<CAPACITACION> CAPACITACION { get; set; }
-        public virtual CLIENTE CLIENTE { get; set; }
+        public virtual ICollection<CLIENTE> CLIENTE { get; set; }
+        public virtual ICollection<PERSONAL> PERSONAL { get; set; }
+        public virtual TIPO_PERSONAL TIPO_PERSONAL { get; set; }
     }
 }
