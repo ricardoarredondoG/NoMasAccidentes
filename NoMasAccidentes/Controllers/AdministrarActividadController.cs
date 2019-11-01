@@ -56,9 +56,10 @@ namespace NoMasAccidentes.Controllers
             actividades.DESCRIPCION_ACTIVIDAD = actividad.descripcion;
             actividades.FECHA_ACTIVIDAD = actividad.fecha;
             actividades.TIPO_ACTIVIDAD_ID_TIPOACTIVI = actividad.tipo;
-            //actividades.CHECKLIST_ID_CHECKLIST = 3;
+            actividades.CHECKLIST_ID_CHECKLIST = actividad.check;
             actividades.PERSONAL_ID_PERSONAL = actividad.personal;
             actividades.CLIENTE_ID_CLIENTE = actividad.cliente;
+            actividades.ACTIVO_ACTIVIDAD = "S";
 
             bd.ACTIVIDAD.Add(actividades);
             try

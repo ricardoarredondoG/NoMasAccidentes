@@ -93,7 +93,7 @@
 
 
                 <div class="input-field col s6">
-                    <select id="select" name="tipoId">
+                    <select id="selectTipo" name="selectTipo">
                         <option value="" disabled selected>Seleccione Actividad</option>
 
                         @foreach (var tipo in Model.tipo_actividad)
@@ -106,7 +106,7 @@
 
 
                 <div class="input-field col s6">
-                    <select id="selectPersonal" name="personalId">
+                    <select id="selectPersonal" name="selectPersonal">
                         <option value="" disabled selected>Seleccione Personal</option>
 
                         @foreach (var personal in Model.personal)
@@ -118,7 +118,7 @@
                 </div>
 
                 <div class="input-field col s6">
-                    <select id="selectCliente" name="clienteId">
+                    <select id="selectCliente" name="selectCliente">
                         <option value="" disabled selected>Seleccione Cliente</option>
 
                         @foreach (var cliente in Model.cliente)
@@ -130,7 +130,7 @@
                 </div>
 
                 <div class="input-field col s6">
-                    <select id="selectCheck" name="checkId">
+                    <select id="selectCheck" name="selectCheck">
                         <option value="" disabled selected>Seleccione Checklist</option>
 
                         @foreach (var check in Model.checklist)
@@ -150,7 +150,7 @@
                 </div>-->
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green" data-target="modalNuevo" id="btnGuardar">Guardar</button>
+                        <button class="btn green"id="btnGuardar">Guardar</button>
                         <button class="btn modal-close red">Cerrar</button>
 
 
@@ -183,7 +183,7 @@
 
 
             <div class="input-field col s6">
-                <select id="select" name="tipoId">
+                <select id="editSelectTipo" name="editSelectTipo">
                     <option value="" disabled selected>Seleccione Actividad</option>
 
                     @foreach (var tipo in Model.tipo_actividad)
@@ -196,7 +196,7 @@
 
 
             <div class="input-field col s6">
-                <select id="selectPersonal" name="personalId">
+                <select id="editSelectPersonal" name="editSelectPersonal">
                     <option value="" disabled selected>Seleccione Personal</option>
 
                     @foreach (var personal in Model.personal)
@@ -208,7 +208,7 @@
             </div>
 
             <div class="input-field col s6">
-                <select id="selectCliente" name="clienteId">
+                <select id="editSelectCliente" name="editSelectCliente">
                     <option value="" disabled selected>Seleccione Cliente</option>
 
                     @foreach (var cliente in Model.cliente)
@@ -220,7 +220,7 @@
             </div>
 
             <div class="input-field col s6">
-                <select id="selectCheck" name="checkId">
+                <select id="editSelectCheck" name="editSelectCheck">
                     <option value="" disabled selected>Seleccione Checklist</option>
 
                     @foreach (var check in Model.checklist)
@@ -277,29 +277,15 @@
                 var url = "@Url.Action("Crear", "AdministrarActividad")";
                 var txtActividad = $("#txtActividad").val();
                 var txtFecha = $("#txtFecha").val();
-                var txtTipo = $("#txtTipo").val();
-                var txtTpAct = $('#select').index();
-                var txtPersonal = $('#selectPersonal').index();
-                var txtCliente = $('#selectCliente').index();
-        var data = { fecha: txtFecha, descripcion: txtActividad, tipo: txtTipo };
+                var selectTipo = $("#selectTipo").val();
+                var selectPersonal = $('#selectPersonal').val();
+                var selectCliente = $('#selectCliente').val();
+                var selectCheck = $('#selectCheck').val();
+                var data = { fecha: txtFecha, descripcion: txtActividad, tipo: selectTipo, personal: selectPersonal, cliente: selectCliente, check: selectCheck };
 
-        $.post(url, data).done(function (data) {
-            if (data.ok) {
-                $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
-
-            } else {
-                $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
-            }
-            $("#mensaje").html(data.mensaje);
-            $("#div-alerta").show();
-        });
-
-
-
+                 $.post(url, data).done();
 
                 $("#txtActividad").attr('required', 'required');
-
-                $.post(url, data).done();
 
     });
 

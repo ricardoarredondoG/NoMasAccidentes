@@ -381,6 +381,8 @@
     <Content Include="Views\AdministrarTipoActividad\Index.cshtml" />
     <Content Include="Views\checklist\Index.cshtml" />
     <Content Include="Views\AccesoDenegado\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

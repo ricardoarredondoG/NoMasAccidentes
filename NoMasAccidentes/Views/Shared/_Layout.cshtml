@@ -61,11 +61,14 @@
                         <li>
                             <a href="#" class="NavLateral-DropDown  waves-effect waves-light"><i class="zmdi zmdi-collection-text  zmdi-hc-fw"></i> <i class="zmdi zmdi-chevron-down NavLateral-CaretDown"></i> Administrar Contratos</a>
                             <ul class="full-width">
-                                <li><a href='@Url.Action("Index", "AdministrarPlanes")' class="waves-effect waves-light"><i class="zmdi zmdi-money  zmdi-hc-fw"></i> Planes</a></li>
-                                @if (Roles.IsUserInRole("Administrador") || Roles.IsUserInRole("Cliente"))
+                                @if (Roles.IsUserInRole("Administrador"))
                                 {
-                                    <li><a href='@Url.Action("Index", "AdministrarFactura")' class="waves-effect waves-light"><i class="zmdi zmdi-collection-pdf  zmdi-hc-fw"></i> Facturas</a></li>
+                                    <li><a href='@Url.Action("Index", "AdministrarPlanes")' class="waves-effect waves-light"><i class="zmdi zmdi-money  zmdi-hc-fw"></i> Planes</a></li>
                                 }
+                                    @if (Roles.IsUserInRole("Administrador") || Roles.IsUserInRole("Cliente"))
+                                    {
+                                        <li><a href='@Url.Action("Index", "AdministrarFactura")' class="waves-effect waves-light"><i class="zmdi zmdi-collection-pdf  zmdi-hc-fw"></i> Facturas</a></li>
+                                    }
                                     <li><a href='@Url.Action("Index", "Contrato")' class="waves-effect waves-light"><i class="zmdi zmdi-receipt zmdi-hc-fw"></i> Contratos</a></li>
                                 </ul>
                         </li>
