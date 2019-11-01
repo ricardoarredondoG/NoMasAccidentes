@@ -84,8 +84,6 @@
                     <th data-field="price">Año</th>
                     <th data-field="price">Estado</th>
                     <th data-field="price">Fecha Vencimiento</th>
-                    <th data-field="price">Valor Plan</th>
-                    <th data-field="price">Total Actividades Extras</th>
                     <th data-field="price">Total Factura</th>
                     <th data-field="price">PDF</th>
                     <th data-field="price">Pagar</th>
@@ -112,12 +110,6 @@
                     </td>
                     <td>
                         @factura.FECHA_VENCIMIENTO.ToString("dd/MM/yyyy")
-                    </td>
-                    <td>
-                        @factura.CONTRATO.PLAN.VALOR.ToString("C")
-                    </td>
-                    <td>
-                        $0
                     </td>
                     <td>
                         @factura.TOTAL.ToString("c")
