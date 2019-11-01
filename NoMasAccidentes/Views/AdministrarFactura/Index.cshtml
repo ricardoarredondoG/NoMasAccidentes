@@ -16,25 +16,25 @@
                     <label for="nombre">Nombre Cliente</label>
                 </div>
                 <div class="input-field col s4">
-                    <select id="selectTipoPersonal">
-                        <option value="" disabled selected>Seleccione Estado</option>
-                        <option value="2">Pagada</option>
-                        <option value="3">Por Pagar</option>
-                        <option value="4">Vencida</option>
+                    <select id="selectEstado" name="selectEstado">
+                        <option value="0" disabled selected>Seleccione Estado</option>
+                        <option value="1">Pagada</option>
+                        <option value="2">Por Pagar</option>
+                        <option value="3">Vencida</option>
                     </select>
                     <label for="correo">Estado</label>
                 </div>
                 <div class="input-field col s3">
-                    <input placeholder="Ingrese Fecha Vencimiento" id="correo" name="correo" type="date" class="validate">
+                    <input placeholder="Ingrese Fecha Vencimiento" id="fechaVencimientoDesde" name="fechaVencimientoDesde" type="date" class="validate">
                     <label for="correo">Fecha Vencimiento Desde</label>
                 </div>
                 <div class="input-field col s3">
-                    <input placeholder="Ingrese Fecha Vencimiento" id="correo" name="correo" type="date" class="validate">
+                    <input placeholder="Ingrese Fecha Vencimiento" id="fechaVencimientoHasta" name="fechaVencimientoHasta" type="date" class="validate">
                     <label for="correo">Fecha Vencimiento Hasta</label>
                 </div>
                 <div class="input-field col s3">
-                    <select id="selectTipoPersonal">
-                        <option value="" disabled selected>Seleccione Mes</option>
+                    <select id="selectMes" name="selectMes">
+                        <option value="0" disabled selected>Seleccione Mes</option>
                         <option value="1">Enero</option>
                         <option value="2">Febrero</option>
                         <option value="3">Marzo</option>
@@ -51,8 +51,8 @@
                     <label for="correo">Mes</label>
                 </div>
                 <div class="input-field col s3">
-                    <select id="selectTipoPersonal">
-                        <option value="" disabled selected>Seleccione Año</option>
+                    <select id="selectAno" name="selectAno">
+                        <option value="0" disabled selected>Seleccione Año</option>
                         @for (int i = System.DateTime.Now.Year; i >= System.DateTime.Now.Year - 10; i--)
                         {
                             <option value="@i">@i</option>
@@ -92,39 +92,43 @@
             <tbody>
                 @foreach (var factura in Model.factura)
                 {
-                <tr>
-                    <td>
-                        @factura.RUT_CLIENTE
-                    </td>
-                    <td>
-                        @factura.NOMBRE_CLIENTE
-                    </td>
-                    <td>
-                        @System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(factura.FECHA.ToString("MMMM", System.Globalization.CultureInfo.CreateSpecificCulture("es")))
-                    </td>
-                    <td>
-                        @factura.FECHA.Year
-                    </td>
-                    <td>
-                        Por Pagar
-                    </td>
-                    <td>
-                        @factura.FECHA_VENCIMIENTO.ToString("dd/MM/yyyy")
-                    </td>
-                    <td>
-                        @factura.TOTAL.ToString("c")
-                    </td>
-                    <td>
-                        <a href="~/AdministrarFactura/FacturaPdf/@factura.ID_FACTURA" class="btn modal-trigger red" id="eliminar"><i class="zmdi zmdi-collection-pdf zmdi-hc-fw"></i></a>
-                    </td>
-                    <td>
-                        <button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-money zmdi-hc-fw"></i></button>
-                    </td>
+                    <tr>
+                        <td>
+                            @factura.RUT_CLIENTE
+                        </td>
+                        <td>
+                            @factura.NOMBRE_CLIENTE
+                        </td>
+                        <td>
+                            @System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(factura.FECHA.ToString("MMMM", System.Globalization.CultureInfo.CreateSpecificCulture("es")))
+                        </td>
+                        <td>
+                            @factura.FECHA.Year
+                        </td>
+                        <td>
+                            Por Pagar
+                        </td>
+                        <td>
+                            @factura.FECHA_VENCIMIENTO.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @factura.TOTAL.ToString("c")
+                        </td>
+                        <td>
+                            <a href="~/AdministrarFactura/FacturaPdf/@factura.ID_FACTURA" class="btn modal-trigger red" id="eliminar"><i class="zmdi zmdi-collection-pdf zmdi-hc-fw"></i></a>
+                        </td>
+                        <td>
+                            <button class="btn modal-trigger blue" data-target="modalEditar"><i class="zmdi zmdi-money zmdi-hc-fw"></i></button>
+                        </td>
 
-                </tr>
+                    </tr>
                 }
             </tbody>
-            </table>
+        </table>
+        <div class="center-align">
+
+            @{Html.RenderPartial("_paginador", Model);}
+        </div>
     </div>
 </div>
 <script>
