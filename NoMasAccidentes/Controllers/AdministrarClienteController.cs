@@ -68,8 +68,9 @@ namespace NoMasAccidentes.Controllers
         {
             //Validaciones.
             var resul = new baseRespuesta();
-            resul.ok = true;
-            
+            resul = validaciones(cliente);
+
+
 
             if (resul.ok == true)
             {
