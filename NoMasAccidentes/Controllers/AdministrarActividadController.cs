@@ -120,7 +120,7 @@ namespace NoMasAccidentes.Controllers
             //{
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             NoMasAccidentes.Models.ACTIVIDAD actividades = new ACTIVIDAD();
-            var actividadid = bd.ACTIVIDAD.Find(actividades.ID_ACTIVIDAD);
+            var actividadid = bd.ACTIVIDAD.Find(actividad.idActividad);
             actividadid.DESCRIPCION_ACTIVIDAD =actividad.descripcion;
             actividadid.FECHA_ACTIVIDAD = actividad.fecha;
             actividadid.ACTIVO_ACTIVIDAD = "S";

@@ -173,11 +173,11 @@
         <div class="input-field col s6">
 
             <div class="input-field col s6">
-                <input placeholder="Nombre Actividad" id="txtActividad" name="nombre" type="text" class="validate">
+                <input placeholder="Nombre Actividad" id="edittxtActividad" name="edittxtActividad" type="text" class="validate">
                 <label for="nombre">Nombre</label>
             </div>
             <div class="input-field col s6">
-                <input placeholder="Fecha" id="txtFecha" name="txtFecha" type="date" class="validate" required>
+                <input placeholder="Fecha" id="edittxtFecha" name="edittxtFecha" type="date" class="validate" required>
                 <label for="nombre">Fecha</label>
             </div>
 
@@ -235,7 +235,7 @@
 
             <div class="row">
                 <div class="center-align">
-                    <button class="btn modal-trigger green" data-target="modalEditar" id="btnGuardarC">Actualizar</button>
+                    <button class="btn green" id="btnEditar">Actualizar</button>
                     <button class="btn modal-close red">Cerrar</button>
                 </div>
             </div>
@@ -296,6 +296,7 @@
 
 
     var idActividad = null;
+
     function eliminarA(id) {
         idActividad = id;
     };
@@ -313,14 +314,51 @@
     function editar(datos) {
 
         d = datos.split('||');
-        $('#edittxtActividad').val[0];
-        $('#edittxtFecha').val[1];
-        $('select').val[2];
-        $('selectPersonal').val[3];
-        $('selectCliente').val[4];
-        $('selectCheck').val[5];
-
+       
+        $('#edittxtActividad').val(d[0]);
+        $('#edittxtFecha').val(d[1]);
+        $('#editSelectTipo').val(d[2]);
+        $('#editSelectTipo').formSelect();
+        $('#editSelectPersonal').val(d[3]);
+        $('#editSelectPersonal').formSelect();
+        $('#editSelectCliente').val(d[4]);
+        $('#editSelectCliente').formSelect();
+        $('#editSelectCheck').val(d[5]);
+        $('#editSelectCheck').formSelect();
+        
     };
+
+    $("#btnEditar").click(function () {
+        var id = d[6];
+        var url = "@Url.Action("Editar", "AdministrarActividad")";
+        var txtActividad = $("#edittxtActividad").val();
+        var txtFecha = $("#edittxtFecha").val();
+        var selectTipo = $("#editSelectTipo").val();
+        var selectPersonal = $("#editSelectPersonal").val();
+        var selectCliente = $("#editSelectCliente").val();
+        var selectCheck = $("#editSelectCheck").val;
+        console.log(txtActividad);
+        var data = { idActividad: id, fecha: txtFecha, descripcion: txtActividad, tipo: selectTipo, personal: selectPersonal, cliente: selectCliente, check: selectCheck };
+        
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                $("#txtActividad").val('');
+                $("#txtFecha").val('');
+                $("#selectTipo").val('');
+                $("#selectPersonal").val('');
+                $("#selectCliente").val('');
+
+            } else {
+                $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+            }
+            $("#mensajeEditar").html(data.mensaje);
+            $("#div-alerta-editar").show();
+
+
+        });
+
+    });
 </script>
 
 
