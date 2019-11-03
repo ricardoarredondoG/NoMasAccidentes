@@ -35,12 +35,7 @@
                             <a href='@Url.Action("Index", "AdministrarPersonal")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-alt zmdi-hc-fw"></i> Administrar Personal</a>
                         </li>
                     }
-
-
-                    <li class="NavLateralDivider"></li>
-                    <li>
-                        <a href='@Url.Action("Index", "AdministrarAsistente")' class="waves-effect waves-light"><i class="zmdi zmdi-account-circle zmdi-hc-fw"></i> Administrar Asistente</a>
-                    </li>
+                    
                     @if (Roles.IsUserInRole("Administrador"))
                     {
                         <li class="NavLateralDivider"></li>
@@ -49,6 +44,9 @@
                             <ul class="full-width">
                                 <li>
                                     <a href='@Url.Action("Index", "AdministrarCliente")' class="waves-effect waves-light"><i class="zmdi zmdi-account-o zmdi-hc-fw"></i> Clientes</a>
+                                </li>
+                                <li>
+                                    <a href='@Url.Action("Index", "AdministrarAsistente")' class="waves-effect waves-light"><i class="zmdi zmdi-account-circle zmdi-hc-fw"></i> Asistente</a>
                                 </li>
                                 <li>
                                     <a href='@Url.Action("Index", "AdministrarRubro")' class="waves-effect waves-light"><i class="zmdi zmdi-receipt zmdi-hc-fw"></i> Rubros</a>
