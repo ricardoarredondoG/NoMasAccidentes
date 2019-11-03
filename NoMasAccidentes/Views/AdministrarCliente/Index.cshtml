@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row">
-        <h3 class="center-align">Registrar cliente</h3>
+        <h3 class="center-align">Administrar Clientes</h3>
         <form class="col s12" href="/AdministrarCliente/Buscar" method="post">
             <div class="row">
                 <div class="input-field col s6">
@@ -117,7 +117,7 @@
                     <label for="direccion">Direccion del cliente</label>
                 </div>
 
-                <div class="input-field col s12">
+                <div class="input-field col s6">
                     <input placeholder="Ingrese correo electronico" id="txtMail" name="mail" type="email" class="validate">
                     <label for="mail">Mail del cliente</label>
                 </div>
@@ -138,8 +138,8 @@
 
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger blue"  id="btnGuardarC">Guardar</button>
-                        <button class="btn modal-close blue" id="btnCerrar">Limpiar</button>
+                        <button class="btn modal-trigger green"  id="btnGuardarC">Guardar</button>
+                        <button class="btn modal-close red" id="btnCerrar">Cerrar</button>
 
                     </div>
                 </div>
@@ -151,7 +151,7 @@
             <div class="modal-content">
                 <div class="center-align">
                     <div id="contenidoEliminar">
-                        <h5>¿Se encuentra seguro de eliminar al cliente?</h5>
+                        <h5>¿Esta seguro que desea eliminar el Cliente?</h5>
                         <button class="btn green" id="btnConfirmarEliminar">Confirmar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
@@ -250,7 +250,7 @@
                 if (data.ok) {
                     $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
                 } else {
-                    $("#div-alerta").removeClass("alert card green white-text").addClass("alert card green white-text").slideDown(200);
+                    $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
                 }
                 $("#mensaje").html(data.mensaje);
                 $("#div-alerta").show();
