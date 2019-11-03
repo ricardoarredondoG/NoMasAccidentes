@@ -11,6 +11,8 @@ namespace NoMasAccidentes.Controllers
     public class AdministrarAsistenteController : Controller
     {
         // GET: AdministrarAsistente
+        [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public ActionResult Index(int pagina = 1, string nombre = "", string apellidoP = "", string apellidoM = "")
         {
             var cantidadRegistroPorPagina = 4;
@@ -51,6 +53,7 @@ namespace NoMasAccidentes.Controllers
         }
         [HttpPost]
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
 
         public JsonResult CrearA(AsistenteViewModel asistente)
         {
@@ -132,6 +135,7 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public JsonResult EliminarA(int id)
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();

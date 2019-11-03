@@ -64,6 +64,7 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public JsonResult CrearCliente(ClienteViewModel cliente)
         {
             //Validaciones.
@@ -143,6 +144,7 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public JsonResult EliminarC(int id)
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
@@ -158,6 +160,7 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public JsonResult EditarC(ClienteViewModel cliente)
         {
             var resul = new baseRespuesta();

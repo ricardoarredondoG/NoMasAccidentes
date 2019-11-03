@@ -11,6 +11,7 @@ namespace NoMasAccidentes.Controllers
     public class AdministrarRubroController : Controller
     {
         // GET: AdministrarRubro
+        [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
         public ActionResult Index(int pagina = 1, string nomRub = "", string descRub = "")
         {
@@ -49,6 +50,7 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public JsonResult Crear(RubroViewModel rub)
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
@@ -85,6 +87,7 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public JsonResult Editar(RubroViewModel rub)
         {
             var resultado = new baseRespuesta();
@@ -108,6 +111,7 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public JsonResult Eliminar(int id)
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
