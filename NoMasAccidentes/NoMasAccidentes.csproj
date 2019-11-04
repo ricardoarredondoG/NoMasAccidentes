@@ -164,6 +164,7 @@
     <Compile Include="Controllers\AdministrarPlanesController.cs" />
     <Compile Include="Controllers\AdministrarRubroController.cs" />
     <Compile Include="Controllers\AdministrarTipoActividadController.cs" />
+    <Compile Include="Controllers\AdministrarTipoSolicitudController.cs" />
     <Compile Include="Controllers\checklistController.cs" />
     <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="ViewModels\PlanViewModel.cs" />
     <Compile Include="ViewModels\RubroViewModel.cs" />
     <Compile Include="ViewModels\TipoActividadViewModel.cs" />
+    <Compile Include="ViewModels\TipoSolicitudViewModel.cs" />
     <Compile Include="WebRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +324,7 @@
     <Folder Include="Views\RubroViewModel\" />
     <Folder Include="Views\TipoActividadViewModel\" />
     <Folder Include="Views\TipoActividad\" />
+    <Folder Include="Views\TipoSolicitud\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -383,6 +386,7 @@
     <Content Include="Views\AccesoDenegado\Index.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\AdministrarTipoSolicitud\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

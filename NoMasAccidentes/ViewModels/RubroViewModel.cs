@@ -6,7 +6,7 @@ using System.Web;
 
 namespace NoMasAccidentes.ViewModels
 {
-    public class RubroViewModel : BaseModelo
+    public class RubroViewModel /*: BaseModelo*/
     {
         //public List<Models.RUBRO> rubro { get; set; }
 

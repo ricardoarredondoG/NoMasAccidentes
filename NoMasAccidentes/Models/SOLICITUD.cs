@@ -19,6 +19,7 @@ namespace NoMasAccidentes.Models
         public string DESCRIPCION_SOLICITUD { get; set; }
         public decimal TIPO_SOLICITUD_ID_TIPOSOLICI { get; set; }
         public decimal CLIENTE_ID_CLIENTE { get; set; }
+        public string ACTIVO_SOLICITUD { get; set; }
     
         public virtual TIPO_SOLICITUD TIPO_SOLICITUD { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }

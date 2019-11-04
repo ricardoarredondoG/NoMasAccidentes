@@ -164,6 +164,7 @@
           <Property Name="DESCRIPCION_SOLICITUD" Type="varchar2" MaxLength="300" Nullable="false" />
           <Property Name="TIPO_SOLICITUD_ID_TIPOSOLICI" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="CLIENTE_ID_CLIENTE" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACTIVO_SOLICITUD" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="TIPO_ACTIVIDAD">
           <Key>
@@ -195,6 +196,7 @@
           <Property Name="ID_TIPOSOLICI" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="NOMBRE_TIPOSOLICITUD" Type="varchar2" MaxLength="50" Nullable="false" />
           <Property Name="DESCRIPCION_TIPOSOLICITUD" Type="varchar2" MaxLength="300" Nullable="false" />
+          <Property Name="ACTIVO_TIPOSOLICITUD" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="USUARIO">
           <Key>
@@ -661,6 +663,7 @@
           <Property Name="CLIENTE_ID_CLIENTE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
           <NavigationProperty Name="TIPO_SOLICITUD" Relationship="Self.SOLICITUD_TIPO_SOLICITUD_FK" FromRole="SOLICITUD" ToRole="TIPO_SOLICITUD" />
           <NavigationProperty Name="CLIENTE" Relationship="ModeloDato.SOLICITUD_CLIENTE_FK" FromRole="SOLICITUD" ToRole="CLIENTE" />
+          <Property Name="ACTIVO_SOLICITUD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="TIPO_ACTIVIDAD">
           <Key>
@@ -687,6 +690,7 @@
           <Property Name="NOMBRE_TIPOSOLICITUD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DESCRIPCION_TIPOSOLICITUD" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="SOLICITUD" Relationship="Self.SOLICITUD_TIPO_SOLICITUD_FK" FromRole="TIPO_SOLICITUD" ToRole="SOLICITUD" />
+          <Property Name="ACTIVO_TIPOSOLICITUD" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <Association Name="ACTIVIDAD_CHECKLIST_FK">
           <End Role="CHECKLIST" Type="Self.CHECKLIST" Multiplicity="1" />
@@ -1230,6 +1234,7 @@
           <EntitySetMapping Name="SOLICITUD">
             <EntityTypeMapping TypeName="ModeloDato.SOLICITUD">
               <MappingFragment StoreEntitySet="SOLICITUD">
+                <ScalarProperty Name="ACTIVO_SOLICITUD" ColumnName="ACTIVO_SOLICITUD" />
                 <ScalarProperty Name="ID_SOLICITUD" ColumnName="ID_SOLICITUD" />
                 <ScalarProperty Name="FECHA_SOLICITUD" ColumnName="FECHA_SOLICITUD" />
                 <ScalarProperty Name="DESCRIPCION_SOLICITUD" ColumnName="DESCRIPCION_SOLICITUD" />
@@ -1258,6 +1263,7 @@
           <EntitySetMapping Name="TIPO_SOLICITUD">
             <EntityTypeMapping TypeName="ModeloDato.TIPO_SOLICITUD">
               <MappingFragment StoreEntitySet="TIPO_SOLICITUD">
+                <ScalarProperty Name="ACTIVO_TIPOSOLICITUD" ColumnName="ACTIVO_TIPOSOLICITUD" />
                 <ScalarProperty Name="ID_TIPOSOLICI" ColumnName="ID_TIPOSOLICI" />
                 <ScalarProperty Name="NOMBRE_TIPOSOLICITUD" ColumnName="NOMBRE_TIPOSOLICITUD" />
                 <ScalarProperty Name="DESCRIPCION_TIPOSOLICITUD" ColumnName="DESCRIPCION_TIPOSOLICITUD" />

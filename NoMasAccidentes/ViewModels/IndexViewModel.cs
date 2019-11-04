@@ -28,6 +28,8 @@ namespace NoMasAccidentes.ViewModels
         public List<Models.TIPO_ACTIVIDAD> tipo_actividad { get; set; }
 
         public List<Models.CHECKLIST> checklist { get; set; }
+
+        public List<Models.TIPO_SOLICITUD> tipo_solicitud { get; set; }
     }
 
    

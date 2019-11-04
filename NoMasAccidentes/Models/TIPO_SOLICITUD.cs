@@ -22,6 +22,7 @@ namespace NoMasAccidentes.Models
         public decimal ID_TIPOSOLICI { get; set; }
         public string NOMBRE_TIPOSOLICITUD { get; set; }
         public string DESCRIPCION_TIPOSOLICITUD { get; set; }
+        public string ACTIVO_TIPOSOLICITUD { get; set; }
     
         public virtual ICollection<SOLICITUD> SOLICITUD { get; set; }
     }

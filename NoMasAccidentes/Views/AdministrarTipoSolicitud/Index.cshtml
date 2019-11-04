@@ -1,0 +1,239 @@
+﻿
+@{
+    ViewBag.Title = "Administrar Tipo Solicitud";
+}
+
+
+<div class="container">
+    <div class="row">
+        <h3 class="center-align">Administrar Tipo Solicitud</h3>
+        <form class="col s12" href="/AdministrarTipoSolicitud/Buscar" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Tipo de Solicitud" id="tiposolicitud" name="tiposolicitud" type="text" class="validate">
+                    <label for="tiposolicitud">Tipo Solicitud</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese la Descripción del tipo de Solicitud" id="descripcion" name="descripcion" type="text" class="validate">
+                    <label for="descripcion">Descripcion Tipo Solicitud</label>
+                </div>
+
+                <div class="input-field col s4">
+                    <div class="center-align">
+                        <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                        <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@model NoMasAccidentes.ViewModels.IndexViewModel
+<div class="row">
+    <div class="col s12">
+
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="id">ID Tipo Solicitud</th>
+                    <th data-field="price">Nombre Tipo Solicitud</th>
+                    <th data-field="price">Descripción Tipo Solicitud</th>
+                    <th data-field="price">Editar</th>
+                    <th data-field="price">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tipSol in Model.tipo_solicitud)
+                {
+                    var datos = @tipSol.NOMBRE_TIPOSOLICITUD + "||" + @tipSol.DESCRIPCION_TIPOSOLICITUD + "||" + @tipSol.ID_TIPOSOLICI;
+
+                    <tr>
+                        <td>@tipSol.ID_TIPOSOLICI</td>
+                        <td>@tipSol.NOMBRE_TIPOSOLICITUD</td>
+                        <td>@tipSol.DESCRIPCION_TIPOSOLICITUD</td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(tipSol.ACTIVO_TIPOSOLICITUD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@tipSol.ID_TIPOSOLICI)" @(tipSol.ACTIVO_TIPOSOLICITUD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                    </tr>
+
+
+                }
+
+            </tbody>
+
+        </table>
+        <div class="center-align">
+
+            @{Html.RenderPartial("_paginador", Model);}
+        </div>
+        <!-- Modal Nuevo -->
+        <!-- Modal Nuevo -->
+
+
+        <div id="modalNuevo" class="modal">
+            <div class="modal-content">
+                <div id="div-alerta" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p id="mensaje"></p>
+                    </div>
+                </div>
+                <h5>Agregar Tipo Solicitud</h5>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese el Tipo de Solicitud" id="txtTipoSolicitud" name="tipoSolicitud" type="text" class="validate">
+                    <label for="tipoSol">Nombre Tipo Solicitud</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Ingrese una Descripción del Tipo de Solicitud" id="txtDescripTipoSolicitud" name="desc" type="text" class="validate" required>
+                    <label for="descTipoSol">Descripción Tipo Solicitud</label>
+                </div>
+
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn modal-trigger green" id="btnGuardar">Guardar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Eliminar-->
+<div id="modalEliminar" class="modal">
+    <div class="modal-content">
+        <div class="center-align">
+            <div id="contenidoEliminar">
+                <h5>¿Esta seguro que desea eliminar el tipo de solicitud?</h5>
+                <button class="btn  green" id="confirmarEliminar"> Confirmar </button>
+                <button class="btn modal-close red">Cerrar</button>
+            </div>
+            <div id="div-alerta-eliminar" style="display:none">
+                <div class="alert card green white-text">
+                    <div class="card-content">
+                        <p id="mensajeEliminar"></p>
+                    </div>
+                </div>
+                <button class="btn modal-close red">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar -->
+<div id="modalEditar" class="modal">
+    <div class="modal-content">
+        <div id="div-alerta-editar" class="alert card green white-text" style="display:none">
+            <div class="card-content">
+                <p id="mensajeEditar"></p>
+            </div>
+        </div>
+        <h5>Editar Rubro</h5>
+        <div class="input-field col s6">
+            <input placeholder="Ingrese el Tipo de Solicitud" id="editTxtTipSol" name="tipSol" type="text" class="validate">
+            <label for="tipoSol">Tipo Solicitud</label>
+        </div>
+        <div class="input-field col s6">
+            <input placeholder="Ingrese la Descripción del Tipo de Solicitud" id="editTxtDescTipSol" name="descTipSol" type="text" class="validate" required>
+            <label for="descTipSol">Descripción Tipo de Solicitud</label>
+        </div>
+
+        <div class="row">
+            <div class="center-align">
+                <button class="btn green" id="btnEditar">Actualizar</button>
+                <button class="btn modal-close red">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+
+    $("#btnGuardar").click(function ()
+    {
+        $("#mensaje").show();
+
+                var url = "@Url.Action("Crear", "AdministrarTipoSolicitud")";
+        var txtTipoSolicitud = $("#txtTipoSolicitud").val();
+        var txtDescripTipoSolicitud = $("#txtDescripTipoSolicitud").val();
+        var data = { nombre_tipsolic: txtTipoSolicitud, desc_tiposolic: txtDescripTipoSolicitud };
+
+
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                $("#txtTipoSolicitud").val('');
+                $("#txtDescripTipoSolicitud").val('');
+            } else {
+                $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+            }
+            $("#mensaje").html(data.mensaje);
+            $("#div-alerta").show();
+        });
+
+    });
+
+
+    //Eliminar Rubro
+        var idTipoSol = null;
+        function eliminar(id) {
+            idTipoSol = id;
+        };
+
+        $("#confirmarEliminar").click(function () {
+            var url = "@Url.Action("Eliminar", "AdministrarTipoSolicitud")";
+            var data = { id: idRubro };
+            $.post(url, data).done(function (data) {
+                $("#mensajeEliminar").html(data.mensaje);
+                $("#div-alerta-eliminar").show();
+                $("#contenidoEliminar").hide();
+            });
+
+
+
+    });
+
+
+    //Editar Rubro
+        function editar(datos) {
+
+            //Llenar campos
+            d = datos.split('||');
+            $('#txtTipoSolicitud').val(d[0]);
+            $('#txtDescripTipoSolicitud').val(d[1]);
+        };
+
+
+    $("#btnEditar").click(function () {
+
+        var id = d[2];
+        //Definir URL
+        var url = "@Url.Action("Editar", "AdministrarTipoSolicitud")";
+        var txtTipSol = $("#editTxtTipSol").val();
+        var txtDescTipSol = $("#editTxtDescTipSol").val();
+        var data = { id_tipsolic: id, nombre_tipsolic: txtTipSol, desc_tiposolic: txtDescTipSol };
+
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                $("#editTxtTipSol").val('');
+                $("#editTxtDescTipSol").val('');
+
+            } else {
+                $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+            }
+            $("#mensajeEditar").html(data.mensaje);
+            $("#div-alerta-editar").show();
+        });
+
+    });
+
+</script>
+
