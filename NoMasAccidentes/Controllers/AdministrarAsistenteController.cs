@@ -11,13 +11,16 @@ namespace NoMasAccidentes.Controllers
     public class AdministrarAsistenteController : Controller
     {
         // GET: AdministrarAsistente
+        [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public ActionResult Index(int pagina = 1, string nombre = "", string apellidoP = "", string apellidoM = "")
         {
             var cantidadRegistroPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var asistente = bd.ASISTENTE.ToList();
 
-            var cliente = bd.CLIENTE.ToList();
+            var cliente = bd.CLIENTE.Where(x =>x.ACTIVO_CLIENTE=="S" &&!bd.ASISTENTE.Any(sp => sp.CLIENTE_ID_CLIENTE == x.ID_CLIENTE && sp.ACTIVO_ASISTENTE== "S")).ToList();
+           
 
             if (nombre != "")
             {
@@ -50,6 +53,7 @@ namespace NoMasAccidentes.Controllers
         }
         [HttpPost]
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
 
         public JsonResult CrearA(AsistenteViewModel asistente)
         {
@@ -131,6 +135,7 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
         public JsonResult EliminarA(int id)
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
@@ -154,7 +159,7 @@ namespace NoMasAccidentes.Controllers
             {
                 EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
                 NoMasAccidentes.Models.ASISTENTE asistentes = new ASISTENTE();
-                var asistenteId = bd.ASISTENTE.Find(asistente.cliente_id_cliente);
+                var asistenteId = bd.ASISTENTE.Find(asistente.id_asistente);
                 asistenteId.NOMBRE_ASISTENTE = asistente.nombre_asistente;
                 asistenteId.APELLIDOP_ASISTENTE = asistente.apellidop_asistente;
                 asistenteId.APELLIDOM_ASISTENTE = asistente.apellidom_asistente;

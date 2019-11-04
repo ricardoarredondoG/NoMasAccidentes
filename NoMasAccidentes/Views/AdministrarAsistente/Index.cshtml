@@ -5,7 +5,7 @@
 
 <div class="container">
     <div class="row">
-        <h3 class="center-align">Registrar asistente</h3>
+        <h3 class="center-align">Administrar Asistentes</h3>
         <form class="col s12" href="/AdministrarAsistente/Buscar" method="post">
             <div class="row">
                 <div class="input-field col s6">
@@ -46,7 +46,8 @@
                     <th data-field="id">Nombre</th>
                     <th data-field="price">Apellido Paterno</th>
                     <th data-field="price">Apellido Materno</th>
-                    <th data-field="price">Id asistente</th>
+                    <th data-field="price">Rut Cliente</th>
+                    <th data-field="price">Nombre Cliente</th>
                     <th data-field="price">Editar</th>
                     <th data-field="price">Eliminar</th>
                 </tr>
@@ -54,15 +55,16 @@
             <tbody>
                 @foreach (var asistente in Model.asistente)
                 {
-                    var datos = @asistente.NOMBRE_ASISTENTE + "||" + @asistente.APELLIDOP_ASISTENTE + "||" + @asistente.APELLIDOM_ASISTENTE + "||" + @asistente.ID_ASISTENTE;
-                    <tr style='background-color: @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "#CCCCCC" : "");'>
-                        <td>@asistente.NOMBRE_ASISTENTE</td>
-                        <td>@asistente.APELLIDOP_ASISTENTE</td>
-                        <td>@asistente.APELLIDOM_ASISTENTE  </td>
-                        <td>@asistente.ID_ASISTENTE</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="EditarA('@datos')" @(asistente.ACTIVO_ASISTENTE.ToString() =="N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEliminarA" id="eliminarA" onclick="eliminarA(@asistente.ID_ASISTENTE)" @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
-                    </tr>
+                    var datos = @asistente.NOMBRE_ASISTENTE + "||" + @asistente.APELLIDOP_ASISTENTE + "||" + @asistente.APELLIDOM_ASISTENTE + "||" + @asistente.ID_ASISTENTE+ "||"+ asistente.CLIENTE_ID_CLIENTE +"||"+ asistente.CLIENTE.RUT_CLIENTE+ " ----> " + asistente.CLIENTE.NOMBRE_CLIENTE+" " +asistente.CLIENTE.APELLIDO_CLIENTE;
+                <tr style='background-color: @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "#CCCCCC" : "");'>
+                    <td>@asistente.NOMBRE_ASISTENTE</td>
+                    <td>@asistente.APELLIDOP_ASISTENTE</td>
+                    <td>@asistente.APELLIDOM_ASISTENTE</td>
+                    <td>@asistente.CLIENTE.RUT_CLIENTE</td>
+                    <td>@asistente.CLIENTE.NOMBRE_CLIENTE @asistente.CLIENTE.APELLIDO_CLIENTE</td>
+                    <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="EditarA('@datos')" @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                    <td><button class="btn modal-trigger red" data-target="modalEliminarA" id="eliminarA" onclick="eliminarA(@asistente.ID_ASISTENTE)" @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+                </tr>
 
 
                 }
@@ -99,20 +101,20 @@
 
                 <div class="input-field col s6">
                     <select id="selectIdCliente" name="tipoId">
-                        <option value="" disabled selected>Seleccione id del cliente</option>
+                        <option value="" disabled selected>Seleccione el Cliente</option>
                         
                             @foreach (var cliente in Model.cliente)
                             {
-                                <option value="@cliente.ID_CLIENTE">@cliente.NOMBRE_CLIENTE</option>
+                             <option value="@cliente.ID_CLIENTE">@cliente.RUT_CLIENTE ----> @cliente.NOMBRE_CLIENTE @cliente.APELLIDO_CLIENTE </option>
                             }
                     </select>
-                    <label for="tipoId">id</label>
+                    <label for="tipoId">Cliente</label>
                 </div>
 
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger blue" id="btnGuardarA">Guardar</button>
-                        <button class="btn modal-close blue" id="btnCerrar">Cerrar</button>
+                        <button class="btn modal-trigger green" id="btnGuardarA">Guardar</button>
+                        <button class="btn modal-close red" id="btnCerrar">Cerrar</button>
 
                     </div>
                 </div>
@@ -146,7 +148,7 @@
                         <p id="mensajeEditar">  </p>
                     </div>
                 </div>
-                <h5>Agregar asistente</h5>
+                <h5>Modificar Asistente</h5>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el nombre" id="editNombreA" type="text" name="nombreA" class="validate" />
                     <label for="nombreA">Nombre asistente</label>
@@ -161,14 +163,14 @@
                 </div>
 
                 <div class="input-field col s6">
-                    <select id="editSelectIdCliente" name="tipoId">
+                    <select id="editSelectIdCliente" name="editSelectIdCliente">
                         <option value="" disabled selected>Seleccione id del cliente</option>
                         @foreach (var cliente in Model.cliente)
                         {
-                            <option value="@cliente.ID_CLIENTE">@cliente.NOMBRE_CLIENTE</option>
+                            <option value="@cliente.ID_CLIENTE">@cliente.RUT_CLIENTE ----> @cliente.NOMBRE_CLIENTE @cliente.APELLIDO_CLIENTE </option>
                         }
                     </select>
-                    <label for="tipoId">id</label>
+                    <label for="tipoId">Cliente</label>
                 </div>
                 <div class="row">
                     <div class="center-align">
@@ -222,21 +224,24 @@
 
     });
     function EditarA(datos) {
+        $('#editSelectIdCliente').formSelect();
         d = datos.split('||');
         $('#editNombreA').val(d[0]);
         $('#editarApellidoP').val(d[1]);
         $('#editarApellidoM').val(d[2]);
-        $('#selectIdCliente').val(d[3]);
-        $('#selectIdCliente').formSelect();
+        $('#editSelectIdCliente').append($('<option>', { value: d[4], text: d[5], selected:true }));
+        $('#editSelectIdCliente').formSelect();
+        $("#editSelectIdCliente option[value='"+d[4]+"']").remove();
+
     }
 
     $("#btnEditar").click(function () {
-        var id = d[4];
+        var id = d[3];
         var url = "@Url.Action("EditarA", "AdministrarAsistente")";
         var txtNombre = $("#editNombreA").val();
         var txtApellidoP = $("#editarApellidoP").val();
         var txtApellidoM = $("#editarApellidoM").val();
-        var selectIdCliente = $("#selectIdCliente").val();
+        var selectIdCliente = $("#editSelectIdCliente").val();
         var data = {id_asistente : id, nombre_asistente: txtNombre, apellidop_asistente: txtApellidoP, apellidoM_asistente: txtApellidoM, cliente_id_cliente: selectIdCliente };
         $.post(url, data).done(function (data) {
             if (data.ok) {

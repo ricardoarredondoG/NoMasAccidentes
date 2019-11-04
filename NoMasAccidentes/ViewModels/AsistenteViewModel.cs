@@ -7,7 +7,7 @@ namespace NoMasAccidentes.ViewModels
 {
     public class AsistenteViewModel
     {
-        public string id_asistente { get; set; }
+        public int id_asistente { get; set; }
         public string nombre_asistente { get; set; }
         public string apellidom_asistente { get; set; }
         public string apellidop_asistente { get; set; }
