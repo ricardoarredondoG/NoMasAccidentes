@@ -37,37 +37,32 @@ namespace NoMasAccidentes.Controllers
         [Authorize]
         public JsonResult CrearTipoSolicitud(TipoSolicitudViewModel tipo_solicitud)
         {
-            //Validaciones.
-            var resul = new baseRespuesta();
-            resul.ok = true;
-            if (tipo_solicitud.nombre_tipsolic == null)
+
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            NoMasAccidentes.Models.TIPO_SOLICITUD tipo_solici = new TIPO_SOLICITUD();
+            var resultado = new baseRespuesta();
+            resultado = validaciones(tipo_solicitud);
+            if (resultado.ok == true)
             {
-                resul.mensaje = resul.mensaje + "<i class ='zmdi zmdi-alert-circle zmdi-hc-fw'></i>Ingrese Tipo de Solicitud</br>";
-                resul.ok = false;
-            }
-
-            if (resul.ok == true)
-            {
-                EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
-                NoMasAccidentes.Models.TIPO_SOLICITUD tipo_solici = new TIPO_SOLICITUD();
-
-
                 tipo_solici.NOMBRE_TIPOSOLICITUD = tipo_solicitud.nombre_tipsolic;
                 tipo_solici.DESCRIPCION_TIPOSOLICITUD = tipo_solicitud.desc_tiposolic;
-
                 tipo_solici.ACTIVO_TIPOSOLICITUD = "S";
 
+                //Eliminar espacios en Blanco
+                var nombre = tipo_solicitud.nombre_tipsolic.Replace(" ", "");
+                var descripcion = tipo_solicitud.desc_tiposolic.Replace(" ", "");
 
 
                 bd.TIPO_SOLICITUD.Add(tipo_solici);
                 bd.SaveChanges();
-                resul.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Tipo Solicitud Registrada Correctamente</br>";
+                resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Tipo Solicitud Registrada Correctamente</br>";
             }
             else
             {
-                resul.mensaje = "<b>Error</b></br>" + resul.mensaje;
+                resultado.mensaje = "<b>Error</b></br>" + resultado.mensaje;
             }
-            return Json(resul);
+
+            return Json(resultado);
         }
 
 

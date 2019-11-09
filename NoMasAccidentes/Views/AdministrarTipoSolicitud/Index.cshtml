@@ -49,7 +49,7 @@
             <tbody>
                 @foreach (var tipSol in Model.tipo_solicitud)
                 {
-                    var datos = @tipSol.NOMBRE_TIPOSOLICITUD + "||" + @tipSol.DESCRIPCION_TIPOSOLICITUD + "||" + @tipSol.ID_TIPOSOLICI;
+                    var datos = @tipSol.NOMBRE_TIPOSOLICITUD + "||" + @tipSol.DESCRIPCION_TIPOSOLICITUD + "||" + tipSol.ID_TIPOSOLICI;
 
                     <tr>
                         <td>@tipSol.ID_TIPOSOLICI</td>
