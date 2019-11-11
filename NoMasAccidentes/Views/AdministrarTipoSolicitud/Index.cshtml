@@ -82,9 +82,17 @@
                 </div>
                 <h5>Agregar Tipo Solicitud</h5>
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese el Tipo de Solicitud" id="txtTipoSolicitud" name="tipoSolicitud" type="text" class="validate">
+                    <select id="selectTipoSolicitud" required>
+                        <option value="" disabled selected>Seleccione Tipo de  Solicitud</option>
+                        <option value="Reporte Accidente">Reporte Accidente</option>
+                        <option value="Reporte Fiscalización">Reporte Fiscalización</option>
+                    </select>
                     <label for="tipoSol">Nombre Tipo Solicitud</label>
                 </div>
+                @*<div class="input-field col s6">
+                    <input placeholder="Ingrese el Tipo de Solicitud" id="txtTipoSolicitud" name="tipoSolicitud" type="text" class="validate" required>
+                    <label for="tipoSol">Nombre Tipo Solicitud</label>
+                </div>*@
                 <div class="input-field col s6">
                     <input placeholder="Ingrese una Descripción del Tipo de Solicitud" id="txtDescripTipoSolicitud" name="desc" type="text" class="validate" required>
                     <label for="descTipoSol">Descripción Tipo Solicitud</label>
@@ -132,44 +140,51 @@
         </div>
         <h5>Editar Tipo Solicitud</h5>
         <div class="input-field col s6">
-            <input placeholder="Ingrese el Tipo de Solicitud" id="editTxtTipSol" name="tipSol" type="text" class="validate">
-            <label for="tipoSol">Tipo Solicitud</label>
+            <select id="editSelectTipoSolicitud">
+                <option value="" disabled>Seleccione Tipo de  Solicitud</option>
+                <option value="Reporte Accidente">Reporte Accidente</option>
+                <option value="Reporte Fiscalización">Reporte Fiscalización</option>
+            </select>
+            <label for="correo">Tipo Personal</label>
         </div>
-        <div class="input-field col s6">
-            <input placeholder="Ingrese la Descripción del Tipo de Solicitud" id="editTxtDescTipSol" name="descTipSol" type="text" class="validate" required>
-            <label for="descTipSol">Descripción Tipo de Solicitud</label>
-        </div>
-
-        <div class="row">
-            <div class="center-align">
-                <button class="btn green" id="btnEditar">Actualizar</button>
-                <button class="btn modal-close red">Cerrar</button>
+            @*<div class="input-field col s6">
+                <input placeholder="Ingrese el Tipo de Solicitud" id="editTxtTipSol" name="tipSol" type="text" class="validate" required>
+                <label for="tipoSol">Tipo Solicitud</label>
+            </div>*@
+            <div class="input-field col s6">
+                <input placeholder="Ingrese la Descripción del Tipo de Solicitud" id="editTxtDescTipSol" name="descTipSol" type="text" class="validate"  required>
+                <label for="descTipSol">Descripción Tipo de Solicitud</label>
+            </div>
+        
+            <div class="row">
+                <div class="center-align">
+                    <button class="btn green" id="btnEditar">Actualizar</button>
+                    <button class="btn modal-close red">Cerrar</button>
+                </div>
             </div>
         </div>
-    </div>
 </div>
 
 
 
 
 
-<script>
+<script type="text/javascript">
+        $('select').formSelect();
 
 
     $("#btnGuardar").click(function ()
     {
-        //$("#mensaje").show();
-
-                var url = "@Url.Action("Crear", "AdministrarTipoSolicitud")";
-        var txtTipoSolicitud = $("#txtTipoSolicitud").val();
+        var url = "@Url.Action("Crear", "AdministrarTipoSolicitud")";
+        var selectTipoSolicitud = $("#selectTipoSolicitud").val();
         var txtDescripTipoSolicitud = $("#txtDescripTipoSolicitud").val();
-        var data = { nombre_tipsolic: txtTipoSolicitud, desc_tiposolic: txtDescripTipoSolicitud };
+        var data = { nombre_tipsolic: selectTipoSolicitud, desc_tiposolic: txtDescripTipoSolicitud };
 
 
         $.post(url, data).done(function (data) {
             if (data.ok) {
                 $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
-                $("#txtTipoSolicitud").val('');
+                $('#selectTipoSolicitud').formSelect();
                 $("#txtDescripTipoSolicitud").val('');
             } else {
                 $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
@@ -202,12 +217,14 @@
     });
 
 
-    //Editar Rubro
+    //Editar Tipo Solicitud 
         function editar(datos) {
 
             //Llenar campos
             d = datos.split('||');
-            $('#txtTipoSolicitud').val(d[0]);
+
+            $('#editSelectTipoSolicitud').val(d[0]);
+            $('#editSelectTipoSolicitud').formSelect();
             $('#txtDescripTipoSolicitud').val(d[1]);
         };
 
@@ -217,9 +234,9 @@
         var id = d[2];
         //Definir URL
         var url = "@Url.Action("Editar", "AdministrarTipoSolicitud")";
-        var txtTipSol = $("#editTxtTipSol").val();
+        var editSelectTipoSolicitud = $("#editSelectTipoSolicitud").val();
         var txtDescTipSol = $("#editTxtDescTipSol").val();
-        var data = { id_tipsolic: id, nombre_tipsolic: txtTipSol, desc_tiposolic: txtDescTipSol };
+        var data = { id_tipsolic: id, nombre_tipsolic: editSelectTipoSolicitud, desc_tiposolic: txtDescTipSol };
 
         $.post(url, data).done(function (data) {
             if (data.ok) {

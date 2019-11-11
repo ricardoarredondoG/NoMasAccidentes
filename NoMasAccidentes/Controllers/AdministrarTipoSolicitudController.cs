@@ -11,12 +11,23 @@ namespace NoMasAccidentes.Controllers
     public class AdministrarTipoSolicitudController : Controller
     {
         // GET: AdministrarTipoSolicitud
-        public ActionResult Index(int pagina = 1)
+        public ActionResult Index(int pagina = 1, string tipsol = "", string descTipSol = "")
         {
             var cantidadRegistroPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var tipo_solicitud = bd.TIPO_SOLICITUD.ToList();
 
+            //Busqueda por Tipo Solicitud
+            if (tipsol != "")
+            {
+                tipo_solicitud = tipo_solicitud.FindAll(x => x.NOMBRE_TIPOSOLICITUD.ToLower().Contains(tipsol.ToLower()));
+            }
+
+            //Busqueda por Descripción de Tipo Solicitud
+            if (descTipSol != "")
+            {
+                tipo_solicitud = tipo_solicitud.FindAll(x => x.DESCRIPCION_TIPOSOLICITUD.ToLower().Contains(descTipSol.ToLower()));
+            }
 
             var totalRegistros = tipo_solicitud.Count();
             tipo_solicitud = tipo_solicitud.OrderBy(x => x.ID_TIPOSOLICI).Skip((pagina - 1) * cantidadRegistroPorPagina).Take(cantidadRegistroPorPagina).ToList();
@@ -35,7 +46,7 @@ namespace NoMasAccidentes.Controllers
 
         [HttpPost]
         [Authorize]
-        public JsonResult CrearTipoSolicitud(TipoSolicitudViewModel tipo_solicitud)
+        public JsonResult Crear(TipoSolicitudViewModel tipo_solicitud)
         {
             var resultado = new baseRespuesta();
             resultado = validaciones(tipo_solicitud);
@@ -73,19 +84,20 @@ namespace NoMasAccidentes.Controllers
         {
             var resultado = new baseRespuesta();
             resultado = validaciones(sol);
-            //if (resultado.ok == true)
-            //{
-            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            if (resultado.ok == true)
+            {
+                EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             NoMasAccidentes.Models.TIPO_SOLICITUD tiposolicitud = new TIPO_SOLICITUD();
+
             var tiposol = bd.TIPO_SOLICITUD.Find(sol.id_tipsolic);
             tiposol.NOMBRE_TIPOSOLICITUD = sol.nombre_tipsolic;
             tiposol.DESCRIPCION_TIPOSOLICITUD = sol.desc_tiposolic;
-            tiposol.ACTIVO_TIPOSOLICITUD = "S";
+            //tiposol.ACTIVO_TIPOSOLICITUD = "S";
             bd.Entry(tiposol).State = System.Data.EntityState.Modified;
             bd.SaveChanges();
             resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Rubro Modificado Correctamente";
 
-            //}
+            }
 
             return Json(resultado);
             
