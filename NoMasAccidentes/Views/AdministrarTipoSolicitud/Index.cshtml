@@ -160,7 +160,7 @@
                 <label for="tipoSol">Tipo Solicitud</label>
             </div>*@
         <div class="input-field col s6">
-            <input placeholder="Ingrese la Descripción del Tipo de Solicitud" id="editTxtDescTipSol" name="descTipSol" type="text" class="validate" required>
+            <input placeholder="Ingrese la Descripción del Tipo de Solicitud" id="editTxtDescTipSol" name="descTipSol" value="" type="text" class="validate" required>
             <label for="descTipSol">Descripción Tipo de Solicitud</label>
         </div>
 
@@ -233,7 +233,7 @@
 
             $('#editSelectTipoSolicitud').val(d[0]);
             $('#editSelectTipoSolicitud').formSelect();
-            $('#txtDescripTipoSolicitud').val(d[1]);
+            $('#editTxtDescTipSol').val(d[1]);
         };
 
 
