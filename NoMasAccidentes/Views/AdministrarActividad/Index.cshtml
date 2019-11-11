@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Administrar Actividades";
+    ViewBag.Title = "Index";
 }
 
 <div class="container">
@@ -60,7 +60,7 @@
                         <td>@actividad.DESCRIPCION_ACTIVIDAD</td>
 
 
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')">@(actividad.ACTIVO_ACTIVIDAD.ToString() == "N" ? "disabled" : "")<i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="EditarA('@datos')" @(actividad.ACTIVO_ACTIVIDAD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
                         <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarA" onclick="eliminarA(@actividad.ID_ACTIVIDAD)" @(actividad.ACTIVO_ACTIVIDAD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
 
                     </tr>
@@ -166,7 +166,7 @@
     <div class="modal-content">
         <div id="div-alerta" class="alert card green white-text" style="display:none">
             <div class="card-content">
-                <p id="mensaje"></p>
+                <p id="mensajeEditar"></p>
             </div>
         </div>
         <h5>Editar Actividad</h5>
@@ -174,11 +174,11 @@
 
             <div class="input-field col s6">
                 <input placeholder="Nombre Actividad" id="edittxtActividad" name="edittxtActividad" type="text" class="validate">
-                <label for="nombre">Nombre</label>
+                <label for="nombreA">Nombre</label>
             </div>
             <div class="input-field col s6">
                 <input placeholder="Fecha" id="edittxtFecha" name="edittxtFecha" type="date" class="validate" required>
-                <label for="nombre">Fecha</label>
+                <label for="fechaA">Fecha</label>
             </div>
 
 
@@ -191,7 +191,7 @@
                         <option value="@tipo.ID_TIPOACTIVI">@tipo.TIPO_ACTIVIDAD1</option>
                     }
                 </select>
-                <label for="tipoId">id</label>
+                <label for="tipoIdA">id</label>
             </div>
 
 
@@ -204,7 +204,7 @@
                         <option value="@personal.ID_PERSONAL">@personal.NOMBRE_PERSO</option>
                     }
                 </select>
-                <label for="personalId">personal</label>
+                <label for="personalIdA">personal</label>
             </div>
 
             <div class="input-field col s6">
@@ -216,7 +216,7 @@
                         <option value="@cliente.ID_CLIENTE">@cliente.NOMBRE_CLIENTE</option>
                     }
                 </select>
-                <label for="clienteId">Cliente</label>
+                <label for="clienteIdA">Cliente</label>
             </div>
 
             <div class="input-field col s6">
@@ -228,7 +228,7 @@
                         <option value="@check.ID_CHECKLIST">@check.NOMBRE_CHECKLIST</option>
                     }
                 </select>
-                <label for="checkId">Check</label>
+                <label for="checkIdA">Check</label>
             </div>
 
 
@@ -311,33 +311,41 @@
 
     });
 
-    function editar(datos) {
+    function EditarA(datos) {
 
-        d = datos.split('||');
        
+        //$('#editSelectTipo').formSelect();
+        d = datos.split('||');
         $('#edittxtActividad').val(d[0]);
         $('#edittxtFecha').val(d[1]);
+
         $('#editSelectTipo').val(d[2]);
         $('#editSelectTipo').formSelect();
+        //$("#editSelectTipo option[value='" + d[2] + "']").remove();
+
         $('#editSelectPersonal').val(d[3]);
         $('#editSelectPersonal').formSelect();
+        //$("#editSelectPersonal option[value='" + d[3] + "']").remove();
+
         $('#editSelectCliente').val(d[4]);
         $('#editSelectCliente').formSelect();
+        //$("#editSelectPersonal option[value='" + d[4] + "']").remove();
+
         $('#editSelectCheck').val(d[5]);
         $('#editSelectCheck').formSelect();
         
-    };
+    }
 
     $("#btnEditar").click(function () {
         var id = d[6];
-        var url = "@Url.Action("Editar", "AdministrarActividad")";
+        var url = "@Url.Action("EditarA", "AdministrarActividad")";
         var txtActividad = $("#edittxtActividad").val();
         var txtFecha = $("#edittxtFecha").val();
         var selectTipo = $("#editSelectTipo").val();
         var selectPersonal = $("#editSelectPersonal").val();
         var selectCliente = $("#editSelectCliente").val();
-        var selectCheck = $("#editSelectCheck").val;
-        console.log(txtActividad);
+        var selectCheck = $("#editSelectCheck").val();
+       
         var data = { idActividad: id, fecha: txtFecha, descripcion: txtActividad, tipo: selectTipo, personal: selectPersonal, cliente: selectCliente, check: selectCheck };
         
         $.post(url, data).done(function (data) {
