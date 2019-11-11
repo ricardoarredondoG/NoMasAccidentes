@@ -163,7 +163,6 @@
     <Compile Include="Controllers\AdministrarPersonalController.cs" />
     <Compile Include="Controllers\AdministrarPlanesController.cs" />
     <Compile Include="Controllers\AdministrarRubroController.cs" />
-    <Compile Include="Controllers\AdministrarSolicitudController.cs" />
     <Compile Include="Controllers\AdministrarTipoActividadController.cs" />
     <Compile Include="Controllers\AdministrarTipoSolicitudController.cs" />
     <Compile Include="Controllers\checklistController.cs" />
@@ -321,7 +320,6 @@
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\AdministrarSolicitud\" />
     <Folder Include="Views\Personal\" />
     <Folder Include="Views\RubroViewModel\" />
     <Folder Include="Views\TipoActividadViewModel\" />

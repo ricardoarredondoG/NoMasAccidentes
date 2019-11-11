@@ -90,9 +90,9 @@
                     <label for="tipoSol">Nombre Tipo Solicitud</label>
                 </div>
                 @*<div class="input-field col s6">
-                    <input placeholder="Ingrese el Tipo de Solicitud" id="txtTipoSolicitud" name="tipoSolicitud" type="text" class="validate" required>
-                    <label for="tipoSol">Nombre Tipo Solicitud</label>
-                </div>*@
+                        <input placeholder="Ingrese el Tipo de Solicitud" id="txtTipoSolicitud" name="tipoSolicitud" type="text" class="validate" required>
+                        <label for="tipoSol">Nombre Tipo Solicitud</label>
+                    </div>*@
                 <div class="input-field col s6">
                     <input placeholder="Ingrese una Descripción del Tipo de Solicitud" id="txtDescripTipoSolicitud" name="desc" type="text" class="validate" required>
                     <label for="descTipoSol">Descripción Tipo Solicitud</label>
@@ -140,29 +140,37 @@
         </div>
         <h5>Editar Tipo Solicitud</h5>
         <div class="input-field col s6">
-            <select id="editSelectTipoSolicitud">
+            <select value="" id="editSelectTipoSolicitud">
                 <option value="" disabled>Seleccione Tipo de  Solicitud</option>
                 <option value="Reporte Accidente">Reporte Accidente</option>
                 <option value="Reporte Fiscalización">Reporte Fiscalización</option>
             </select>
-            <label for="correo">Tipo Personal</label>
+            @*<select id="editSelectTipoSolicitud" name="editSelectTipoSolicitud">
+                    <option value="" disabled selected>Seleccione Tipo Solicitud</option>
+
+                    @foreach (var tipo in Model.tipo_solicitud)
+                    {
+                        <option value="@tipo.NOMBRE_TIPOSOLICITUD">@tipo.NOMBRE_TIPOSOLICITUD</option>
+                    }
+                </select>*@
+            <label for="tipsol">Tipo Personal</label>
         </div>
-            @*<div class="input-field col s6">
+        @*<div class="input-field col s6">
                 <input placeholder="Ingrese el Tipo de Solicitud" id="editTxtTipSol" name="tipSol" type="text" class="validate" required>
                 <label for="tipoSol">Tipo Solicitud</label>
             </div>*@
-            <div class="input-field col s6">
-                <input placeholder="Ingrese la Descripción del Tipo de Solicitud" id="editTxtDescTipSol" name="descTipSol" type="text" class="validate"  required>
-                <label for="descTipSol">Descripción Tipo de Solicitud</label>
-            </div>
-        
-            <div class="row">
-                <div class="center-align">
-                    <button class="btn green" id="btnEditar">Actualizar</button>
-                    <button class="btn modal-close red">Cerrar</button>
-                </div>
+        <div class="input-field col s6">
+            <input placeholder="Ingrese la Descripción del Tipo de Solicitud" id="editTxtDescTipSol" name="descTipSol" type="text" class="validate" required>
+            <label for="descTipSol">Descripción Tipo de Solicitud</label>
+        </div>
+
+        <div class="row">
+            <div class="center-align">
+                <button class="btn green" id="btnEditar">Actualizar</button>
+                <button class="btn modal-close red">Cerrar</button>
             </div>
         </div>
+    </div>
 </div>
 
 
@@ -217,7 +225,7 @@
     });
 
 
-    //Editar Tipo Solicitud 
+    //Editar Tipo Solicitud
         function editar(datos) {
 
             //Llenar campos
@@ -235,14 +243,13 @@
         //Definir URL
         var url = "@Url.Action("Editar", "AdministrarTipoSolicitud")";
         var editSelectTipoSolicitud = $("#editSelectTipoSolicitud").val();
-        var txtDescTipSol = $("#editTxtDescTipSol").val();
-        var data = { id_tipsolic: id, nombre_tipsolic: editSelectTipoSolicitud, desc_tiposolic: txtDescTipSol };
+        var editTxtDescTipSol = $("#editTxtDescTipSol").val();
+        var data = { id_tipsolic: id, nombre_tipsolic: editSelectTipoSolicitud, desc_tiposolic: editTxtDescTipSol };
 
         $.post(url, data).done(function (data) {
             if (data.ok) {
                 $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
                 $("#editTxtTipSol").val('');
-                $("#editTxtDescTipSol").val('');
 
             } else {
                 $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);

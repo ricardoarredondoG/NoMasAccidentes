@@ -87,7 +87,7 @@ namespace NoMasAccidentes.Controllers
             if (resultado.ok == true)
             {
                 EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
-            NoMasAccidentes.Models.TIPO_SOLICITUD tiposolicitud = new TIPO_SOLICITUD();
+            NoMasAccidentes.Models.TIPO_SOLICITUD tipo_solicitud = new TIPO_SOLICITUD();
 
             var tiposol = bd.TIPO_SOLICITUD.Find(sol.id_tipsolic);
             tiposol.NOMBRE_TIPOSOLICITUD = sol.nombre_tipsolic;
@@ -95,7 +95,7 @@ namespace NoMasAccidentes.Controllers
             //tiposol.ACTIVO_TIPOSOLICITUD = "S";
             bd.Entry(tiposol).State = System.Data.EntityState.Modified;
             bd.SaveChanges();
-            resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Rubro Modificado Correctamente";
+            resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Tipo Solicitud Modificada Correctamente";
 
             }
 
