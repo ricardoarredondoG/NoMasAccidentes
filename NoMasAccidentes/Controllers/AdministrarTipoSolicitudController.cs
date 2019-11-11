@@ -37,13 +37,14 @@ namespace NoMasAccidentes.Controllers
         [Authorize]
         public JsonResult CrearTipoSolicitud(TipoSolicitudViewModel tipo_solicitud)
         {
-
-            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
-            NoMasAccidentes.Models.TIPO_SOLICITUD tipo_solici = new TIPO_SOLICITUD();
             var resultado = new baseRespuesta();
             resultado = validaciones(tipo_solicitud);
             if (resultado.ok == true)
             {
+                EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+                NoMasAccidentes.Models.TIPO_SOLICITUD tipo_solici = new TIPO_SOLICITUD();
+
+
                 tipo_solici.NOMBRE_TIPOSOLICITUD = tipo_solicitud.nombre_tipsolic;
                 tipo_solici.DESCRIPCION_TIPOSOLICITUD = tipo_solicitud.desc_tiposolic;
                 tipo_solici.ACTIVO_TIPOSOLICITUD = "S";
@@ -63,7 +64,7 @@ namespace NoMasAccidentes.Controllers
             }
 
             return Json(resultado);
-        }
+            }
 
 
         [HttpPost]
@@ -87,6 +88,7 @@ namespace NoMasAccidentes.Controllers
             //}
 
             return Json(resultado);
+            
         }
 
 

@@ -130,7 +130,7 @@
                 <p id="mensajeEditar"></p>
             </div>
         </div>
-        <h5>Editar Rubro</h5>
+        <h5>Editar Tipo Solicitud</h5>
         <div class="input-field col s6">
             <input placeholder="Ingrese el Tipo de Solicitud" id="editTxtTipSol" name="tipSol" type="text" class="validate">
             <label for="tipoSol">Tipo Solicitud</label>
@@ -158,7 +158,7 @@
 
     $("#btnGuardar").click(function ()
     {
-        $("#mensaje").show();
+        //$("#mensaje").show();
 
                 var url = "@Url.Action("Crear", "AdministrarTipoSolicitud")";
         var txtTipoSolicitud = $("#txtTipoSolicitud").val();
@@ -176,6 +176,7 @@
             }
             $("#mensaje").html(data.mensaje);
             $("#div-alerta").show();
+
         });
 
     });
@@ -189,7 +190,7 @@
 
         $("#confirmarEliminar").click(function () {
             var url = "@Url.Action("Eliminar", "AdministrarTipoSolicitud")";
-            var data = { id: idRubro };
+            var data = { id: idTipoSol };
             $.post(url, data).done(function (data) {
                 $("#mensajeEliminar").html(data.mensaje);
                 $("#div-alerta-eliminar").show();
