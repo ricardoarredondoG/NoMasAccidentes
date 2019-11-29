@@ -159,6 +159,7 @@
     <Compile Include="Controllers\AdministrarActividadController.cs" />
     <Compile Include="Controllers\AdministrarAsistenteController.cs" />
     <Compile Include="Controllers\AdministrarClienteController.cs" />
+    <Compile Include="Controllers\AdministrarEstadisticasController.cs" />
     <Compile Include="Controllers\AdministrarFacturaController.cs" />
     <Compile Include="Controllers\AdministrarPersonalController.cs" />
     <Compile Include="Controllers\AdministrarPlanesController.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="ViewModels\AsistenteViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\ContratoViewModel.cs" />
+    <Compile Include="ViewModels\DiagnosticoController.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\ActividadViewModel.cs" />
     <Compile Include="ViewModels\PersonalViewModel.cs" />
@@ -263,6 +265,8 @@
     <Compile Include="WebRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Chart.css" />
+    <Content Include="Content\Chart.min.css" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\material-design-iconic-font.min.css" />
     <Content Include="Content\materialize.min.css" />
@@ -294,6 +298,8 @@
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery.mCustomScrollbar.concat.min.js" />
@@ -320,6 +326,7 @@
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Diagnostico\" />
     <Folder Include="Views\Personal\" />
     <Folder Include="Views\RubroViewModel\" />
     <Folder Include="Views\TipoActividadViewModel\" />
@@ -387,6 +394,7 @@
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\AdministrarTipoSolicitud\Index.cshtml" />
+    <Content Include="Views\AdministrarEstadisticas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

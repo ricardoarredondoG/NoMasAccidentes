@@ -12,11 +12,11 @@
         <EntityTypeShape EntityType="ModeloDato.CONTRATO" Width="1.5" PointX="5.25" PointY="15.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloDato.OPCION_CHECKLIST" Width="1.5" PointX="5.25" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloDato.REPORTAR" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloDato.RUBRO" Width="1.5" PointX="0.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.RUBRO" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloDato.SOLICITUD" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloDato.TIPO_ACTIVIDAD" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloDato.TIPO_REPORTAR" Width="1.5" PointX="6" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloDato.TIPO_SOLICITUD" Width="1.5" PointX="6" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloDato.TIPO_SOLICITUD" Width="2.25" PointX="3" PointY="2.875" IsExpanded="true" />
         <AssociationConnector Association="ModeloDato.ACTIVIDAD_CHECKLIST_FK" ManuallyRouted="false" />
         <AssociationConnector Association="ModeloDato.ACTIVIDAD_TIPO_ACTIVIDAD_FK" ManuallyRouted="false" />
         <AssociationConnector Association="ModeloDato.CAPACITACION_ACTIVIDAD_FK" ManuallyRouted="false" />
