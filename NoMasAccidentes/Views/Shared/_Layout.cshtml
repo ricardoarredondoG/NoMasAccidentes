@@ -35,7 +35,7 @@
                             <a href='@Url.Action("Index", "AdministrarPersonal")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-alt zmdi-hc-fw"></i> Administrar Personal</a>
                         </li>
                     }
-                    
+
                     @if (Roles.IsUserInRole("Administrador"))
                     {
                         <li class="NavLateralDivider"></li>
@@ -84,6 +84,13 @@
                         <a href="#" class="NavLateral-DropDown  waves-effect waves-light"><i class="zmdi zmdi-collection-text  zmdi-hc-fw"></i> <i class="zmdi zmdi-chevron-down NavLateral-CaretDown"></i> Administrar Solicitud Asesoría</a>
                         <ul class="full-width">
                             <li> <a href='@Url.Action("Index", "AdministrarTipoSolicitud")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i> Administrar Tipo Solicitud</a></li>
+                        </ul>
+                    </li>
+                    <li class="NavLateralDivider"></li>
+                    <li>
+                        <a href="#" class="NavLateral-DropDown  waves-effect waves-light"><i class="zmdi zmdi-collection-text  zmdi-hc-fw"></i> <i class="zmdi zmdi-chevron-down NavLateral-CaretDown"></i>Estadisticas</a>
+                        <ul class="full-width">
+                            <li> <a href='@Url.Action("Index", "AdministrarEstadisticas")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i> Estadisticas del tipo de solicitud</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -11,14 +11,16 @@
     <title>Gráficos de tipos de solicitud </title>
 </head>
 <body>
-    <div>
-        <table>
-            <tr>
-                <td>
-                    <img src="@Url.Action("crearBarra")" alt="Gráfico de barras " />
-                </td>
-            </tr>
-        </table>
-    </div>
+   
+        <div class="row">
+            <div class="col l6 m12">
+                <img src="@Url.Action("crearBarra")" alt="Gráfico de barras " />
+            </div>
+            <div class="col l6 m12">
+                <img src="@Url.Action("crearPie")" alt="Gráfico " />
+            </div>
+        </div>
+   
+
 </body>
 </html>
