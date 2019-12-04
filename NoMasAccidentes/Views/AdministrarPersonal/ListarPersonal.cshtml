@@ -1,4 +1,5 @@
-﻿@model NoMasAccidentes.ViewModels.IndexViewModel
+﻿@model PagedList.IPagedList<NoMasAccidentes.Models.PERSONAL>
+@using PagedList.Mvc
 <table>
     <thead>
         <tr>
@@ -14,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var personal in Model.personal)
+        @foreach (var personal in Model)
         {
             var datos = @personal.NOMBRE_PERSO + "||" + @personal.APELLIDOP_PERSO + "||" + @personal.APELLIDOM_PERSO + "||" + @personal.TELEFONO_PERSO + "||" + @personal.DIRECCION_PERSO + "||" + personal.CORREO_PERSO + "||" + personal.USUARIO1.TIPO_PERSONAL.ID_TIPOPERSONAL + "||" + personal.ID_PERSONAL;
 
@@ -26,7 +27,9 @@
                 <td>@personal.TELEFONO_PERSO</td>
                 <td>@personal.CORREO_PERSO</td>
                 <td>@personal.USUARIO1.TIPO_PERSONAL.TIPO_PERSONAL1</td>
-                <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                <td>
+                    <button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button>
+                </td>
                 <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@personal.ID_PERSONAL)" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
 
 
@@ -36,11 +39,30 @@
     </tbody>
 
 </table>
-<div class="center-align">
-    @{ Html.RenderPartial("_paginador", Model);}
+<div class="center-align" id="paginator">
+    @Html.PagedListPager(Model, page => Url.Action("ListarPersonal", new { page, search = ViewBag.Buscar }))
 
 </div>
-@if (Model.personal.Count <= 0)
+@if (Model.Count <= 0)
 {
     <p>NO SE HAN ENCONTRADO RESULTADOS. </p>
 }
+
+<script>
+
+    $("#paginator").on("click", 'a', function (e) {
+        e.preventDefault();
+        $("#msgCargando").show();
+        $('#divPersonal').hide();
+        $.ajax({
+            url: this.href,
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+                $("#msgCargando").hide();
+                $('#divPersonal').show();
+                $('#divPersonal').html(result);
+            }
+        });
+    });
+</script>

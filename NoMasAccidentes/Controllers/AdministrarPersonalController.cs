@@ -7,6 +7,8 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using PagedList;
+using PagedList.Mvc;
 
 namespace NoMasAccidentes.Controllers
 {
@@ -23,12 +25,10 @@ namespace NoMasAccidentes.Controllers
 
         [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
-        public ActionResult ListarPersonal(int pagina = 1, string nombre = "", string apellidoP = "", string usuario = "", string correo = "")
+        public ActionResult ListarPersonal(int? page, string nombre = "", string apellidoP = "", string usuario = "", string correo = "")
         {
-            var cantidadRegistrosPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var personal = bd.PERSONAL.ToList();
-
             //Busqueda por Nombre
             if (nombre != "")
             {
@@ -56,17 +56,15 @@ namespace NoMasAccidentes.Controllers
             }
 
 
-            var totalRegistros = personal.Count();
-            personal = personal.OrderBy(x => x.ID_PERSONAL).Skip((pagina - 1) * cantidadRegistrosPorPagina).Take(cantidadRegistrosPorPagina).ToList();
-
-
             var modelo = new IndexViewModel();
 
             modelo.personal = personal;
-            modelo.PaginaActual = pagina;
-            modelo.TotalDeRegistros = totalRegistros;
-            modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
-            return PartialView(modelo);
+
+            int pageSize = 4;
+
+            int pageNumber = page ?? 1;
+
+            return PartialView(modelo.personal.ToPagedList(pageNumber, pageSize));
         }
 
         [HttpPost]
@@ -178,7 +176,9 @@ namespace NoMasAccidentes.Controllers
                 personaId.APELLIDOP_PERSO = persona.apellidop_perso;
                 personaId.CORREO_PERSO = persona.correo_pero;
                 personaId.DIRECCION_PERSO = persona.direccion_perso;
-                personaId.USUARIO1.TIPO_PERSONAL.ID_TIPOPERSONAL = persona.tipo_personal;
+
+                var tipoPersoal = bd.TIPO_PERSONAL.FirstOrDefault(e => e.ID_TIPOPERSONAL == persona.tipo_personal);
+                personaId.USUARIO1.TIPO_PERSONAL = tipoPersoal;
                 personaId.TELEFONO_PERSO = persona.telefono_perso;
                 personaId.NOMBRE_PERSO = persona.nombre_perso;
                 bd.Entry(personaId).State = System.Data.EntityState.Modified;

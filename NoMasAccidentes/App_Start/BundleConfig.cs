@@ -47,6 +47,7 @@ namespace NoMasAccidentes
             bundles.Add(new StyleBundle("~/factura/Content/css").Include(
                       "~/Content/styleFactura.css"));
 
+
         }
     }
 }
