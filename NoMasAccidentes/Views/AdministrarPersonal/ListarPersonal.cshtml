@@ -1,0 +1,46 @@
+﻿@model NoMasAccidentes.ViewModels.IndexViewModel
+<table>
+    <thead>
+        <tr>
+            <th data-field="id">Usuario</th>
+            <th data-field="id">Nombre</th>
+            <th data-field="price">Apellido Paterno</th>
+            <th data-field="price">Apellido Materno</th>
+            <th data-field="price">Telefono</th>
+            <th data-field="price">Correo Electronico</th>
+            <th data-field="price">Tipo Personal</th>
+            <th data-field="price">Editar</th>
+            <th data-field="price">Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var personal in Model.personal)
+        {
+            var datos = @personal.NOMBRE_PERSO + "||" + @personal.APELLIDOP_PERSO + "||" + @personal.APELLIDOM_PERSO + "||" + @personal.TELEFONO_PERSO + "||" + @personal.DIRECCION_PERSO + "||" + personal.CORREO_PERSO + "||" + personal.USUARIO1.TIPO_PERSONAL.ID_TIPOPERSONAL + "||" + personal.ID_PERSONAL;
+
+            <tr style='background-color: @(personal.ACTIVO.ToString() == "N" ? "#CCCCCC" : "" );'>
+                <td>@personal.USUARIO1.USUARIO1</td>
+                <td>@personal.NOMBRE_PERSO</td>
+                <td>@personal.APELLIDOP_PERSO</td>
+                <td>@personal.APELLIDOM_PERSO</td>
+                <td>@personal.TELEFONO_PERSO</td>
+                <td>@personal.CORREO_PERSO</td>
+                <td>@personal.USUARIO1.TIPO_PERSONAL.TIPO_PERSONAL1</td>
+                <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@personal.ID_PERSONAL)" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+<div class="center-align">
+    @{ Html.RenderPartial("_paginador", Model);}
+
+</div>
+@if (Model.personal.Count <= 0)
+{
+    <p>NO SE HAN ENCONTRADO RESULTADOS. </p>
+}

@@ -16,7 +16,14 @@ namespace NoMasAccidentes.Controllers
         
         [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
-        public ActionResult Index(int pagina = 1, string nombre = "", string apellidoP = "", string usuario = "", string correo = "")
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
+        public ActionResult ListarPersonal(int pagina = 1, string nombre = "", string apellidoP = "", string usuario = "", string correo = "")
         {
             var cantidadRegistrosPorPagina = 4;
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
@@ -59,9 +66,7 @@ namespace NoMasAccidentes.Controllers
             modelo.PaginaActual = pagina;
             modelo.TotalDeRegistros = totalRegistros;
             modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
-
-
-            return View(modelo);
+            return PartialView(modelo);
         }
 
         [HttpPost]
