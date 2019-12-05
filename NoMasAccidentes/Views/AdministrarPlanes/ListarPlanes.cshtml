@@ -1,0 +1,55 @@
+﻿@model PagedList.IPagedList<NoMasAccidentes.Models.PLAN>
+@using PagedList.Mvc
+<table>
+    <thead>
+        <tr>
+            <th data-field="id">Nombre</th>
+            <th data-field="id">Descripcion</th>
+            <th data-field="price">Valor Mensual</th>
+            <th data-field="price">Editar</th>
+            <th data-field="price">Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var plan in Model)
+        {
+            var datos = plan.NOMBRE + "||" + plan.VALOR + "||" + plan.DESCRIPCION + "||" + plan.ID_PLAN;
+            <tr style='background-color: @(plan.ACTIVO.ToString() == "N" ? "#CCCCCC" : "" );'>
+                <td>@plan.NOMBRE</td>
+                <td>@plan.DESCRIPCION</td>
+                <td>$@string.Format("{0:N0}", plan.VALOR)</td>
+
+                <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(plan.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@plan.ID_PLAN)" @(plan.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<div class="center-align" id="paginator">
+    @Html.PagedListPager(Model, page => Url.Action("ListarPlanes", new { page, search = ViewBag.Buscar }))
+
+</div>
+@if (Model.Count <= 0)
+{
+    <p>NO SE HAN ENCONTRADO RESULTADOS. </p>
+}
+
+    <script>
+
+        $("#paginator").on("click", 'a', function (e) {
+            e.preventDefault();
+            $("#msgCargando").show();
+            $('#divPlan').hide();
+            $.ajax({
+                url: this.href,
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    $("#msgCargando").hide();
+                    $('#divPlan').show();
+                    $('#divPlan').html(result);
+                }
+            });
+        });
+    </script>
