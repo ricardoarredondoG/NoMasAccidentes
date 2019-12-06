@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <h3 class="center-align">Administrar Clientes</h3>
-        <form class="col s12" href="/AdministrarCliente/Buscar" method="post">
+     
             <div class="row">
                 <div class="input-field col s6">
                     <input placeholder="Ingrese rut del cliente" id="rut" name="rut" oninput="checkRut(this)" type="text" class="validate">
@@ -30,59 +30,23 @@
                 <div class="center-align">
                     <div class="input-field col s12">
 
-                        <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                        <button class="btn red waves-effect" id="btnBuscar">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
                         <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
 
                     </div>
                 </div>
             </div>
-        </form>
+       
     </div>
 </div>
-@model NoMasAccidentes.ViewModels.IndexViewModel
+
 <div class="row">
     <div class="col s12">
-        <table>
-            <thead>
-                <tr>
-                    <th data-field="id">Rut</th>
-                    <th data-field="id">Nombre</th>
-                    <th data-field="price">Apellido</th>
-                    <th data-field="price">Telefono</th>
-                    <th data-field="price">Correo Electronico</th>
-                    <th data-field="price">Rubro</th>
-                   
-                    <th data-field="price">Editar</th>
-                    <th data-field="price">Eliminar</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var cliente in Model.cliente)
-                {
-                    var datos = @cliente.RUT_CLIENTE + "||" + @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE +"||"+ @cliente.TELEFONO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + @cliente.RUBRO_ID_RUBRO + "||" + @cliente.ID_CLIENTE;
-                <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
-                    <td>@cliente.RUT_CLIENTE</td>
-                    <td>@cliente.NOMBRE_CLIENTE</td>
-                    <td>@cliente.APELLIDO_CLIENTE</td>
-                    <td>@cliente.TELEFONO_CLIENTE</td>
-                    <td>@cliente.CORREO_CLIENTE</td>
-                    <td>@cliente.RUBRO.NOMBRE_RUBRO</td>
-                   
-                    
-                    <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                    <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC" onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
-                </tr>
-                }
-
-
-            </tbody>
-
-        </table>
-        <div class="center-align">
-            @{ Html.RenderPartial("_paginador", Model);}
-
+        <div id="divCliente">
         </div>
-
+        <div id="msgCargandoC" class="center">
+            <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width: 10%>
+        </div>
 
         <div id="modalNuevo" class="modal">
             <div class="modal-content">
@@ -91,6 +55,7 @@
                         <p id="mensaje"></p>
                     </div>
                 </div>
+                <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgNuevo" hidden/>
                 <h5>Agregar Cliente</h5>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese rut del cliente" id="txtRut" required oninput="checkRut(this)" name="rut" type="text" class="validate">
@@ -127,18 +92,18 @@
                         <option value="" disabled selected>Seleccione rubro</option>
                         @foreach (var rubro in Model.rubro)
                         {
-                        <option value="@rubro.ID_RUBRO">@rubro.NOMBRE_RUBRO</option>
+                            <option value="@rubro.ID_RUBRO">@rubro.NOMBRE_RUBRO</option>
                         }
 
                     </select>
                     <label for="rubro">Rubro</label>
                 </div>
 
-    
+
 
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green"  id="btnGuardarC">Guardar</button>
+                        <button class="btn modal-trigger green" id="btnGuardarC">Guardar</button>
                         <button class="btn modal-close red" id="btnCerrar">Cerrar</button>
 
                     </div>
@@ -176,12 +141,13 @@
                         <p id="mensajeEditar"></p>
                     </div>
                 </div>
-                <h5>Agregar Cliente</h5>
+                <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgEditar" hidden />
+                <h5>Editar Cliente</h5>
                 <div class="input-field col s6">
-                    <input placeholder="Ingrese el rut" id="editTxtRut" name="rut" type="text"  oninput="checkRut(this)" class="validate">
+                    <input placeholder="Ingrese el rut" id="editTxtRut" name="rut" type="text" oninput="checkRut(this)" class="validate">
                     <label for="rut">rut</label>
                 </div>
-                <div class="input-field col s6">            
+                <div class="input-field col s6">
                     <input placeholder="Ingrese el nombre" id="editTxtNombre" name="nombre" type="text" class="validate" required>
                     <label for="nombre">Nombre del cliente</label>
                 </div>
@@ -203,7 +169,7 @@
                 </div>
                 <div class="input-field col s6">
                     <select id="editSelectTipoRubro" name="tipoRubro">
-                        <option value="" disabled       >Seleccione Tipo de  Personal</option>
+                        <option value="" disabled>Seleccione Tipo de  Personal</option>
                         @foreach (var rubro in Model.rubro)
                         {
                             <option value="@rubro.ID_RUBRO">@rubro.NOMBRE_RUBRO</option>
@@ -225,13 +191,36 @@
 </div>
 
 
-<script>
+<script type="text/javascript">
     $('select').formSelect();
-   
+    var urlGeneral = '@Url.Content("~/")'
+
+    $(document).ready(function () {
+        $("#msgCargandoC").show();
+        cargarTabla();
+
+    });
+    function cargarTabla() {
+        $.ajaxSetup({ cache: false })
+        $('#divCliente').load(urlGeneral + 'AdministrarCliente/ListarCliente/?' + "rut=" + $('#rut').val() + "nombre=" + $('#nombre').val() + "apellido=" + $('#apellido').val() + "correo=" + $('#correo').val(), function (response, status, xhr) {
+            $('#msgCargandoC').hide();
+            $('#divCliente').show();
+
+        });
+    }
+    $('#btnBuscar').click(
+
+        function () {
+            $('#msgCargandoC').hide();
+            $('#divPersonal').show();
+        });
+
+    //Agregar cliente
  
         $("#btnGuardarC").click(function () {
 
-            $("#mensaje").show();
+            $("#div-alerta").hide();
+            $('#imgNuevo').show();
 
             var url = "@Url.Action("CrearCliente", "AdministrarCliente")";
             var txtRut = $("#txtRut").val();
@@ -246,11 +235,26 @@
                 nombre_cliente: txtNombre, apellido_cliente: txtApellido, telefono_cliente: txtTelefono,
                 direc_cliente: txtDireccion, correo_cliente: txtMail, rubro_id_rubro: txtRubro
             };  
+
+
             $.post(url, data).done(function (data) {
                 if (data.ok) {
                     $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                    $("txtRut").val('');
+                    $("txtNombre").val('');
+                    $("txtApellido").val('');
+                    $("txtTelefono").val('');
+                    $("txtDireccion").val('');
+                    $("txtMail").val('');
+                    $("txtRubro").val(0);
+                    $("txtRubro").formSelect();
+                    $('#imgNuevo').hide();
+
+                    cargarTabla();
+
                 } else {
                     $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+                    $('#imgNuevo').hide();
                 }
                 $("#mensaje").html(data.mensaje);
                 $("#div-alerta").show();
@@ -298,6 +302,8 @@
     };
 
     $("#btnEditarC").click(function () {
+        $('#imgEditar').show();
+        $('#div-alerta-editar').hide();
         var id = d[7];
         var url = "@Url.Action("EditarC", "AdministrarCliente")";
         var txtRut = $("#editTxtRut").val();
@@ -323,10 +329,12 @@
                 $("#txtTelefono").val('');
                 $("#txtDireccion").val('');
                 $("#txtCorreo").val('');
-
+                cargarTabla();
+                $('#imgEditar').hide();
 
             } else {
                 $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+                $('#imgEditar').hide();
             }
 
             $("#mensajeEditar").html(data.mensaje);
