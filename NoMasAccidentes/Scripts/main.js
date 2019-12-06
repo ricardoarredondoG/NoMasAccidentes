@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
     $('.NavLateral-DropDown').on('click', function(e){
         e.preventDefault();
         var DropMenu=$(this).next('ul');
@@ -83,13 +83,6 @@ $(document).ready(function(){
             scrollButtons:{ enable: true }
         });
     });
+
+
 })(jQuery);
-
-
-
-
-
-
-
-
-

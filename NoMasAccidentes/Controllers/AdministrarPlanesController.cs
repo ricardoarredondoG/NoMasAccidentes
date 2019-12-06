@@ -1,5 +1,6 @@
 ﻿using NoMasAccidentes.Models;
 using NoMasAccidentes.ViewModels;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,14 @@ namespace NoMasAccidentes.Controllers
     {
         // GET: AdministrarPlanes
         [Authorize]
-        public ActionResult Index(int pagina=1, String nombrePlan="", String precioDesde="", String precioHasta="" )
+        public ActionResult Index()
         {
-            var cantidadRegistrosPorPagina = 4;
+            return View();
+        }
+
+
+        public ActionResult ListarPlanes(int? page, String nombrePlan = "", String precioDesde = "", String precioHasta = "")
+        {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var plan = bd.PLAN.ToList();
 
@@ -25,7 +31,7 @@ namespace NoMasAccidentes.Controllers
             }
 
             //Busqueda por Precio Desde
-            if (!precioDesde.Equals("") )
+            if (!precioDesde.Equals(""))
             {
                 precioDesde = precioDesde.Replace(".", "");
                 var parseprecioDesde = Int32.Parse(precioDesde);
@@ -39,16 +45,10 @@ namespace NoMasAccidentes.Controllers
                 plan = plan.FindAll(x => x.VALOR <= parsePrecioHasta);
             }
 
-            var totalRegistros = plan.Count();
-            plan = plan.OrderBy(x => x.ID_PLAN).Skip((pagina - 1) * cantidadRegistrosPorPagina).Take(cantidadRegistrosPorPagina).ToList();
+            int pageSize = 4;
+            int pageNumber = page ?? 1;
 
-            var modelo = new IndexViewModel();
-            modelo.PaginaActual = pagina;
-            modelo.TotalDeRegistros = totalRegistros;
-            modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
-            modelo.plan = plan;
-
-            return View(modelo);
+            return PartialView(plan.ToPagedList(pageNumber, pageSize));
         }
 
         [Authorize]
