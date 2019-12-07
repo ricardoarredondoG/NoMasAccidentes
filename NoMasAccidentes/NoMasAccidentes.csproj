@@ -405,7 +405,6 @@
     <Content Include="Views\AdministrarEstadisticas\Index.cshtml" />
     <Content Include="Views\AdministrarPersonal\ListarPersonal.cshtml" />
     <Content Include="Views\AdministrarCliente\ListarCliente.cshtml" />
-    <Content Include="Views\AdministrarPlanes\ListarPlanes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
