@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AdministrarPersonalController.cs" />
     <Compile Include="Controllers\AdministrarPlanesController.cs" />
     <Compile Include="Controllers\AdministrarRubroController.cs" />
+    <Compile Include="Controllers\AdministrarSolicitudesController.cs" />
     <Compile Include="Controllers\AdministrarTipoActividadController.cs" />
     <Compile Include="Controllers\AdministrarTipoSolicitudController.cs" />
     <Compile Include="Controllers\checklistController.cs" />
@@ -406,6 +407,7 @@
     <Content Include="Views\AdministrarPersonal\ListarPersonal.cshtml" />
     <Content Include="Views\AdministrarCliente\ListarCliente.cshtml" />
     <Content Include="Views\AdministrarTipoSolicitud\ListarTipoSolicitud.cshtml" />
+    <Content Include="Views\AdministrarSolicitudes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
