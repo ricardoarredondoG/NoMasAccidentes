@@ -3,12 +3,12 @@
 <table>
     <thead>
         <tr>
+            <th data-field="Info">Info</th>
             <th data-field="id">Rut</th>
             <th data-field="id">Nombre</th>
             <th data-field="price">Apellido</th>
             <th data-field="price">Telefono</th>
             <th data-field="price">Correo Electronico</th>
-            <th data-field="price">Rubro</th>
             <th data-field="price">Editar</th>
             <th data-field="price">Eliminar</th>
         </tr>
@@ -17,18 +17,23 @@
         @foreach (var cliente in Model)
         {
             var datos = @cliente.RUT_CLIENTE + "||" + @cliente.NOMBRE_CLIENTE + "||" + @cliente.APELLIDO_CLIENTE + "||" + @cliente.TELEFONO_CLIENTE + "||" + @cliente.DIREC_CLIENTE + "||" + @cliente.CORREO_CLIENTE + "||" + @cliente.RUBRO_ID_RUBRO + "||" + @cliente.ID_CLIENTE;
-            <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
-                <td>@cliente.RUT_CLIENTE</td>
-                <td>@cliente.NOMBRE_CLIENTE</td>
-                <td>@cliente.APELLIDO_CLIENTE</td>
-                <td>@cliente.TELEFONO_CLIENTE</td>
-                <td>@cliente.CORREO_CLIENTE</td>
-                <td>@cliente.RUBRO.NOMBRE_RUBRO</td>
+        <tr style='background-color: @(cliente.ACTIVO_CLIENTE.ToString()=="N" ? "#CCCCCC" :"");'>
+
+            <td>
+                <a class="tooltipped waves-effect waves-light btn-Notification" data-position="right" data-delay="50" data-tooltip="<p align='left'>Rubro: @cliente.RUBRO.NOMBRE_RUBRO <br><br> Direccion: @cliente.DIREC_CLIENTE</p> ">
+                    <i class="zmdi zmdi-info" ></i>
+                </a>
+            </td>
+            <td>@cliente.RUT_CLIENTE</td>
+            <td>@cliente.NOMBRE_CLIENTE</td>
+            <td>@cliente.APELLIDO_CLIENTE</td>
+            <td>@cliente.TELEFONO_CLIENTE</td>
+            <td>@cliente.CORREO_CLIENTE</td>
 
 
-                <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC" onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
-            </tr>
+            <td><button class="btn modal-trigger blue" data-target="modalEditar" id="editar" onclick="editar('@datos')" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+            <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminarC" onclick="eliminarC(@cliente.ID_CLIENTE)" @(cliente.ACTIVO_CLIENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+        </tr>
         }
 
 
@@ -58,6 +63,9 @@
                     $('#divCliente').html(result);
                 }
             });
-        });
+    });
+    $(document).ready(function () {
+        $('.tooltipped').tooltip();
+    });
 
 </script>
