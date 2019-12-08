@@ -23,22 +23,22 @@
                 <label for="nombre">Tipo de Solicitud</label>
             </div>
             <div class="input-field col s4">
-                <select id="selectTipoRubro" name="rubro">
-                    <option value="" disabled selected>Estado de Solicitud</option>
-                    @foreach (var tipoSolicitud in Model.tipo_solicitud)
-                    {
-                        <option value="@tipoSolicitud.ID_TIPOSOLICI">@tipoSolicitud.NOMBRE_TIPOSOLICITUD</option>
-                    }
+                <select id="selectEstadoSolicitud" name="estadoSolicitud">
+                    <option value="0" disabled selected>Estado de Solicitud</option>
+                    <option value="1">En Revisión</option>
+                    <option value="2">Proceso de Asignación de Profesional</option>
+                    <option value="3">Aprobada</option>
+                    <option value="4">Rechazada</option>
 
                 </select>
                 <label for="nombre">Estado</label>
             </div>
             <div class="input-field col s3">
-                <input placeholder="Ingrese Fecha Vencimiento" id="fechaVencimientoDesde" name="fechaVencimientoDesde" type="date">
+                <input placeholder="Ingrese Fecha Vencimiento" id="fechaDesde" name="fechaDesde" type="date">
                 <label for="correo">Fecha Desde</label>
             </div>
             <div class="input-field col s3">
-                <input placeholder="Ingrese Fecha Vencimiento" id="fechaVencimientoHasta" name="fechaVencimientoHasta" type="date">
+                <input placeholder="Ingrese Fecha Vencimiento" id="fechaHasta" name="fechaHasta" type="date">
                 <label for="correo">Fecha Hasta</label>
             </div>
             <div class="input-field col s4">
@@ -53,3 +53,41 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col s12">
+        <div id="divSolicitud">
+        </div>
+        <div id="msgCargando" class="center">
+            <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="10%">
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+ ///////////////// Inicio Mostrar Contenido con Ajax/////////////////////
+        var urlGeneral = '@Url.Content("~/")'
+        $(document).ready(function () {
+        $("#msgCargando").show()
+        cargarTabla();
+        });
+
+        function cargarTabla() {
+
+        $.ajaxSetup({ cache: false })
+        $('#divSolicitud').load(urlGeneral + 'AdministrarSolicitudes/ListarSolicitud/', function (response, status, xhr){
+        $("#msgCargando").hide()
+        $("#divSolicitud").show()
+        });
+        }
+
+        $('#btnBuscar').click(
+        function () {
+        $("#msgCargando").show()
+            $("#divSolicitud").hide()
+        cargarTabla();
+        }
+        );
+
+        ///////////////// Fin Mostrar Contenido con Ajax/////////////////////
+</script>

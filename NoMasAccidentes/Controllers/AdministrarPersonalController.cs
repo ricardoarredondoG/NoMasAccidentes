@@ -206,8 +206,7 @@ namespace NoMasAccidentes.Controllers
             {
                 resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese Nombre</br>";
                 resultado.ok = false;
-            }
-            if (persona.nombre_perso.ToString().Length < 3)
+            }else if (persona.nombre_perso.ToString().Length < 3)
             {
                 resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> El Nombre Ingresado no es Valido</br>";
                 resultado.ok = false;

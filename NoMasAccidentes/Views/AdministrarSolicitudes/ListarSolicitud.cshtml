@@ -1,0 +1,67 @@
+﻿@model PagedList.IPagedList<NoMasAccidentes.Models.SOLICITUD>
+@using PagedList.Mvc
+<table>
+    <thead>
+        <tr>
+            <th data-field="cliente">Rut Cliente</th>
+            <th data-field="cliente">Nombre Cliente</th>
+            <th data-field="fecha">Fecha Solicitud</th>
+            <th data-field="fecha">Tipo Solicitud</th>
+            <th data-field="fecha">Estado</th>
+            <th data-field="price">Editar</th>
+            <th data-field="price">Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var solicitud in Model)
+        {
+
+        <tr style='background-color: @(solicitud.ACTIVO_SOLICITUD.ToString() == "N" ? "#CCCCCC" : "" );'>
+            <td>@solicitud.CLIENTE.RUT_CLIENTE</td>
+            <td>@solicitud.CLIENTE.NOMBRE_CLIENTE @solicitud.CLIENTE.APELLIDO_CLIENTE</td>
+            <td>@solicitud.FECHA_SOLICITUD.ToString("dd/MM/yyyy")</td>
+            <td>@solicitud.TIPO_SOLICITUD.NOMBRE_TIPOSOLICITUD</td>
+            <td>Aprobada</td>
+
+            <td>
+                <button class="btn modal-trigger blue" data-target="modalEditar" @(solicitud.ACTIVO_SOLICITUD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button>
+            </td>
+            <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" @(solicitud.ACTIVO_SOLICITUD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+
+
+        </tr>
+        }
+
+    </tbody>
+
+</table>
+<div class="center-align" id="paginator">
+    @Html.PagedListPager(Model, page => Url.Action("ListarPersonal", new { page, search = ViewBag.Buscar }))
+
+</div>
+@if (Model.Count <= 0)
+{
+    <p>NO SE HAN ENCONTRADO RESULTADOS. </p>
+}
+
+<script>
+
+    $("#paginator").on("click", 'a', function (e) {
+        e.preventDefault();
+        $("#msgCargando").show();
+        $('#divPersonal').hide();
+        $.ajax({
+            url: this.href,
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+                $("#msgCargando").hide();
+                $('#divPersonal').show();
+                $('#divPersonal').html(result);
+            }
+        });
+    });
+    $(document).ready(function () {
+        $('.tooltipped').tooltip();
+    });
+</script>
