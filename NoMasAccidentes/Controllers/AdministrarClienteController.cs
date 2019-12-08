@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using NoMasAccidentes.Models;
 using NoMasAccidentes.ViewModels;
+using PagedList;
 
 namespace NoMasAccidentes.Controllers
 {
@@ -16,7 +17,17 @@ namespace NoMasAccidentes.Controllers
         [AccessDeniedAuthorize(Roles = "Administrador")]
         public ActionResult Index(int pagina = 1,string rut ="", string nombre = "", string apellido = "",string telefono ="", string direccion ="", string correo = "")
         {
-            var cantidadRegistroPorPagina = 4;
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var modelo = new IndexViewModel();
+            //rubro
+            modelo.rubro = bd.RUBRO.ToList();
+            return View(modelo);
+        }
+
+        [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
+        public ActionResult ListarCliente(int? page, string rut = "", string nombre = "", string apellido = "", string correo = "")
+        {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var cliente = bd.CLIENTE.ToList();
             if (rut != "")
@@ -32,34 +43,16 @@ namespace NoMasAccidentes.Controllers
             {
                 cliente = cliente.FindAll(x => x.APELLIDO_CLIENTE.ToLower().Contains(apellido.ToLower()));
             }
-            if (telefono != "")
-            {
-                cliente = cliente.FindAll(x => x.TELEFONO_CLIENTE.ToLower().Contains(telefono.ToLower()));
-            }
-            if (direccion != "")
-            {
-                cliente = cliente.FindAll(x => x.DIREC_CLIENTE.ToLower().Contains(direccion.ToLower()));
-            }
             if (correo != "")
             {
                 cliente = cliente.FindAll(x => x.CORREO_CLIENTE.ToLower().Contains(correo.ToLower()));
             }
 
-            var totalRegistros = cliente.Count();
-            cliente = cliente.OrderBy(x => x.ID_CLIENTE).Skip((pagina - 1) * cantidadRegistroPorPagina).Take(cantidadRegistroPorPagina).ToList();
+            int pageSize = 4;
 
-            var modelo = new IndexViewModel();
-            modelo.cliente = cliente;
-            modelo.PaginaActual = pagina;
-            modelo.RegistrosPorPagina = cantidadRegistroPorPagina;
-            modelo.TotalDeRegistros = totalRegistros;
+            int pageNumber = page ?? 1;
 
-
-            //rubro
-            modelo.rubro = bd.RUBRO.ToList();
-
-
-            return View(modelo);
+            return PartialView(cliente.ToPagedList(pageNumber, pageSize));
         }
 
         [HttpPost]

@@ -29,7 +29,6 @@
                 </div>
                 <div class="center-align">
                     <div class="input-field col s12">
-
                         <button class="btn red waves-effect" id="btnBuscar">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
                         <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
 
@@ -44,8 +43,8 @@
     <div class="col s12">
         <div id="divCliente">
         </div>
-        <div id="msgCargandoC" class="center">
-            <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width: 10%>
+        <div id="msgCargando" class="center">
+            <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="10%">
         </div>
 
         <div id="modalNuevo" class="modal">
@@ -120,13 +119,14 @@
                         <button class="btn green" id="btnConfirmarEliminar">Confirmar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
+                    <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgEliminar" hidden />
                     <div id="div-alerta-eliminar" style="display:none">
                         <div class="alert card green white-text">
                             <div class="card-content">
                                 <p id="mensajeEliminar"></p>
                             </div>
                         </div>
-                        <button class="btn modal-close red">Cerrar</button>
+                        <button class="btn modal-close red" id="btnCerrarEliminar">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -196,24 +196,25 @@
     var urlGeneral = '@Url.Content("~/")'
 
     $(document).ready(function () {
-        $("#msgCargandoC").show();
+        $("#msgCargando").show();
         cargarTabla();
 
     });
     function cargarTabla() {
         $.ajaxSetup({ cache: false })
-        $('#divCliente').load(urlGeneral + 'AdministrarCliente/ListarCliente/?' + "rut=" + $('#rut').val() + "nombre=" + $('#nombre').val() + "apellido=" + $('#apellido').val() + "correo=" + $('#correo').val(), function (response, status, xhr) {
-            $('#msgCargandoC').hide();
+        $('#divCliente').load(urlGeneral + 'AdministrarCliente/ListarCliente/?' + "rut=" + $('#rut').val() + "&nombre=" + $('#nombre').val() + "&apellido=" + $('#apellido').val() + "&correo=" + $('#correo').val(), function (response, status, xhr) {
+            $('#msgCargando').hide();
             $('#divCliente').show();
 
         });
     }
     $('#btnBuscar').click(
-
         function () {
-            $('#msgCargandoC').hide();
-            $('#divPersonal').show();
-        });
+            $("#msgCargando").show();
+            $("#divCliente").hide();
+            cargarTabla();
+        }
+    );
 
     //Agregar cliente
  
@@ -262,7 +263,11 @@
             });
 
         });
-            
+    $("#btnCerrarEliminar").click(function () {
+
+        $("#div-alerta-eliminar").hide();
+        $("#contenidoEliminar").show();
+    });
 
             var idCliente = null;
             function eliminarC(id) {
@@ -274,12 +279,16 @@
         
 
         $("#btnConfirmarEliminar").click(function () {
+            $("#imgEliminar").show();
+            $("#contenidoEliminar").hide();
             var url = "@Url.Action("EliminarC", "AdministrarCliente")";
             var data = { id: idCliente };
             $.post(url, data).done(function (data) {
                 $("#mensajeEliminar").html(data.mensaje);
                 $("#div-alerta-eliminar").show();
                 $("#contenidoEliminar").hide();
+                cargarTabla();
+                $("#imgEliminar").hide()
             });
 
         });

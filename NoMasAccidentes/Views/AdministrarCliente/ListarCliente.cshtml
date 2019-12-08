@@ -40,24 +40,24 @@
 </div>
 @if (Model.Count <= 0)
 {
-    <p>NO SE HAN ENCONTRADO RESULTADOS DE CLIENTE. </p>
+    <p>NO SE HAN ENCONTRADO RESULTADOS. </p>
 }
 
-    <script>
+<script>
         $("#paginatorC").on("click", 'a', function (e) {
             e.preventDefault();
-            $('#msgCargandoC').show();
+            $('#msgCargando').show();
             $('#divCliente').hide();
             $.ajax({
                 url: this.href,
                 type: 'GET',
                 cache: false,
                 success: function (result) {
-                    $("#msgCargandoC").hide();
+                    $("#msgCargando").hide();
                     $('#divCliente').show();
                     $('#divCliente').html(result);
                 }
             });
         });
 
-    </script>
+</script>
