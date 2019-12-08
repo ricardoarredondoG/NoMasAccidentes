@@ -1,5 +1,6 @@
 ﻿using NoMasAccidentes.Models;
 using NoMasAccidentes.ViewModels;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,20 @@ namespace NoMasAccidentes.Controllers
             modelo.tipo_solicitud = bd.TIPO_SOLICITUD.ToList();
             return View(modelo);
         }
+
+
+        public ActionResult ListarSolicitud(int? page)
+        {
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var solicitudes = bd.SOLICITUD.ToList();
+
+            int pageSize = 4;
+
+            int pageNumber = page ?? 1;
+
+            return PartialView(solicitudes.ToPagedList(pageNumber, pageSize));
+        }
+
+
     }
 }
