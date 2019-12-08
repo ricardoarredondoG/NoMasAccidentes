@@ -3,6 +3,7 @@
 <table>
     <thead>
         <tr>
+            <th data-field="Info">Info</th>
             <th data-field="id">Usuario</th>
             <th data-field="id">Nombre</th>
             <th data-field="price">Apellido Paterno</th>
@@ -19,21 +20,26 @@
         {
             var datos = @personal.NOMBRE_PERSO + "||" + @personal.APELLIDOP_PERSO + "||" + @personal.APELLIDOM_PERSO + "||" + @personal.TELEFONO_PERSO + "||" + @personal.DIRECCION_PERSO + "||" + personal.CORREO_PERSO + "||" + personal.USUARIO1.TIPO_PERSONAL.ID_TIPOPERSONAL + "||" + personal.ID_PERSONAL;
 
-            <tr style='background-color: @(personal.ACTIVO.ToString() == "N" ? "#CCCCCC" : "" );'>
-                <td>@personal.USUARIO1.USUARIO1</td>
-                <td>@personal.NOMBRE_PERSO</td>
-                <td>@personal.APELLIDOP_PERSO</td>
-                <td>@personal.APELLIDOM_PERSO</td>
-                <td>@personal.TELEFONO_PERSO</td>
-                <td>@personal.CORREO_PERSO</td>
-                <td>@personal.USUARIO1.TIPO_PERSONAL.TIPO_PERSONAL1</td>
-                <td>
-                    <button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button>
-                </td>
-                <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@personal.ID_PERSONAL)" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+        <tr style='background-color: @(personal.ACTIVO.ToString() == "N" ? "#CCCCCC" : "" );'>
+            <td>
+                <a class="tooltipped waves-effect waves-light btn-Notification" data-position="right" data-delay="50" data-tooltip="<p align='left'>Direccion: @personal.DIRECCION_PERSO</p> ">
+                    <i class="zmdi zmdi-info"></i>
+                </a>
+            </td>
+            <td>@personal.USUARIO1.USUARIO1</td>
+            <td>@personal.NOMBRE_PERSO</td>
+            <td>@personal.APELLIDOP_PERSO</td>
+            <td>@personal.APELLIDOM_PERSO</td>
+            <td>@personal.TELEFONO_PERSO</td>
+            <td>@personal.CORREO_PERSO</td>
+            <td>@personal.USUARIO1.TIPO_PERSONAL.TIPO_PERSONAL1</td>
+            <td>
+                <button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button>
+            </td>
+            <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@personal.ID_PERSONAL)" @(personal.ACTIVO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
 
 
-            </tr>
+        </tr>
         }
 
     </tbody>
@@ -64,5 +70,8 @@
                 $('#divPersonal').html(result);
             }
         });
+    });
+    $(document).ready(function () {
+        $('.tooltipped').tooltip();
     });
 </script>
