@@ -165,6 +165,7 @@
           <Property Name="TIPO_SOLICITUD_ID_TIPOSOLICI" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="CLIENTE_ID_CLIENTE" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="ACTIVO_SOLICITUD" Type="char" MaxLength="1" />
+          <Property Name="ESTADO" Type="varchar2" MaxLength="35" Nullable="false" />
         </EntityType>
         <EntityType Name="TIPO_ACTIVIDAD">
           <Key>
@@ -664,6 +665,7 @@
           <NavigationProperty Name="TIPO_SOLICITUD" Relationship="Self.SOLICITUD_TIPO_SOLICITUD_FK" FromRole="SOLICITUD" ToRole="TIPO_SOLICITUD" />
           <NavigationProperty Name="CLIENTE" Relationship="ModeloDato.SOLICITUD_CLIENTE_FK" FromRole="SOLICITUD" ToRole="CLIENTE" />
           <Property Name="ACTIVO_SOLICITUD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ESTADO" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TIPO_ACTIVIDAD">
           <Key>
@@ -1234,6 +1236,7 @@
           <EntitySetMapping Name="SOLICITUD">
             <EntityTypeMapping TypeName="ModeloDato.SOLICITUD">
               <MappingFragment StoreEntitySet="SOLICITUD">
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
                 <ScalarProperty Name="ACTIVO_SOLICITUD" ColumnName="ACTIVO_SOLICITUD" />
                 <ScalarProperty Name="ID_SOLICITUD" ColumnName="ID_SOLICITUD" />
                 <ScalarProperty Name="FECHA_SOLICITUD" ColumnName="FECHA_SOLICITUD" />

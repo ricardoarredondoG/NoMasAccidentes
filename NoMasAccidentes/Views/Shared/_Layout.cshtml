@@ -78,16 +78,18 @@
                             <li><a href='@Url.Action("Index", "checklist")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i> Administrar Checklist</a></li>
                         </ul>
                     </li>
+                    @if (Roles.IsUserInRole("Administrador") || Roles.IsUserInRole("Cliente"))
+                    {
+                        <li class="NavLateralDivider"></li>
+                        <li>
+                            <a href="#" class="NavLateral-DropDown  waves-effect waves-light"><i class="zmdi zmdi-email zmdi-hc-fw"></i> <i class="zmdi zmdi-chevron-down NavLateral-CaretDown"></i> Administrar Solicitudes</a>
+                            <ul class="full-width">
+                                <li> <a href='@Url.Action("Index", "AdministrarTipoSolicitud")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i>Tipo Solicitud</a></li>
 
-                    <li class="NavLateralDivider"></li>
-                    <li>
-                        <a href="#" class="NavLateral-DropDown  waves-effect waves-light"><i class="zmdi zmdi-email zmdi-hc-fw"></i> <i class="zmdi zmdi-chevron-down NavLateral-CaretDown"></i> Administrar Solicitudes</a>
-                        <ul class="full-width">
-                            <li> <a href='@Url.Action("Index", "AdministrarTipoSolicitud")' class="waves-effect waves-light"><i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i>Tipo Solicitud</a></li>
-                       
-                            <li> <a href='@Url.Action("Index", "AdministrarSolicitudes")' class="waves-effect waves-light"><i class="zmdi zmdi-folder-outline zmdi-hc-fw"></i>Solicitudes</a></li>
-                        </ul>
-                    </li>
+                                <li> <a href='@Url.Action("Index", "AdministrarSolicitudes")' class="waves-effect waves-light"><i class="zmdi zmdi-folder-outline zmdi-hc-fw"></i>Solicitudes</a></li>
+                            </ul>
+                        </li>
+                    }
                     <li class="NavLateralDivider"></li>
                     <li>
                         <a href="#" class="NavLateral-DropDown  waves-effect waves-light"><i class="zmdi zmdi zmdi-tonality  zmdi-hc-fw"></i> <i class="zmdi zmdi-chevron-down NavLateral-CaretDown"></i>Estadisticas</a>

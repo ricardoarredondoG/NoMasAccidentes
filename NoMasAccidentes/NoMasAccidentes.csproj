@@ -267,6 +267,7 @@
     <Compile Include="ViewModels\PersonalViewModel.cs" />
     <Compile Include="ViewModels\PlanViewModel.cs" />
     <Compile Include="ViewModels\RubroViewModel.cs" />
+    <Compile Include="ViewModels\SolicitudViewModel.cs" />
     <Compile Include="ViewModels\TipoActividadViewModel.cs" />
     <Compile Include="ViewModels\TipoSolicitudViewModel.cs" />
     <Compile Include="WebRoleProvider.cs" />
