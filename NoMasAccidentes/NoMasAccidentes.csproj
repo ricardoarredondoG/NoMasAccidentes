@@ -409,7 +409,11 @@
     <Content Include="Views\AdministrarCliente\ListarCliente.cshtml" />
     <Content Include="Views\AdministrarTipoSolicitud\ListarTipoSolicitud.cshtml" />
     <Content Include="Views\AdministrarSolicitudes\Index.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\AdministrarRubro\ListarRubro.cshtml" />
+=======
     <Content Include="Views\AdministrarSolicitudes\ListarSolicitud.cshtml" />
+>>>>>>> 8ba8eb889c3915ad6c78fb81b9c4c89a2d0fe982
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
