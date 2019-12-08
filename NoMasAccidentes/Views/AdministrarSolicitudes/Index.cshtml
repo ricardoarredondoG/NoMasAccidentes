@@ -1,7 +1,55 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Solicitudes";
 }
+@model NoMasAccidentes.ViewModels.IndexViewModel
+<div class="container">
+    <div class="row">
+        <h3 class="center-align">Solicitudes</h3>
+        <div class="row">
+            <div class="input-field col s4">
+                <input placeholder="Ingrese el Nombre del Cliente" id="Cliente" name="buscarCliente" type="text" class="validate">
+                <label for="rut">Nombre Cliente</label>
+            </div>
+            <div class="input-field col s4">
+                <select id="selectTipoRubro" name="rubro">
+                    <option value="" disabled selected>Seleccione el Tipo de Solicitud</option>
+                    @foreach (var tipoSolicitud in Model.tipo_solicitud)
+                    {
+                        <option value="@tipoSolicitud.ID_TIPOSOLICI">@tipoSolicitud.NOMBRE_TIPOSOLICITUD</option>
+                    }
 
-<h2>Index</h2>
+                </select>
+                <label for="nombre">Tipo de Solicitud</label>
+            </div>
+            <div class="input-field col s4">
+                <select id="selectTipoRubro" name="rubro">
+                    <option value="" disabled selected>Estado de Solicitud</option>
+                    @foreach (var tipoSolicitud in Model.tipo_solicitud)
+                    {
+                        <option value="@tipoSolicitud.ID_TIPOSOLICI">@tipoSolicitud.NOMBRE_TIPOSOLICITUD</option>
+                    }
+
+                </select>
+                <label for="nombre">Estado</label>
+            </div>
+            <div class="input-field col s3">
+                <input placeholder="Ingrese Fecha Vencimiento" id="fechaVencimientoDesde" name="fechaVencimientoDesde" type="date">
+                <label for="correo">Fecha Desde</label>
+            </div>
+            <div class="input-field col s3">
+                <input placeholder="Ingrese Fecha Vencimiento" id="fechaVencimientoHasta" name="fechaVencimientoHasta" type="date">
+                <label for="correo">Fecha Hasta</label>
+            </div>
+            <div class="input-field col s4">
+                <div class="center-align">
+                    <button class="btn red waves-effect" id="btnBuscar">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                    <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 

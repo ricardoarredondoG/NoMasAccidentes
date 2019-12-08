@@ -30,6 +30,8 @@ namespace NoMasAccidentes.ViewModels
         public List<Models.CHECKLIST> checklist { get; set; }
 
         public List<Models.TIPO_SOLICITUD> tipo_solicitud { get; set; }
+
+        public List<Models.SOLICITUD> solicitud { get; set; }
     }
 
    

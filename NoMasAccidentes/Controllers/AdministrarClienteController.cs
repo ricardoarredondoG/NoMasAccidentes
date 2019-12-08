@@ -15,7 +15,7 @@ namespace NoMasAccidentes.Controllers
         // GET: AdministrarCliente
         [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
-        public ActionResult Index(int pagina = 1,string rut ="", string nombre = "", string apellido = "",string telefono ="", string direccion ="", string correo = "")
+        public ActionResult Index()
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var modelo = new IndexViewModel();
