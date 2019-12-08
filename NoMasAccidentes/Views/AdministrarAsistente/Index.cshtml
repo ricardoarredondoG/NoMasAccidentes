@@ -2,79 +2,41 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <div class="container">
     <div class="row">
         <h3 class="center-align">Administrar Asistentes</h3>
-        <form class="col s12" href="/AdministrarAsistente/Buscar" method="post">
-            <div class="row">
-                <div class="input-field col s6">
-                    <input placeholder="Ingrese nombre del asistente" id="nombreA" name="nombre"  type="text" class="validate">
-                    <label for="rut">Nombre del asistente</label>
-                </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input placeholder="Ingrese nombre del asistente" id="nombreA" name="nombre" type="text" class="validate">
+                <label for="rut">Nombre del asistente</label>
+            </div>
+            <div class="input-field col s6">
+                <input placeholder="Ingrese apellido paterno del asistente" id="apellidoPA" name="apellidoP" type="email" class="validate">
+                <label for="nombre">Apellido paterno del asistente</label>
+            </div>
+            <div class="input-field col s6">
+                <input placeholder="Ingrese apellido materno del asistente" id="apellidoMA" name="apellidoM" type="text" class="validate">
+                <label for="apellido">Apellido materno del asistente</label>
+            </div>
 
-                <div class="input-field col s6">
-                    <input placeholder="Ingrese apellido paterno del asistente" id="apellidoPA" name="apellidoP" type="email" class="validate">
-                    <label for="nombre">Apellido paterno del asistente</label>
-                </div>
-
-                <div class="input-field col s6">
-                    <input placeholder="Ingrese apellido materno del asistente" id="apellidoMA" name="apellidoM" type="text" class="validate">
-                    <label for="apellido">Apellido materno del asistente</label>
-                </div>
-
-
-
-                <div class="input-field col s4">
-                    <div class="center-align">
-                        <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
-                        <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
-                    </div>
-
+            <div class="input-field col s4">
+                <div class="center-align">
+                    <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                    <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
-@model NoMasAccidentes.ViewModels.IndexViewModel
 <div class="row">
     <div class="col s12">
-        <table>
-            <thead>
-                <tr>
-                    <th data-field="id">Nombre</th>
-                    <th data-field="price">Apellido Paterno</th>
-                    <th data-field="price">Apellido Materno</th>
-                    <th data-field="price">Rut Cliente</th>
-                    <th data-field="price">Nombre Cliente</th>
-                    <th data-field="price">Editar</th>
-                    <th data-field="price">Eliminar</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var asistente in Model.asistente)
-                {
-                    var datos = @asistente.NOMBRE_ASISTENTE + "||" + @asistente.APELLIDOP_ASISTENTE + "||" + @asistente.APELLIDOM_ASISTENTE + "||" + @asistente.ID_ASISTENTE+ "||"+ asistente.CLIENTE_ID_CLIENTE +"||"+ asistente.CLIENTE.RUT_CLIENTE+ " ----> " + asistente.CLIENTE.NOMBRE_CLIENTE+" " +asistente.CLIENTE.APELLIDO_CLIENTE;
-                <tr style='background-color: @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "#CCCCCC" : "");'>
-                    <td>@asistente.NOMBRE_ASISTENTE</td>
-                    <td>@asistente.APELLIDOP_ASISTENTE</td>
-                    <td>@asistente.APELLIDOM_ASISTENTE</td>
-                    <td>@asistente.CLIENTE.RUT_CLIENTE</td>
-                    <td>@asistente.CLIENTE.NOMBRE_CLIENTE @asistente.CLIENTE.APELLIDO_CLIENTE</td>
-                    <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="EditarA('@datos')" @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                    <td><button class="btn modal-trigger red" data-target="modalEliminarA" id="eliminarA" onclick="eliminarA(@asistente.ID_ASISTENTE)" @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
-                </tr>
-
-
-                }
-
-            </tbody>
-
-        </table>
-        <div class="center-align">
-            @{ Html.RenderPartial("_paginador", Model);}
+        <div id="divAsistente">
         </div>
+        <div id="msgCargandoA" class="center">
+            <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="10%">
+        </div>
+
         <div id="modalNuevo" class="modal">
             <div class="modal-content">
                 <div id="div-alerta" class="alert card green white-text" style="display:none">
@@ -82,40 +44,36 @@
                         <p id="mensaje"></p>
                     </div>
                 </div>
+                <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgNuevo" hidden />
                 <h5>Agregar asistente</h5>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese nombre del asistente" id="txtNombre" name="nombre" type="text" class="validate" required>
                     <label for="nombre">Nombre del asistente</label>
                 </div>
-
                 <div class="input-field col s6">
                     <input placeholder="Ingrese apellido paterno del asistente" id="txtApellidoP" name="apellidoP" type="text" class="validate" required>
                     <label for="apellidoP">Apellido paterno del asistente</label>
                 </div>
-
                 <div class="input-field col s6">
                     <input placeholder="Ingrese apellido materno del cliente" id="txtApellidoM" name="apellidoM" type="text" class="validate" required>
                     <label for="apellidoM">Apellido materno del asistente</label>
                 </div>
 
-
                 <div class="input-field col s6">
                     <select id="selectIdCliente" name="tipoId">
                         <option value="" disabled selected>Seleccione el Cliente</option>
-                        
-                            @foreach (var cliente in Model.cliente)
-                            {
-                             <option value="@cliente.ID_CLIENTE">@cliente.RUT_CLIENTE ----> @cliente.NOMBRE_CLIENTE @cliente.APELLIDO_CLIENTE </option>
-                            }
+
+                        @foreach (var cliente in Model)
+                        {
+                        <option value="@cliente.ID_CLIENTE">@cliente.RUT_CLIENTE ----> @cliente.NOMBRE_CLIENTE @cliente.APELLIDO_CLIENTE </option>
+                        }
                     </select>
                     <label for="tipoId">Cliente</label>
                 </div>
-
                 <div class="row">
                     <div class="center-align">
                         <button class="btn modal-trigger green" id="btnGuardarA">Guardar</button>
                         <button class="btn modal-close red" id="btnCerrar">Cerrar</button>
-
                     </div>
                 </div>
             </div>
@@ -128,9 +86,9 @@
                         <button class="btn green" id="confirmarEliminarA">Confirmar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
+                    <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgNuevo" hidden />
                     <div id="div-alerta-eliminar" style="display:none">
                         <div class="alert card green white-text">
-
                             <div class="card-content">
                                 <p id="mensajeEliminar"></p>
                             </div>
@@ -140,7 +98,6 @@
                 </div>
             </div>
         </div>
-
         <div id="modalEditar" class="modal">
             <div class="modal-content">
                 <div id="div-alerta-editar" class="alert card green white-text" style="display:none">
@@ -148,6 +105,7 @@
                         <p id="mensajeEditar">  </p>
                     </div>
                 </div>
+                <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgNuevo" hidden />
                 <h5>Modificar Asistente</h5>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el nombre" id="editNombreA" type="text" name="nombreA" class="validate" />
@@ -161,32 +119,58 @@
                     <input placeholder="Ingrese apellido materno asistente" id="editarApellidoM" type="text" name="apellidoAM" class="validate" />
                     <label for="apellidoAM">Apellido Materno</label>
                 </div>
-
                 <div class="input-field col s6">
                     <select id="editSelectIdCliente" name="editSelectIdCliente">
                         <option value="" disabled selected>Seleccione id del cliente</option>
                         @foreach (var cliente in Model.cliente)
                         {
-                            <option value="@cliente.ID_CLIENTE">@cliente.RUT_CLIENTE ----> @cliente.NOMBRE_CLIENTE @cliente.APELLIDO_CLIENTE </option>
+                        <option value="@cliente.ID_CLIENTE">@cliente.RUT_CLIENTE ----> @cliente.NOMBRE_CLIENTE @cliente.APELLIDO_CLIENTE </option>
                         }
                     </select>
                     <label for="tipoId">Cliente</label>
                 </div>
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn green"id="btnEditar">Actualizar</button>
+                        <button class="btn green" id="btnEditar">Actualizar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>
 <script>
 
     $('select').formSelect();
+
+
+    var urlGeneral = '@Url.Content("~/")'
+
+    $(document).ready(function () {
+        $("#msgCargandoA".show());
+        cargarTabla();
+    });
+    function cargarTabla() {
+        $.ajaxSetup({ cache: false })
+        $.('#divAsistente').load(urlGeneral + 'AdministrarAsistente/ListarAsistente/?' + "nombreA=" + $('#nombreA').val() + "&apellidoPA" + $('#apellidoPA').val() + "&apellidoMA" + $('#apellidoMA').val(), function (response, status, xhr) {
+            $('#msgCargandoA').hide();
+            $('#divAsistente').show();
+        });
+    }
+     //buscar
+    $('#btnBuscar').click(
+        function () {
+            $("#msgCargandoA").show();
+            $("#divAsistente").hide();
+            cargarTabla();
+        }
+    );
+
+
+
+
+
+
 
     $("#btnGuardarA").click(function () {
 
@@ -200,7 +184,19 @@
         $.post(url, data).done(function (data) {
             if (data.ok) {
                 $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
-             
+
+                $("txtNombre").val('');
+                $("txtApellidoP").val('');
+                $("txtApellidoM").val('');
+                $("selectIdCliente").val(0);
+                $("selectIdCliente").formSelect();
+                $('#imgNuevo').hide();
+
+                cargarTabla();
+
+
+
+
             } else {
                 $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
             }
@@ -260,5 +256,4 @@
 
 
 </script>
-
 
