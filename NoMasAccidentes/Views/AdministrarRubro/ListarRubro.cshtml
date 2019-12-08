@@ -1,0 +1,62 @@
+﻿@model PagedList.IPagedList<NoMasAccidentes.Models.RUBRO>
+@using PagedList.Mvc
+
+<table>
+    <thead>
+        <tr>
+            <th data-field="id">ID Rubro</th>
+            <th data-field="price">Nombre Rubro</th>
+            <th data-field="price">Descripción Rubro</th>
+            <th data-field="price">Editar</th>
+            <th data-field="price">Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rub in Model)
+        {
+            var datos = @rub.NOMBRE_RUBRO + "||" + @rub.DESC_RUBRO + "||" + rub.ID_RUBRO;
+
+            <tr>
+                <td>@rub.ID_RUBRO</td>
+                <td>@rub.NOMBRE_RUBRO</td>
+                <td>@rub.DESC_RUBRO</td>
+                <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@rub.ID_RUBRO)" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+            </tr>
+
+
+        }
+
+    </tbody>
+
+</table>
+<div class="center-align" id="paginator">
+    @Html.PagedListPager(Model, page => Url.Action("ListarRubro", new { page, search = ViewBag.Buscar }))
+
+</div>
+@if (Model.Count <= 0)
+{
+    <p>NO SE HAN ENCONTRADO RESULTADOS. </p>
+}
+
+<script>
+
+    $("#paginator").on("click", 'a', function (e) {
+        e.preventDefault();
+        $("#msgCargando").show();
+        $('#divRubro').hide();
+        $.ajax({
+            url: this.href,
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+                $("#msgCargando").hide();
+                $('#divRubro').show();
+                $('#divRubro').html(result);
+            }
+        });
+    });
+    $(document).ready(function () {
+        $('.tooltipped').tooltip();
+    });
+</script>

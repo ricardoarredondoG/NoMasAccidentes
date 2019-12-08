@@ -16,12 +16,12 @@ namespace NoMasAccidentes.Controllers
     {
         // GET: AdministrarPersonal
         
-        [Authorize]
-        [AccessDeniedAuthorize(Roles = "Administrador")]
-        public ActionResult Index()
-        {
-            return View();
-        }
+            [Authorize]
+            [AccessDeniedAuthorize(Roles = "Administrador")]
+            public ActionResult Index()
+            {
+                return View();
+            }
 
         [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
