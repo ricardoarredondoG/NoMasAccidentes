@@ -1,5 +1,6 @@
 ﻿using NoMasAccidentes.Models;
 using NoMasAccidentes.ViewModels;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +11,26 @@ namespace NoMasAccidentes.Controllers
 {
     public class AdministrarAsistenteController : Controller
     {
-        // GET: AdministrarAsistente
+
         [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
         public ActionResult Index(int pagina = 1, string nombre = "", string apellidoP = "", string apellidoM = "")
         {
-            var cantidadRegistroPorPagina = 4;
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            var modelo = new IndexViewModel();
+            return View(modelo);
+        }
+        // GET: AdministrarAsistente
+        [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
+        public ActionResult ListarCliente(int? pagina = 1, string nombre = "", string apellidoP = "", string apellidoM = "")
+        {
+
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var asistente = bd.ASISTENTE.ToList();
 
-            var cliente = bd.CLIENTE.Where(x =>x.ACTIVO_CLIENTE=="S" &&!bd.ASISTENTE.Any(sp => sp.CLIENTE_ID_CLIENTE == x.ID_CLIENTE && sp.ACTIVO_ASISTENTE== "S")).ToList();
-           
+            var cliente = bd.CLIENTE.Where(x => x.ACTIVO_CLIENTE == "S" && !bd.ASISTENTE.Any(sp => sp.CLIENTE_ID_CLIENTE == x.ID_CLIENTE && sp.ACTIVO_ASISTENTE == "S")).ToList();
+
 
             if (nombre != "")
             {
@@ -37,19 +47,9 @@ namespace NoMasAccidentes.Controllers
                 asistente = asistente.FindAll(x => x.APELLIDOM_ASISTENTE.ToLower().Contains(apellidoM.ToLower()));
             }
 
-
-            var totalRegistros = asistente.Count();
-            asistente = asistente.OrderBy(x => x.ID_ASISTENTE).Skip((pagina - 1) * cantidadRegistroPorPagina).Take(cantidadRegistroPorPagina).ToList();
-
-            var modelo = new IndexViewModel();
-            modelo.asistente = asistente;
-            modelo.PaginaActual = pagina;
-            modelo.RegistrosPorPagina = cantidadRegistroPorPagina;
-            modelo.TotalDeRegistros = totalRegistros;
-            modelo.cliente = cliente;
-
-            return View(modelo);
-
+            int pageSize = 4;
+            int pageNumber = pagina ?? 1;
+            return PartialView(asistente.ToPagedList(pageNumber, pageSize));
         }
         [HttpPost]
         [Authorize]
@@ -188,12 +188,12 @@ namespace NoMasAccidentes.Controllers
                 resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese Nombre</br>";
                 resultado.ok = false;
             }
-            if (asistente.apellidop_asistente==null)
+            if (asistente.apellidop_asistente == null)
             {
                 resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese apellido paterno</br>";
                 resultado.ok = false;
             }
-            if (asistente.apellidom_asistente==null)
+            if (asistente.apellidom_asistente == null)
             {
                 resultado.mensaje = resultado.mensaje + "<i class='zmdi zmdi-alert-circle zmdi-hc-fw'></i> Ingrese apellido materno</br>";
                 resultado.ok = false;
