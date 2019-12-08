@@ -1,0 +1,59 @@
+﻿@model PagedList.IPagedList<NoMasAccidentes.Models.TIPO_SOLICITUD>
+@using PagedList.Mvc
+<table>
+    <thead>
+        <tr>
+            <th data-field="price">Tipo Solicitud</th>
+            <th data-field="price">Descripción</th>
+            <th data-field="price">Editar</th>
+            <th data-field="price">Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tipSol in Model)
+        {
+            var datos = @tipSol.NOMBRE_TIPOSOLICITUD + "||" + @tipSol.DESCRIPCION_TIPOSOLICITUD + "||" + tipSol.NOMBRE_TIPOSOLICITUD + "||" + tipSol.ID_TIPOSOLICI;
+
+            <tr style='background-color: @(@tipSol.ACTIVO_TIPOSOLICITUD.ToString() == "N" ? "#CCCCCC" : "" );'>
+                <td>@tipSol.NOMBRE_TIPOSOLICITUD</td>
+                <td>@tipSol.DESCRIPCION_TIPOSOLICITUD</td>
+                <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(tipSol.ACTIVO_TIPOSOLICITUD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@tipSol.ID_TIPOSOLICI)" @(tipSol.ACTIVO_TIPOSOLICITUD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+            </tr>
+
+
+        }
+
+    </tbody>
+
+</table>
+<div class="center-align" id="paginator">
+    @Html.PagedListPager(Model, page => Url.Action("ListarTipoSolicitud", new { page, search = ViewBag.Buscar }))
+
+</div>
+@if (Model.Count <= 0)
+{
+    <p>NO SE HAN ENCONTRADO RESULTADOS. </p>
+}
+
+    <script>
+
+        $("#paginator").on("click", 'a', function (e) {
+            e.preventDefault();
+            $("#msgCargando").show();
+            $('#divTipoSolicitud').hide();
+            $.ajax({
+                url: this.href,
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    $("#msgCargando").hide();
+                    $('#divTipoSolicitud').show();
+                    $('#divTipoSolicitud').html(result);
+                }
+            });
+        });
+        $(document).ready(function () {
+            $('.tooltipped').tooltip();
+        });
+    </script>

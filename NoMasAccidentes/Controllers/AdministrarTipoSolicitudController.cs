@@ -1,5 +1,6 @@
 ﻿using NoMasAccidentes.Models;
 using NoMasAccidentes.ViewModels;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,36 +12,27 @@ namespace NoMasAccidentes.Controllers
     public class AdministrarTipoSolicitudController : Controller
     {
         // GET: AdministrarTipoSolicitud
-        public ActionResult Index(int pagina = 1, string tipsol = "", string descTipSol = "")
+        public ActionResult Index()
         {
-            var cantidadRegistroPorPagina = 4;
+            return View();
+        }
+
+        public ActionResult ListarTipoSolicitud(int? page, string nombreSolicitud = "")
+        {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var tipo_solicitud = bd.TIPO_SOLICITUD.ToList();
 
             //Busqueda por Tipo Solicitud
-            if (tipsol != "")
+            if (nombreSolicitud != "")
             {
-                tipo_solicitud = tipo_solicitud.FindAll(x => x.NOMBRE_TIPOSOLICITUD.ToLower().Contains(tipsol.ToLower()));
+                tipo_solicitud = tipo_solicitud.FindAll(x => x.NOMBRE_TIPOSOLICITUD.ToLower().Contains(nombreSolicitud.ToLower()));
             }
 
-            //Busqueda por Descripción de Tipo Solicitud
-            if (descTipSol != "")
-            {
-                tipo_solicitud = tipo_solicitud.FindAll(x => x.DESCRIPCION_TIPOSOLICITUD.ToLower().Contains(descTipSol.ToLower()));
-            }
+            int pageSize = 5;
 
-            var totalRegistros = tipo_solicitud.Count();
-            tipo_solicitud = tipo_solicitud.OrderBy(x => x.ID_TIPOSOLICI).Skip((pagina - 1) * cantidadRegistroPorPagina).Take(cantidadRegistroPorPagina).ToList();
+            int pageNumber = page ?? 1;
 
-            var modelo = new IndexViewModel();
-            modelo.tipo_solicitud = tipo_solicitud;
-            modelo.PaginaActual = pagina;
-            modelo.RegistrosPorPagina = cantidadRegistroPorPagina;
-            modelo.TotalDeRegistros = totalRegistros;
-
-
-
-            return View(modelo);
+            return PartialView(tipo_solicitud.ToPagedList(pageNumber, pageSize));
         }
 
 

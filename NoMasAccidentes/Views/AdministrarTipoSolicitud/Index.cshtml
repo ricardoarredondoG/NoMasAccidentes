@@ -7,26 +7,20 @@
 <div class="container">
     <div class="row">
         <h3 class="center-align">Administrar Tipo Solicitud</h3>
-        <form class="col s12" href="/AdministrarTipoSolicitud/Buscar" method="post">
             <div class="row">
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Tipo de Solicitud" id="tiposolicitud" name="tiposolicitud" type="text" class="validate">
                     <label for="tiposolicitud">Tipo Solicitud</label>
                 </div>
-                <div class="input-field col s6">
-                    <input placeholder="Ingrese la Descripción del tipo de Solicitud" id="descripcion" name="descripcion" type="text" class="validate">
-                    <label for="descripcion">Descripcion Tipo Solicitud</label>
-                </div>
 
                 <div class="input-field col s4">
                     <div class="center-align">
-                        <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                        <button class="btn red waves-effect" id="btnBuscar">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
                         <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
                     </div>
 
                 </div>
             </div>
-        </form>
     </div>
 </div>
 
@@ -36,40 +30,13 @@
 <div class="row">
     <div class="col s12">
 
-        <table>
-            <thead>
-                <tr>
-                    <th data-field="id">ID Tipo Solicitud</th>
-                    <th data-field="price">Nombre Tipo Solicitud</th>
-                    <th data-field="price">Descripción Tipo Solicitud</th>
-                    <th data-field="price">Editar</th>
-                    <th data-field="price">Eliminar</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var tipSol in Model.tipo_solicitud)
-                {
-                    var datos = @tipSol.NOMBRE_TIPOSOLICITUD + "||" + @tipSol.DESCRIPCION_TIPOSOLICITUD + "||" + tipSol.ID_TIPOSOLICI;
-
-                    <tr>
-                        <td>@tipSol.ID_TIPOSOLICI</td>
-                        <td>@tipSol.NOMBRE_TIPOSOLICITUD</td>
-                        <td>@tipSol.DESCRIPCION_TIPOSOLICITUD</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(tipSol.ACTIVO_TIPOSOLICITUD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@tipSol.ID_TIPOSOLICI)" @(tipSol.ACTIVO_TIPOSOLICITUD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
-                    </tr>
-
-
-                }
-
-            </tbody>
-
-        </table>
-        <div class="center-align">
-
-            @{Html.RenderPartial("_paginador", Model);}
+        <div id="divTipoSolicitud">
         </div>
-        <!-- Modal Nuevo -->
+        <div id="msgCargando" class="center">
+            <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="10%">
+        </div>
+
+
         <!-- Modal Nuevo -->
 
 
@@ -82,17 +49,13 @@
                 </div>
                 <h5>Agregar Tipo Solicitud</h5>
                 <div class="input-field col s6">
-                    <select id="selectTipoSolicitud" required>
-                        <option value="" disabled selected>Seleccione Tipo de  Solicitud</option>
-                        <option value="Reporte Accidente">Reporte Accidente</option>
-                        <option value="Reporte Fiscalización">Reporte Fiscalización</option>
-                    </select>
+                    <input placeholder="Ingrese el Nombre de la Solicitud" id="txtNombreSolicitud" name="desc" type="text" class="validate" required>
                     <label for="tipoSol">Nombre Tipo Solicitud</label>
                 </div>
                 @*<div class="input-field col s6">
-                        <input placeholder="Ingrese el Tipo de Solicitud" id="txtTipoSolicitud" name="tipoSolicitud" type="text" class="validate" required>
-                        <label for="tipoSol">Nombre Tipo Solicitud</label>
-                    </div>*@
+                    <input placeholder="Ingrese el Tipo de Solicitud" id="txtTipoSolicitud" name="tipoSolicitud" type="text" class="validate" required>
+                    <label for="tipoSol">Nombre Tipo Solicitud</label>
+                </div>*@
                 <div class="input-field col s6">
                     <input placeholder="Ingrese una Descripción del Tipo de Solicitud" id="txtDescripTipoSolicitud" name="desc" type="text" class="validate" required>
                     <label for="descTipoSol">Descripción Tipo Solicitud</label>
@@ -124,7 +87,7 @@
                         <p id="mensajeEliminar"></p>
                     </div>
                 </div>
-                <button class="btn modal-close red">Cerrar</button>
+                <button class="btn modal-close red" id="btnCerrarEliminar">Cerrar</button>
             </div>
         </div>
     </div>
@@ -138,27 +101,16 @@
                 <p id="mensajeEditar"></p>
             </div>
         </div>
+        <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgEditar" hidden />
         <h5>Editar Tipo Solicitud</h5>
         <div class="input-field col s6">
-            <select value="" id="editSelectTipoSolicitud">
-                <option value="" disabled>Seleccione Tipo de  Solicitud</option>
-                <option value="Reporte Accidente">Reporte Accidente</option>
-                <option value="Reporte Fiscalización">Reporte Fiscalización</option>
-            </select>
-            @*<select id="editSelectTipoSolicitud" name="editSelectTipoSolicitud">
-                    <option value="" disabled selected>Seleccione Tipo Solicitud</option>
-
-                    @foreach (var tipo in Model.tipo_solicitud)
-                    {
-                        <option value="@tipo.NOMBRE_TIPOSOLICITUD">@tipo.NOMBRE_TIPOSOLICITUD</option>
-                    }
-                </select>*@
+            <input placeholder="Ingrese la Descripción del Tipo de Solicitud" id="editTxtTipoSolicitud" name="descTipSol" value="" type="text" class="validate" required>
             <label for="tipsol">Tipo Personal</label>
         </div>
         @*<div class="input-field col s6">
-                <input placeholder="Ingrese el Tipo de Solicitud" id="editTxtTipSol" name="tipSol" type="text" class="validate" required>
-                <label for="tipoSol">Tipo Solicitud</label>
-            </div>*@
+            <input placeholder="Ingrese el Tipo de Solicitud" id="editTxtTipSol" name="tipSol" type="text" class="validate" required>
+            <label for="tipoSol">Tipo Solicitud</label>
+        </div>*@
         <div class="input-field col s6">
             <input placeholder="Ingrese la Descripción del Tipo de Solicitud" id="editTxtDescTipSol" name="descTipSol" value="" type="text" class="validate" required>
             <label for="descTipSol">Descripción Tipo de Solicitud</label>
@@ -167,7 +119,7 @@
         <div class="row">
             <div class="center-align">
                 <button class="btn green" id="btnEditar">Actualizar</button>
-                <button class="btn modal-close red">Cerrar</button>
+                <button class="btn modal-close red" id="btnCerrarEditar">Cerrar</button>
             </div>
         </div>
     </div>
@@ -178,15 +130,42 @@
 
 
 <script type="text/javascript">
-        $('select').formSelect();
+     ///////////////// Inicio Mostrar Contenido con Ajax/////////////////////
+        var urlGeneral = '@Url.Content("~/")'
+        $(document).ready(function () {
+            $("#msgCargando").show()
+            cargarTabla();
+        });
+
+        function cargarTabla() {
+
+            $.ajaxSetup({ cache: false })
+            $('#divTipoSolicitud').load(urlGeneral + 'AdministrarTipoSolicitud/ListarTipoSolicitud/?' + "nombreSolicitud=" + $('#tiposolicitud').val(), function (response, status, xhr){
+                $("#msgCargando").hide()
+                $("#divTipoSolicitud").show()
+            });
+        }
+
+        $('#btnBuscar').click(
+            function () {
+                $("#msgCargando").show()
+                $("#divTipoSolicitud").hide()
+                cargarTabla();
+            }
+        );
+
+        ///////////////// Fin Mostrar Contenido con Ajax/////////////////////
+
+
+    $('select').formSelect();
 
 
     $("#btnGuardar").click(function ()
     {
         var url = "@Url.Action("Crear", "AdministrarTipoSolicitud")";
-        var selectTipoSolicitud = $("#selectTipoSolicitud").val();
+        var txtNombreSolicitud = $("#txtNombreSolicitud").val();
         var txtDescripTipoSolicitud = $("#txtDescripTipoSolicitud").val();
-        var data = { nombre_tipsolic: selectTipoSolicitud, desc_tiposolic: txtDescripTipoSolicitud };
+        var data = { nombre_tipsolic: txtNombreSolicitud, desc_tiposolic: txtDescripTipoSolicitud };
 
 
         $.post(url, data).done(function (data) {
@@ -206,6 +185,11 @@
 
 
     //Eliminar Rubro
+    $("#btnCerrarEliminar").click(function () {
+
+        $("#div-alerta-eliminar").hide();
+        $("#contenidoEliminar").show();
+    });
         var idTipoSol = null;
         function eliminar(id) {
             idTipoSol = id;
@@ -218,6 +202,7 @@
                 $("#mensajeEliminar").html(data.mensaje);
                 $("#div-alerta-eliminar").show();
                 $("#contenidoEliminar").hide();
+                cargarTabla();
             });
 
 
@@ -226,33 +211,40 @@
 
 
     //Editar Tipo Solicitud
+    $("#btnCerrarEditar").click(function () {
+
+        $("#div-alerta-editar").hide()
+    });
         function editar(datos) {
 
             //Llenar campos
             d = datos.split('||');
 
-            $('#editSelectTipoSolicitud').val(d[0]);
-            $('#editSelectTipoSolicitud').formSelect();
+            $('#editTxtTipoSolicitud').val(d[0]);
             $('#editTxtDescTipSol').val(d[1]);
         };
 
 
     $("#btnEditar").click(function () {
-
-        var id = d[2];
+        $('#imgEditar').show();
+        $("#div-alerta-editar").hide();
+        var id = d[3];
         //Definir URL
         var url = "@Url.Action("Editar", "AdministrarTipoSolicitud")";
-        var editSelectTipoSolicitud = $("#editSelectTipoSolicitud").val();
+        var editTxtTipoSolicitud = $("#editTxtTipoSolicitud").val();
         var editTxtDescTipSol = $("#editTxtDescTipSol").val();
-        var data = { id_tipsolic: id, nombre_tipsolic: editSelectTipoSolicitud, desc_tiposolic: editTxtDescTipSol };
+        var data = { id_tipsolic: id, nombre_tipsolic: editTxtTipoSolicitud, desc_tiposolic: editTxtDescTipSol };
 
         $.post(url, data).done(function (data) {
             if (data.ok) {
                 $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
                 $("#editTxtTipSol").val('');
+                cargarTabla();
+                $('#imgEditar').hide();
 
             } else {
                 $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+                $('#imgEditar').hide();
             }
             $("#mensajeEditar").html(data.mensaje);
             $("#div-alerta-editar").show();
