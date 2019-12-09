@@ -1,6 +1,5 @@
 ﻿using NoMasAccidentes.Models;
 using NoMasAccidentes.ViewModels;
-using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,72 +10,40 @@ namespace NoMasAccidentes.Controllers
 {
     public class AdministrarRubroController : Controller
     {
-        [Authorize]
-        [AccessDeniedAuthorize(Roles = "Administrador")]
-        public ActionResult Index()
-        {
-            return View();
-        }
         // GET: AdministrarRubro
         [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
-        public ActionResult ListarRubro(int? page, string nomRub = "", string descRub = "")
+        public ActionResult Index(int pagina = 1, string nomRub = "", string descRub = "")
         {
+            var cantidadRegistrosPorPagina = 4;
+
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var rubro = bd.RUBRO.ToList();
+
             //Busqueda por Nombre
             if (nomRub != "")
             {
                 rubro = rubro.FindAll(x => x.NOMBRE_RUBRO.ToLower().Contains(nomRub.ToLower()));
             }
 
-            if (descRub != "")
-            {
-                rubro = rubro.FindAll(x => x.DESC_RUBRO.ToLower().Contains(descRub.ToLower()));
-            }
+
+            var totalRegistros = rubro.Count();
+            rubro = rubro.OrderBy(x => x.ID_RUBRO).Skip((pagina - 1) * cantidadRegistrosPorPagina).Take(cantidadRegistrosPorPagina).ToList();
+
 
             var modelo = new IndexViewModel();
 
             modelo.rubro = rubro;
+            modelo.PaginaActual = pagina;
+            modelo.TotalDeRegistros = totalRegistros;
+            modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
 
-            int pageSize = 4;
 
-            int pageNumber = page ?? 1;
+            return View(modelo);
 
-            return PartialView(modelo.rubro.ToPagedList(pageNumber, pageSize));
 
+            //return View();
         }
-        //public ActionResult Index(int pagina = 1, string nomRub = "", string descRub = "")
-        //{
-        //    var cantidadRegistrosPorPagina = 4;
-
-        //    EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
-        //    var rubro = bd.RUBRO.ToList();
-
-        //    //Busqueda por Nombre
-        //    if (nomRub != "")
-        //    {
-        //        rubro = rubro.FindAll(x => x.NOMBRE_RUBRO.ToLower().Contains(nomRub.ToLower()));
-        //    }
-
-
-        //    var totalRegistros = rubro.Count();
-        //    rubro = rubro.OrderBy(x => x.ID_RUBRO).Skip((pagina - 1) * cantidadRegistrosPorPagina).Take(cantidadRegistrosPorPagina).ToList();
-
-
-        //    var modelo = new IndexViewModel();
-
-        //    modelo.rubro = rubro;
-        //    modelo.PaginaActual = pagina;
-        //    modelo.TotalDeRegistros = totalRegistros;
-        //    modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
-
-
-        //    return View(modelo);
-
-
-        //    //return View();
-        //}
 
 
 
