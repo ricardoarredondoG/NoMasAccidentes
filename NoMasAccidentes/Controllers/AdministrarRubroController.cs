@@ -1,49 +1,84 @@
 ﻿using NoMasAccidentes.Models;
 using NoMasAccidentes.ViewModels;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using PagedList.Mvc;
 
 namespace NoMasAccidentes.Controllers
 {
     public class AdministrarRubroController : Controller
     {
+        [Authorize]
+        [AccessDeniedAuthorize(Roles = "Administrador")]
+        public ActionResult Index()
+        {
+            return View();
+        }
         // GET: AdministrarRubro
         [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
-        public ActionResult Index(int pagina = 1, string nomRub = "", string descRub = "")
+        public ActionResult ListarRubro(int? page, string nomRub = "", string descRub = "")
         {
-            var cantidadRegistrosPorPagina = 4;
-
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var rubro = bd.RUBRO.ToList();
-
             //Busqueda por Nombre
             if (nomRub != "")
             {
                 rubro = rubro.FindAll(x => x.NOMBRE_RUBRO.ToLower().Contains(nomRub.ToLower()));
             }
 
-
-            var totalRegistros = rubro.Count();
-            rubro = rubro.OrderBy(x => x.ID_RUBRO).Skip((pagina - 1) * cantidadRegistrosPorPagina).Take(cantidadRegistrosPorPagina).ToList();
-
+            if (descRub != "")
+            {
+                rubro = rubro.FindAll(x => x.DESC_RUBRO.ToLower().Contains(descRub.ToLower()));
+            }
 
             var modelo = new IndexViewModel();
 
             modelo.rubro = rubro;
-            modelo.PaginaActual = pagina;
-            modelo.TotalDeRegistros = totalRegistros;
-            modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
 
+            int pageSize = 4;
 
-            return View(modelo);
+            int pageNumber = page ?? 1;
 
+            return PartialView(modelo.rubro.ToPagedList(pageNumber, pageSize));
 
-            //return View();
         }
+        //public ActionResult Index(int pagina = 1, string nomRub = "", string descRub = "")
+        //{
+        //    var cantidadRegistrosPorPagina = 4;
+
+        //    EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+        //    var rubro = bd.RUBRO.ToList();
+
+        //    //Busqueda por Nombre
+        //    if (nomRub != "")
+        //    {
+        //        rubro = rubro.FindAll(x => x.NOMBRE_RUBRO.ToLower().Contains(nomRub.ToLower()));
+        //    }
+
+
+        //    var totalRegistros = rubro.Count();
+        //    rubro = rubro.OrderBy(x => x.ID_RUBRO).Skip((pagina - 1) * cantidadRegistrosPorPagina).Take(cantidadRegistrosPorPagina).ToList();
+
+
+        //    var modelo = new IndexViewModel();
+
+        //    modelo.rubro = rubro;
+        //    modelo.PaginaActual = pagina;
+        //    modelo.TotalDeRegistros = totalRegistros;
+        //    modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
+
+
+        //    return View(modelo);
+
+
+        //    //return View();
+        //}
 
 
 
@@ -94,15 +129,15 @@ namespace NoMasAccidentes.Controllers
             resultado = validaciones(rub);
             //if (resultado.ok == true)
             //{
-                EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
-                NoMasAccidentes.Models.RUBRO rubro = new RUBRO();
-                var rubroid = bd.RUBRO.Find(rub.id_rubro);
-                rubroid.NOMBRE_RUBRO = rub.nombre_rubro;
-                rubroid.DESC_RUBRO = rub.desc_rubro;
-                rubroid.ACTIVO_RUBRO = "S";
-                bd.Entry(rubroid).State = System.Data.EntityState.Modified;
-                bd.SaveChanges();
-                resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Rubro Modificado Correctamente";
+            EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
+            NoMasAccidentes.Models.RUBRO rubro = new RUBRO();
+            var rubroid = bd.RUBRO.Find(rub.id_rubro);
+            rubroid.NOMBRE_RUBRO = rub.nombre_rubro;
+            rubroid.DESC_RUBRO = rub.desc_rubro;
+            rubroid.ACTIVO_RUBRO = "S";
+            bd.Entry(rubroid).State = System.Data.EntityState.Modified;
+            bd.SaveChanges();
+            resultado.mensaje = "<i class='zmdi zmdi-check zmdi-hc-fw'></i>Rubro Modificado Correctamente";
 
             //}
 

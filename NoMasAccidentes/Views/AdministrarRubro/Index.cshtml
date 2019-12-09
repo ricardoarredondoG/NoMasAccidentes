@@ -32,39 +32,10 @@
 @model NoMasAccidentes.ViewModels.IndexViewModel
 <div class="row">
     <div class="col s12">
-
-        <table>
-            <thead>
-                <tr>
-                    <th data-field="id">ID Rubro</th>
-                    <th data-field="price">Nombre Rubro</th>
-                    <th data-field="price">Descripción Rubro</th>
-                    <th data-field="price">Editar</th>
-                    <th data-field="price">Eliminar</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var rub in Model.rubro)
-                {
-                    var datos = @rub.NOMBRE_RUBRO + "||" + @rub.DESC_RUBRO + "||" + rub.ID_RUBRO ;
-
-                    <tr>
-                        <td>@rub.ID_RUBRO</td>
-                        <td>@rub.NOMBRE_RUBRO</td>
-                        <td>@rub.DESC_RUBRO</td>
-                        <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="editar('@datos')" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
-                        <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" onclick="eliminar(@rub.ID_RUBRO)" @(rub.ACTIVO_RUBRO.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
-                    </tr>
-
-
-                }
-
-            </tbody>
-
-        </table>
-        <div class="center-align">
-
-            @{Html.RenderPartial("_paginador", Model);}
+        <div id="divRubro">
+        </div>
+        <div id="msgCargando" class="center">
+            <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="10%">
         </div>
         <!-- Modal Nuevo -->
         <!-- Modal Nuevo -->
@@ -77,6 +48,7 @@
                         <p id="mensaje"></p>
                     </div>
                 </div>
+                <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgNuevo" hidden />
                 <h5>Agregar Rubro</h5>
                 <div class="input-field col s6">
                     <input placeholder="Ingrese el Nombre de Rubro" id="txtNombre" name="nombre" type="text" class="validate">
@@ -89,7 +61,7 @@
 
                 <div class="row">
                     <div class="center-align">
-                        <button class="btn modal-trigger green"  id="btnGuardar">Guardar</button>
+                        <button class="btn modal-trigger green" id="btnGuardar">Guardar</button>
                         <button class="btn modal-close red">Cerrar</button>
                     </div>
                 </div>
@@ -127,6 +99,7 @@
                 <p id="mensajeEditar"></p>
             </div>
         </div>
+        <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgEditar" hidden />
         <h5>Editar Rubro</h5>
         <div class="input-field col s6">
             <input placeholder="Ingrese el Nombre del Rubro" id="editTxtNomRub" name="nomRub" type="text" class="validate">
@@ -148,11 +121,36 @@
 
 
 
-    
-
-<script>
 
 
+<script type="text/javascript">
+
+ ///////////////// Inicio Mostrar Contenido con Ajax/////////////////////
+        var urlGeneral = '@Url.Content("~/")'
+        $(document).ready(function () {
+            $("#msgCargando").show()
+            cargarTabla();
+        });
+
+        function cargarTabla() {
+
+            $.ajaxSetup({ cache: false })
+            $('#divRubro').load(urlGeneral + 'AdministrarRubro/ListarRubro/?' + "nomRub=" + $('#nomRub').val() + "&descRub=" + $('#descRub').val(), function (response, status, xhr){
+                $("#msgCargando").hide()
+                $("#divRubro").show()
+            });
+        }
+
+        $('#btnBuscar').click(
+            function () {
+                $("#msgCargando").show()
+                $("#divRubro").hide()
+                cargarTabla();
+            }
+        );
+
+ ///////////////// Fin Mostrar Contenido con Ajax/////////////////////
+    //Agregar Rubro
     $("#btnGuardar").click(function ()
     {
         $("#mensaje").show();
