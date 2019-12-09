@@ -14,47 +14,47 @@
                     <label for="rut">Nombre Cliente</label>
                 </div>
             }
-                <div class="input-field col s4">
-                    <select id="selectTipoRubro" name="rubro">
-                        <option value="" disabled selected>Seleccione el Tipo de Solicitud</option>
-                        @foreach (var tipoSolicitud in Model.tipo_solicitud)
-                        {
-                            <option value="@tipoSolicitud.ID_TIPOSOLICI">@tipoSolicitud.NOMBRE_TIPOSOLICITUD</option>
-                        }
+            <div class="input-field col s4">
+                <select id="selectTipoRubro" name="rubro">
+                    <option value="" disabled selected>Seleccione el Tipo de Solicitud</option>
+                    @foreach (var tipoSolicitud in Model.tipo_solicitud)
+                    {
+                        <option value="@tipoSolicitud.ID_TIPOSOLICI">@tipoSolicitud.NOMBRE_TIPOSOLICITUD</option>
+                    }
 
-                    </select>
-                    <label for="nombre">Tipo de Solicitud</label>
-                </div>
-                <div class="input-field col s4">
-                    <select id="selectEstadoSolicitud" name="estadoSolicitud">
-                        <option value="0" disabled selected>Estado de Solicitud</option>
-                        <option value="1">En Revisión</option>
-                        <option value="3">Aprobada</option>
-                        <option value="4">Rechazada</option>
-
-                    </select>
-                    <label for="nombre">Estado</label>
-                </div>
-                <div class="input-field col s3">
-                    <input placeholder="Ingrese Fecha Vencimiento" id="fechaDesde" name="fechaDesde" type="date">
-                    <label for="correo">Fecha Desde</label>
-                </div>
-                <div class="input-field col s3">
-                    <input placeholder="Ingrese Fecha Vencimiento" id="fechaHasta" name="fechaHasta" type="date">
-                    <label for="correo">Fecha Hasta</label>
-                </div>
-                <div class="input-field col s4">
-                    <div class="center-align">
-                        <button class="btn red waves-effect" id="btnBuscar">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
-                        @if (Roles.IsUserInRole("Cliente"))
-                        {
-                            <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
-                        }
-                        </div>
-
-
-                </div>
+                </select>
+                <label for="nombre">Tipo de Solicitud</label>
             </div>
+            <div class="input-field col s4">
+                <select id="selectEstadoSolicitud" name="estadoSolicitud">
+                    <option value="0" disabled selected>Estado de Solicitud</option>
+                    <option value="1">En Revisión</option>
+                    <option value="3">Aprobada</option>
+                    <option value="4">Rechazada</option>
+
+                </select>
+                <label for="nombre">Estado</label>
+            </div>
+            <div class="input-field col s3">
+                <input placeholder="Ingrese Fecha Vencimiento" id="fechaDesde" name="fechaDesde" type="date">
+                <label for="correo">Fecha Desde</label>
+            </div>
+            <div class="input-field col s3">
+                <input placeholder="Ingrese Fecha Vencimiento" id="fechaHasta" name="fechaHasta" type="date">
+                <label for="correo">Fecha Hasta</label>
+            </div>
+            <div class="input-field col s4">
+                <div class="center-align">
+                    <button class="btn red waves-effect" id="btnBuscar">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                    @if (Roles.IsUserInRole("Cliente"))
+                    {
+                        <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+                    }
+                </div>
+
+
+            </div>
+        </div>
     </div>
 </div>
 
@@ -102,8 +102,20 @@
 
     </div>
 </div>
-
-<script type="text/javascript">
+@if (Roles.IsUserInRole("Administrador"))
+{
+    <div id="modalConfirmar" class="modal">
+        <div class="modal-content">
+            <div class="center-align">
+                <div id="contenidoEliminar">
+                    <h5>El Estado se Cambio Correctamente</h5>
+                    <button class="btn modal-close red">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+    <script type="text/javascript">
  ///////////////// Inicio Mostrar Contenido con Ajax/////////////////////
         var urlGeneral = '@Url.Content("~/")'
         $(document).ready(function () {
@@ -167,13 +179,27 @@
         var data = { idSolicitud: d[0], estado: selectObject.value };
 
         $.post(url, data).done(function (data) {
-            if (data.ok) {
-                alert('d');
-
-            } else {
-                
-            }
+            $('#modalConfirmar').modal('open');
         });
 
     };
-</script>
+    </script>
+
+    @if (Roles.IsUserInRole("Administrador"))
+    {
+        <script type="text/javascript">
+    function editar(datos, selectObject)
+    {
+
+        d = datos.split('||');
+
+        var url = "@Url.Action("CambiarEstado", "AdministrarSolicitudes")";
+        var data = { idSolicitud: d[0], estado: selectObject.value };
+
+        $.post(url, data).done(function(data) {
+        $('#modalConfirmar').modal('open');
+        });
+
+        };
+        </script>
+    }
