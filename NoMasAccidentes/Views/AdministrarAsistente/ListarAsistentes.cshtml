@@ -1,0 +1,68 @@
+﻿@model PagedList.IPagedList<NoMasAccidentes.Models.ASISTENTE>
+@using PagedList.Mvc
+
+
+<table>
+    <thead>
+        <tr>
+            <th data-field="id">Nombre</th>
+            <th data-field="price">Apellido Paterno</th>
+            <th data-field="price">Apellido Materno</th>
+            <th data-field="price">Rut Cliente</th>
+            <th data-field="price">Nombre Cliente</th>
+            <th data-field="price">Editar</th>
+            <th data-field="price">Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var asistente in Model)
+        {
+            var datos = @asistente.NOMBRE_ASISTENTE + "||" + @asistente.APELLIDOP_ASISTENTE + "||" + @asistente.APELLIDOM_ASISTENTE + "||" + @asistente.ID_ASISTENTE + "||" + asistente.CLIENTE_ID_CLIENTE + "||" + asistente.CLIENTE.RUT_CLIENTE + " ----> " + asistente.CLIENTE.NOMBRE_CLIENTE + " " + asistente.CLIENTE.APELLIDO_CLIENTE;
+            <tr style='background-color: @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "#CCCCCC" : "");'>
+
+
+
+
+                <td>@asistente.NOMBRE_ASISTENTE</td>
+                <td>@asistente.APELLIDOP_ASISTENTE</td>
+                <td>@asistente.APELLIDOM_ASISTENTE</td>
+                <td>@asistente.CLIENTE.RUT_CLIENTE</td>
+                <td>@asistente.CLIENTE.NOMBRE_CLIENTE @asistente.CLIENTE.APELLIDO_CLIENTE</td>
+                <td><button class="btn modal-trigger blue" data-target="modalEditar" onclick="EditarA('@datos')" @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button></td>
+                <td><button class="btn modal-trigger red" data-target="modalEliminarA" id="eliminarA" onclick="eliminarA(@asistente.ID_ASISTENTE)" @(asistente.ACTIVO_ASISTENTE.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+            </tr>
+
+
+        }
+    </tbody>
+</table>
+<div class="center align" id="paginatorA">
+    @Html.PagedListPager(Model, page => Url.Action("ListarAsistentes", new { page, search = ViewBag.Buscar }))
+</div>
+@if (Model.Count <= 0)
+{
+    <p>No se han encontrado resultados para los asistentes.</p>
+}
+
+<script>
+    $("#paginatorA").on("click", 'a', function (e) {
+        e.preventDefault();
+        $('#msgCargandoA').show();
+        $('#divAsistente').hide();
+        $.ajax({
+            url: this.href,
+            type: 'get',
+            cache: false,
+            success: function (result) {
+                $('#msgCargandoA').hide();
+                $('#divAsistente').show();
+                $('#divAsistente').html(result)
+            }
+        });
+    });
+    $(document).ready(function () {
+        $('.tooltipped').tooltip();
+
+    });
+
+</script>

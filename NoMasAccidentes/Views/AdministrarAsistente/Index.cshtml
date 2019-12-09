@@ -2,26 +2,27 @@
 @{
     ViewBag.Title = "Index";
 }
+@model NoMasAccidentes.ViewModels.IndexViewModel
 <div class="container">
     <div class="row">
         <h3 class="center-align">Administrar Asistentes</h3>
         <div class="row">
             <div class="input-field col s6">
-                <input placeholder="Ingrese nombre del asistente" id="nombreA" name="nombre" type="text" class="validate">
+                <input placeholder="Ingrese nombre del asistente" id="nombreABuscar" name="nombre" type="text" class="validate">
                 <label for="rut">Nombre del asistente</label>
             </div>
             <div class="input-field col s6">
-                <input placeholder="Ingrese apellido paterno del asistente" id="apellidoPA" name="apellidoP" type="email" class="validate">
+                <input placeholder="Ingrese apellido paterno del asistente" id="apellidoPABuscar" name="apellidoP" type="email" class="validate">
                 <label for="nombre">Apellido paterno del asistente</label>
             </div>
             <div class="input-field col s6">
-                <input placeholder="Ingrese apellido materno del asistente" id="apellidoMA" name="apellidoM" type="text" class="validate">
+                <input placeholder="Ingrese apellido materno del asistente" id="apellidoMABuscar" name="apellidoM" type="text" class="validate">
                 <label for="apellido">Apellido materno del asistente</label>
             </div>
 
             <div class="input-field col s4">
                 <div class="center-align">
-                    <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                    <button class="btn red waves-effect" id="btnBuscar">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
                     <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
                 </div>
             </div>
@@ -63,9 +64,9 @@
                     <select id="selectIdCliente" name="tipoId">
                         <option value="" disabled selected>Seleccione el Cliente</option>
 
-                        @foreach (var cliente in Model)
+                        @foreach (var cliente in Model.cliente)
                         {
-                        <option value="@cliente.ID_CLIENTE">@cliente.RUT_CLIENTE ----> @cliente.NOMBRE_CLIENTE @cliente.APELLIDO_CLIENTE </option>
+                            <option value="@cliente.ID_CLIENTE">@cliente.RUT_CLIENTE ----> @cliente.NOMBRE_CLIENTE @cliente.APELLIDO_CLIENTE </option>
                         }
                     </select>
                     <label for="tipoId">Cliente</label>
@@ -124,7 +125,7 @@
                         <option value="" disabled selected>Seleccione id del cliente</option>
                         @foreach (var cliente in Model.cliente)
                         {
-                        <option value="@cliente.ID_CLIENTE">@cliente.RUT_CLIENTE ----> @cliente.NOMBRE_CLIENTE @cliente.APELLIDO_CLIENTE </option>
+                            <option value="@cliente.ID_CLIENTE">@cliente.RUT_CLIENTE ----> @cliente.NOMBRE_CLIENTE @cliente.APELLIDO_CLIENTE </option>
                         }
                     </select>
                     <label for="tipoId">Cliente</label>
@@ -139,22 +140,21 @@
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
 
     $('select').formSelect();
-
-
     var urlGeneral = '@Url.Content("~/")'
 
     $(document).ready(function () {
-        $("#msgCargandoA".show());
+        $("#msgCargandoA").show();
         cargarTabla();
     });
     function cargarTabla() {
         $.ajaxSetup({ cache: false })
-        $.('#divAsistente').load(urlGeneral + 'AdministrarAsistente/ListarAsistente/?' + "nombreA=" + $('#nombreA').val() + "&apellidoPA" + $('#apellidoPA').val() + "&apellidoMA" + $('#apellidoMA').val(), function (response, status, xhr) {
+        $('#divAsistente').load(urlGeneral + 'AdministrarAsistente/ListarAsistentes/?' + "nombre=" + $('#nombreABuscar').val() + "&apellidoP=" + $('#apellidoPABuscar').val(), + "&apellidoM=" + $('#apellidoMABuscar').val(), function (response, status, xhr) {
             $('#msgCargandoA').hide();
             $('#divAsistente').show();
+
         });
     }
      //buscar

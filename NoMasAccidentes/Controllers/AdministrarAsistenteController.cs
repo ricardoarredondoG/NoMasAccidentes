@@ -14,16 +14,17 @@ namespace NoMasAccidentes.Controllers
 
         [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
-        public ActionResult Index(int pagina = 1, string nombre = "", string apellidoP = "", string apellidoM = "")
+        public ActionResult Index()
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var modelo = new IndexViewModel();
+            modelo.cliente = bd.CLIENTE.ToList();
             return View(modelo);
         }
         // GET: AdministrarAsistente
         [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador")]
-        public ActionResult ListarCliente(int? pagina = 1, string nombre = "", string apellidoP = "", string apellidoM = "")
+        public ActionResult ListarAsistentes(int? page, string nombre = "", string apellidoP = "", string apellidoM = "")
         {
 
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
@@ -48,7 +49,7 @@ namespace NoMasAccidentes.Controllers
             }
 
             int pageSize = 4;
-            int pageNumber = pagina ?? 1;
+            int pageNumber = page ?? 1;
             return PartialView(asistente.ToPagedList(pageNumber, pageSize));
         }
         [HttpPost]
