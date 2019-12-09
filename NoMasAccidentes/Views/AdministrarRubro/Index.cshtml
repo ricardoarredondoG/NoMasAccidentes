@@ -7,26 +7,24 @@
 <div class="container">
     <div class="row">
         <h3 class="center-align">Administrar Rubro</h3>
-        <form class="col s12" href="/AdministrarRubro/Buscar" method="post">
-            <div class="row">
-                <div class="input-field col s6">
-                    <input placeholder="Ingrese el Rubro" id="rubro" name="rubro" type="text" class="validate">
-                    <label for="nombre">Rubro</label>
-                </div>
-                <div class="input-field col s6">
-                    <input placeholder="Ingrese la Descripción" id="descripcion" name="descripcion" type="text" class="validate">
-                    <label for="descripcion">Descripcion</label>
-                </div>
-
-                <div class="input-field col s4">
-                    <div class="center-align">
-                        <button class="btn red waves-effect">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
-                        <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
-                    </div>
-
-                </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input placeholder="Ingrese el Rubro" id="buscarRubro" name="rubro" type="text" class="validate">
+                <label for="nombre">Rubro</label>
             </div>
-        </form>
+            <div class="input-field col s6">
+                <input placeholder="Ingrese la Descripción" id="buscarDescripcion" name="descripcion" type="text" class="validate">
+                <label for="descripcion">Descripcion</label>
+            </div>
+
+            <div class="input-field col s4">
+                <div class="center-align">
+                    <button class="btn red waves-effect" id="btnBuscar">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                    <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 @model NoMasAccidentes.ViewModels.IndexViewModel
@@ -72,24 +70,25 @@
 
 <!--Modal Eliminar-->
 <div id="modalEliminar" class="modal">
-    <div class="modal-content">
-        <div class="center-align">
-            <div id="contenidoEliminar">
-                <h5>¿Esta seguro que desea eliminar el rubro?</h5>
-                <button class="btn  green" id="confirmarEliminar"> Confirmar </button>
-                <button class="btn modal-close red">Cerrar</button>
-            </div>
-            <div id="div-alerta-eliminar" style="display:none">
-                <div class="alert card green white-text">
-                    <div class="card-content">
-                        <p id="mensajeEliminar"></p>
-                    </div>
+<div class="modal-content">
+    <div class="center-align">
+        <div id="contenidoEliminar">
+            <h5>¿Esta seguro que desea eliminar el Rubro?</h5>
+            <button class="btn  green" id="confirmarEliminar"> Confirmar </button>
+            <button class="btn modal-close red">Cerrar</button>
+        </div>
+        <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgEliminar" hidden />
+        <div id="div-alerta-eliminar" style="display:none">
+            <div class="alert card green white-text">
+                <div class="card-content">
+                    <p id="mensajeEliminar"></p>
                 </div>
-                <button class="btn modal-close red">Cerrar</button>
             </div>
+            <button class="btn modal-close red" id="btnCerrarEliminar">Cerrar</button>
         </div>
     </div>
 </div>
+        </div>
 
 <!-- Modal Editar -->
 <div id="modalEditar" class="modal">
@@ -113,7 +112,7 @@
         <div class="row">
             <div class="center-align">
                 <button class="btn green" id="btnEditar">Actualizar</button>
-                <button class="btn modal-close red">Cerrar</button>
+                <button class="btn modal-close red" id="btnCerrarEditar">Cerrar</button>
             </div>
         </div>
     </div>
@@ -135,7 +134,7 @@
         function cargarTabla() {
 
             $.ajaxSetup({ cache: false })
-            $('#divRubro').load(urlGeneral + 'AdministrarRubro/ListarRubro/?' + "nomRub=" + $('#nomRub').val() + "&descRub=" + $('#descRub').val(), function (response, status, xhr){
+            $('#divRubro').load(urlGeneral + 'AdministrarRubro/ListarRubro/?' + "nomRub=" + $('#buscarRubro').val() + "&descRub=" + $('#buscarDescripcion').val(), function (response, status, xhr){
                 $("#msgCargando").hide()
                 $("#divRubro").show()
             });
@@ -153,12 +152,15 @@
     //Agregar Rubro
     $("#btnGuardar").click(function ()
     {
+        $("#div-alerta").hide();
+        $('#imgNuevo').show();
         $("#mensaje").show();
 
                 var url = "@Url.Action("Crear", "AdministrarRubro")";
                 var txtNombre = $("#txtNombre").val();
                 var txtDescripRubro = $("#txtDescripRubro").val();
                 var data = {nombre_rubro: txtNombre, desc_rubro: txtDescripRubro };
+
 
         //         $("#txtNombre").attr('required', 'required');
 
@@ -169,8 +171,12 @@
                 $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
                 $("#txtNombre").val('');
                 $("#txtDescripRubro").val('');
+                $('#imgNuevo').hide();
+
+                cargarTabla();
             } else {
                 $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+                $('#imgNuevo').hide();
             }
             $("#mensaje").html(data.mensaje);
             $("#div-alerta").show();
@@ -180,18 +186,27 @@
 
 
     //Eliminar Rubro
+    $("#btnCerrarEliminar").click(function () {
+
+        $("#div-alerta-eliminar").hide();
+        $("#contenidoEliminar").show();
+    });
         var idRubro = null;
         function eliminar(id) {
             idRubro = id;
         };
 
-        $("#confirmarEliminar").click(function () {
+    $("#confirmarEliminar").click(function () {
+        $("#imgEliminar").show();
+        $("#contenidoEliminar").hide();
             var url = "@Url.Action("Eliminar", "AdministrarRubro")";
             var data = { id: idRubro };
             $.post(url, data).done(function (data) {
                 $("#mensajeEliminar").html(data.mensaje);
                 $("#div-alerta-eliminar").show();
                 $("#contenidoEliminar").hide();
+                cargarTabla();
+                $("#imgEliminar").hide()
             });
 
 
@@ -206,10 +221,16 @@
             d = datos.split('||');
             $('#editTxtNomRub').val(d[0]);
             $('#editTxtDescRub').val(d[1]);
-        };
+    };
 
+    $("#btnCerrarEditar").click(function () {
+
+        $("#div-alerta-editar").hide()
+    });
 
     $("#btnEditar").click(function () {
+        $('#imgEditar').show();
+        $("#div-alerta-editar").hide();
 
         var id = d[2];
         //Definir URL
@@ -223,9 +244,12 @@
                 $("#div-alerta-editar").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
                 $("#txtNombre").val('');
                 $("#txtDescRub").val('');
+                cargarTabla();
+                $('#imgEditar').hide();
 
             } else {
                 $("#div-alerta-editar").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+                $('#imgEditar').hide();
             }
             $("#mensajeEditar").html(data.mensaje);
             $("#div-alerta-editar").show();
