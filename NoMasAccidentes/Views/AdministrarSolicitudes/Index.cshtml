@@ -7,49 +7,54 @@
     <div class="row">
         <h3 class="center-align">Solicitudes</h3>
         <div class="row">
-            <div class="input-field col s4">
-                <input placeholder="Ingrese el Nombre del Cliente" id="Cliente" name="buscarCliente" type="text" class="validate">
-                <label for="rut">Nombre Cliente</label>
-            </div>
-            <div class="input-field col s4">
-                <select id="selectTipoRubro" name="rubro">
-                    <option value="" disabled selected>Seleccione el Tipo de Solicitud</option>
-                    @foreach (var tipoSolicitud in Model.tipo_solicitud)
-                    {
-                        <option value="@tipoSolicitud.ID_TIPOSOLICI">@tipoSolicitud.NOMBRE_TIPOSOLICITUD</option>
-                    }
-
-                </select>
-                <label for="nombre">Tipo de Solicitud</label>
-            </div>
-            <div class="input-field col s4">
-                <select id="selectEstadoSolicitud" name="estadoSolicitud">
-                    <option value="0" disabled selected>Estado de Solicitud</option>
-                    <option value="1">En Revisión</option>
-                    <option value="2">Proceso de Asignación de Profesional</option>
-                    <option value="3">Aprobada</option>
-                    <option value="4">Rechazada</option>
-
-                </select>
-                <label for="nombre">Estado</label>
-            </div>
-            <div class="input-field col s3">
-                <input placeholder="Ingrese Fecha Vencimiento" id="fechaDesde" name="fechaDesde" type="date">
-                <label for="correo">Fecha Desde</label>
-            </div>
-            <div class="input-field col s3">
-                <input placeholder="Ingrese Fecha Vencimiento" id="fechaHasta" name="fechaHasta" type="date">
-                <label for="correo">Fecha Hasta</label>
-            </div>
-            <div class="input-field col s4">
-                <div class="center-align">
-                    <button class="btn red waves-effect" id="btnBuscar">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
-                    <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+            @if (Roles.IsUserInRole("Administrador"))
+            {
+                <div class="input-field col s4">
+                    <input placeholder="Ingrese el Nombre del Cliente" id="Cliente" name="buscarCliente" type="text" class="validate">
+                    <label for="rut">Nombre Cliente</label>
                 </div>
+            }
+                <div class="input-field col s4">
+                    <select id="selectTipoRubro" name="rubro">
+                        <option value="" disabled selected>Seleccione el Tipo de Solicitud</option>
+                        @foreach (var tipoSolicitud in Model.tipo_solicitud)
+                        {
+                            <option value="@tipoSolicitud.ID_TIPOSOLICI">@tipoSolicitud.NOMBRE_TIPOSOLICITUD</option>
+                        }
+
+                    </select>
+                    <label for="nombre">Tipo de Solicitud</label>
+                </div>
+                <div class="input-field col s4">
+                    <select id="selectEstadoSolicitud" name="estadoSolicitud">
+                        <option value="0" disabled selected>Estado de Solicitud</option>
+                        <option value="1">En Revisión</option>
+                        <option value="3">Aprobada</option>
+                        <option value="4">Rechazada</option>
+
+                    </select>
+                    <label for="nombre">Estado</label>
+                </div>
+                <div class="input-field col s3">
+                    <input placeholder="Ingrese Fecha Vencimiento" id="fechaDesde" name="fechaDesde" type="date">
+                    <label for="correo">Fecha Desde</label>
+                </div>
+                <div class="input-field col s3">
+                    <input placeholder="Ingrese Fecha Vencimiento" id="fechaHasta" name="fechaHasta" type="date">
+                    <label for="correo">Fecha Hasta</label>
+                </div>
+                <div class="input-field col s4">
+                    <div class="center-align">
+                        <button class="btn red waves-effect" id="btnBuscar">Buscar <i class="zmdi zmdi-search zmdi-hc-fw"></i></button>
+                        @if (Roles.IsUserInRole("Cliente"))
+                        {
+                            <button class="btn modal-trigger green" data-target="modalNuevo">Nuevo <i class="zmdi zmdi-account-add zmdi-hc-fw"></i></button>
+                        }
+                        </div>
 
 
+                </div>
             </div>
-        </div>
     </div>
 </div>
 
@@ -59,6 +64,40 @@
         </div>
         <div id="msgCargando" class="center">
             <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="10%">
+        </div>
+        <!-- Modal Nuevo -->
+        <div id="modalNuevo" class="modal">
+            <div class="modal-content">
+                <div id="div-alerta" class="alert card green white-text" style="display:none">
+                    <div class="card-content">
+                        <p id="mensaje"></p>
+                    </div>
+                </div>
+                <img src="@Url.Content("~/Imagenes/loading.gif")" alt="material-logo" class="responsive-img center-box" width="30" id="imgNuevo" hidden />
+                <h5>Registrar Solicitud</h5>
+                <div class="input-field col s12">
+                    <select id="selectTipoSolicitudNuevo" name="rubro">
+                        <option value="0" disabled selected>Seleccione el Tipo de Solicitud</option>
+                        @foreach (var tipoSolicitud in Model.tipo_solicitud)
+                        {
+                            <option value="@tipoSolicitud.ID_TIPOSOLICI">@tipoSolicitud.NOMBRE_TIPOSOLICITUD</option>
+                        }
+
+                    </select>
+                    <label for="correo">(*) Tipo Solicitud</label>
+                </div>
+                <div class="input-field col s12">
+                    <textarea id="txtDetalle" class="materialize-textarea" placeholder="Ingrese el Detalle de Solicitud"></textarea>
+                    <label for="correo">(*) Detalle de Solicitud</label>
+                </div>
+
+                <div class="row">
+                    <div class="center-align">
+                        <button class="btn modal-trigger green" id="btnGuardar">Guardar</button>
+                        <button class="btn modal-close red">Cerrar</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -90,4 +129,51 @@
         );
 
         ///////////////// Fin Mostrar Contenido con Ajax/////////////////////
+
+    //Agregar Peronal
+        $("#btnGuardar").click(function () {
+            $("#div-alerta").hide();
+            $('#imgNuevo').show();
+            var url = "@Url.Action("Crear", "AdministrarSolicitudes")";
+            var txtDetalle = $("#txtDetalle").val();
+            var selectTipoSolicitudNuevo = $("#selectTipoSolicitudNuevo").val();
+            var data = { detalle_solicitud: txtDetalle, tipo_solicitud: selectTipoSolicitudNuevo };
+
+
+            $.post(url, data).done(function (data) {
+                if (data.ok) {
+                    $("#div-alerta").removeClass("alert card red white-text").addClass("alert card green white-text").slideDown(200);
+                    $("#txtDetalle").val('');
+                    $('#selectTipoSolicitudNuevo').val(0);
+                    $('#selectTipoSolicitudNuevo').formSelect();
+                    $('#imgNuevo').hide();
+                    cargarTabla();
+
+                } else {
+                    $("#div-alerta").removeClass("alert card green white-text").addClass("alert card red white-text").slideDown(200);
+                    $('#imgNuevo').hide();
+                }
+                $("#mensaje").html(data.mensaje);
+                $("#div-alerta").show();
+            });
+
+    });
+
+    function editar(datos,selectObject) {
+
+        d = datos.split('||');
+
+        var url = "@Url.Action("CambiarEstado", "AdministrarSolicitudes")";
+        var data = { idSolicitud: d[0], estado: selectObject.value };
+
+        $.post(url, data).done(function (data) {
+            if (data.ok) {
+                alert('d');
+
+            } else {
+                
+            }
+        });
+
+    };
 </script>

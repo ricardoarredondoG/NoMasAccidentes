@@ -1,34 +1,70 @@
 ﻿@model PagedList.IPagedList<NoMasAccidentes.Models.SOLICITUD>
 @using PagedList.Mvc
-<table>
+<table class="centered">
     <thead>
         <tr>
             <th data-field="cliente">Rut Cliente</th>
             <th data-field="cliente">Nombre Cliente</th>
             <th data-field="fecha">Fecha Solicitud</th>
             <th data-field="fecha">Tipo Solicitud</th>
+            <th data-field="fecha">Detalle</th>
             <th data-field="fecha">Estado</th>
-            <th data-field="price">Editar</th>
-            <th data-field="price">Eliminar</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var solicitud in Model)
         {
+            var datos = solicitud.ID_SOLICITUD;
 
         <tr style='background-color: @(solicitud.ACTIVO_SOLICITUD.ToString() == "N" ? "#CCCCCC" : "" );'>
             <td>@solicitud.CLIENTE.RUT_CLIENTE</td>
             <td>@solicitud.CLIENTE.NOMBRE_CLIENTE @solicitud.CLIENTE.APELLIDO_CLIENTE</td>
             <td>@solicitud.FECHA_SOLICITUD.ToString("dd/MM/yyyy")</td>
             <td>@solicitud.TIPO_SOLICITUD.NOMBRE_TIPOSOLICITUD</td>
-            <td>Aprobada</td>
-
             <td>
-                <button class="btn modal-trigger blue" data-target="modalEditar" @(solicitud.ACTIVO_SOLICITUD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button>
+                <a class="tooltipped waves-effect waves-light btn-Notification" data-position="bottom" data-delay="50" data-tooltip="<p align='left'>@solicitud.DESCRIPCION_SOLICITUD</p> ">
+                    <i class="zmdi zmdi-info"></i>
+                </a>
             </td>
-            <td><button class="btn modal-trigger red" data-target="modalEliminar" id="eliminar" @(solicitud.ACTIVO_SOLICITUD.ToString() == "N" ? "disabled" : "")><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button></td>
+            <td>
+                @if (Roles.IsUserInRole("Administrador"))
+                {
+                <select id="selectEstadoSolicitud" name="estadoSolicitud" onchange="editar('@datos',this)">
+                    @if (solicitud.ESTADO.Equals("En Revisión"))
+                    {
+                        <option value="En Revisión" selected>En Revisión</option>
+                    }
+                    else
+                    {
+                        <option value="En Revisión">En Revisión</option>
+                    }
 
+                    @if (solicitud.ESTADO.Equals("Aprobada"))
+                    {
+                        <option value="Aprobada" selected>Aprobada</option>
+                    }
+                    else
+                    {
+                        <option value="Aprobada">Aprobada</option>
+                    }
 
+                    @if (solicitud.ESTADO.Equals("Rechazada"))
+                    {
+                        <option value="Rechazada" selected>Rechazada</option>
+                    }
+                    else
+                    {
+                        <option value="Rechazada">Rechazada</option>
+                    }
+
+                </select>
+                }
+                else
+                {
+                    @solicitud.ESTADO
+                }
+            </td>
+           
         </tr>
         }
 
@@ -45,19 +81,19 @@
 }
 
 <script>
-
+    $('select').formSelect();
     $("#paginator").on("click", 'a', function (e) {
         e.preventDefault();
         $("#msgCargando").show();
-        $('#divPersonal').hide();
+        $('#divSolicitud').hide();
         $.ajax({
             url: this.href,
             type: 'GET',
             cache: false,
             success: function (result) {
                 $("#msgCargando").hide();
-                $('#divPersonal').show();
-                $('#divPersonal').html(result);
+                $('#divSolicitud').show();
+                $('#divSolicitud').html(result);
             }
         });
     });
