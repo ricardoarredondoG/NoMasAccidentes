@@ -26,7 +26,7 @@ namespace NoMasAccidentes.Controllers
 
         [Authorize]
         [AccessDeniedAuthorize(Roles = "Administrador, Cliente")]
-        public ActionResult ListarSolicitud(int? page)
+        public ActionResult ListarSolicitud(int? page, String nombreCliente = "", int tipoSolicitud = 0, String estado = "", DateTime? fechaDesde = null, DateTime? fechaHasta = null)
         {
             EntitiesNoMasAccidentes bd = new EntitiesNoMasAccidentes();
             var solicitudes = bd.SOLICITUD.ToList();
@@ -35,7 +35,11 @@ namespace NoMasAccidentes.Controllers
             {
                 solicitudes = solicitudes.FindAll(x => x.CLIENTE.USUARIO.USUARIO1.Equals(User.Identity.Name));
             }
-
+            //Busqueda por Nombre
+            if (nombreCliente != "" && nombreCliente != "undefined")
+            {
+                solicitudes = solicitudes.FindAll(x => x.CLIENTE.NOMBRE_CLIENTE.ToLower().Contains(nombreCliente.ToLower()));
+            }
             int pageSize = 4;
 
             int pageNumber = page ?? 1;

@@ -10,7 +10,7 @@
             @if (Roles.IsUserInRole("Administrador"))
             {
                 <div class="input-field col s4">
-                    <input placeholder="Ingrese el Nombre del Cliente" id="Cliente" name="buscarCliente" type="text" class="validate">
+                    <input placeholder="Ingrese el Nombre del Cliente" id="nombreCliente" name="buscarCliente" type="text" class="validate">
                     <label for="rut">Nombre Cliente</label>
                 </div>
             }
@@ -126,7 +126,7 @@
         function cargarTabla() {
 
         $.ajaxSetup({ cache: false })
-        $('#divSolicitud').load(urlGeneral + 'AdministrarSolicitudes/ListarSolicitud/', function (response, status, xhr){
+            $('#divSolicitud').load(urlGeneral + 'AdministrarSolicitudes/ListarSolicitud/?' + "nombreCliente=" + $('#nombreCliente').val(), function (response, status, xhr){
         $("#msgCargando").hide()
         $("#divSolicitud").show()
         });
