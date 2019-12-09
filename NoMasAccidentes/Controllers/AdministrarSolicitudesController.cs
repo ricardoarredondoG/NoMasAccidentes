@@ -21,6 +21,7 @@ namespace NoMasAccidentes.Controllers
             var modelo = new IndexViewModel();
             //Tipo Solicitud
             modelo.tipo_solicitud = bd.TIPO_SOLICITUD.ToList();
+            modelo.tipo_solicitud.Where(x => x.ACTIVO_TIPOSOLICITUD == "S");
             return View(modelo);
         }
 
